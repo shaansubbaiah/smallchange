@@ -2,22 +2,23 @@
   <form class="frmLogin">
     <mat-form-field class="fullWidth" appearance="fill">
       <mat-label>Enter your username</mat-label>
-      <input matInput [type]="'text'" />
+      <input matInput [type]="'text'" title="username"/>
     </mat-form-field>
 
     <mat-form-field class="fullWidth" appearance="fill">
       <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" />
+      <input matInput [type]="hide ? 'password' : 'text'" title="password"/>
       <button
         mat-icon-button
         matSuffix
         (click)="hide = !hide"
         [attr.aria-label]="'Hide password'"
         [attr.aria-pressed]="hide"
+        type="button"
       >
         <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-raised-button color="primary" appearance="fill" class="fullWidth">Log In</button>
+    <button mat-raised-button color="primary" appearance="fill" class="fullWidth" type="button">Log In</button>
   </form>
 </div>
