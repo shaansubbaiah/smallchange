@@ -40,8 +40,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatInputModule, 
     MatFormFieldModule, 
     MatCardModule,
-    
-    MatButtonModule,
+    MatTableModule,
+    MatButtonModule
     
   ],
   exports: [LoginPageComponent, HomePageComponent],

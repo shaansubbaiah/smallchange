@@ -53,3 +53,18 @@ h1{
 .slide{
   overflow: overlay;
 }
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+table {
+  width: 90%;
+  margin: auto 10px;
+}
+
+.mat-column-name {
+  font-weight: 500;
+}

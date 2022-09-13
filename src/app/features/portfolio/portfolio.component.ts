@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { StockHolding } from '../../core/models/stock-holding';
+import { dummy_data_stocks } from '../../core/models/mock-data';
 
 @Component({
   selector: 'app-portfolio',
@@ -6,20 +8,28 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./portfolio.component.scss']
 })
 
+
 export class PortfolioComponent implements OnInit {
-  constructor() { }
-  @Input() fromMain!: boolean;
-  eventTriggered: boolean = true;
+
+ 
+  data: StockHolding[] = dummy_data_stocks;
   invested_amount: number = 0;
   current_amount: number = 0;
-  funds: number = 0;
-  ngOnInit(): void {
+ 
+
+  constructor() {
+  }
+  ngOnChanges() {
+    this.ngOnInit();
     
   }
-
-  ngOnChanges() {
-      this.eventTriggered?this.eventTriggered=false:this.eventTriggered=true;
-      this.ngOnInit();
+  
+  ngOnInit(): void {
+    this.invested_amount = 0;
+    this.current_amount = 0;
+    for (var i = 0; i < this.data.length; i++) {
+      this.invested_amount += (this.data[i].buy_price * this.data[i].quantity)
+      this.current_amount += (this.data[i].LTP * this.data[i].quantity)
+    }
   }
-
 }
