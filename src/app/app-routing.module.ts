@@ -1,10 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BuyTradeComponent } from './features/buy-trade/buy-trade.component';
+import { HomePageComponent } from './features/home-page/home-page.component';
+import { LoginPageComponent } from './features/login-page/login-page.component';
+import { PageNotFoundComponent } from './features/page-not-found/page-not-found.component';
+import { PortfolioComponent } from './features/portfolio/portfolio.component';
+import { SellTradeComponent } from './features/sell-trade/sell-trade.component';
+import { TradeHistoryComponent } from './features/trade-history/trade-history.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomePageComponent },
+  { path: 'login', component: LoginPageComponent },
+  { path: 'portfolio', component: PortfolioComponent },
+  { path: 'trade-history', component: TradeHistoryComponent },
+  { path: 'buy', component: BuyTradeComponent },
+  { path: 'sell', component: SellTradeComponent },
+  { path: '**', component: PageNotFoundComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
