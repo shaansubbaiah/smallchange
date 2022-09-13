@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginFormComponent } from './login-page/login-form/login-form.component';
@@ -14,7 +15,6 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { TradeHistoryComponent } from './trade-history/trade-history.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { BuyTradeComponent } from './buy-trade/buy-trade.component';
-import { MatTabsModule } from '@angular/material/tabs';
 import { SellTradeComponent } from './sell-trade/sell-trade.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -36,13 +36,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatIconModule,
     MatCardModule,
     MatButtonModule,
-    MatTabsModule, 
-    MatInputModule, 
-    MatFormFieldModule, 
-    MatCardModule,
     MatTableModule,
-    MatButtonModule
-    
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })

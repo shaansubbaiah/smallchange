@@ -1,14 +1,31 @@
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 50px 0;
+}
+
 .table-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 10px 0;
+  margin: 50px auto;
+  width: 95%;
 }
 
 table {
-  width: 90%;
   margin: auto 10px;
 }
 
-.mat-column-name {
+.mat-column-name,
+.mat-column-trade_type {
   font-weight: 500;
+}
+
+.buy {
+  color: rgb(0, 123, 224);
+}
+
+.sell {
+  color: rgb(212, 1, 194);
 }
