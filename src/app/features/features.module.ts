@@ -14,9 +14,19 @@ import { TradeHistoryComponent } from './trade-history/trade-history.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { BuyTradeComponent } from './buy-trade/buy-trade.component';
 import { SellTradeComponent } from './sell-trade/sell-trade.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [LoginPageComponent, LoginFormComponent, HomePageComponent, TradeHistoryComponent, PortfolioComponent, BuyTradeComponent, SellTradeComponent],
+  declarations: [
+    LoginPageComponent,
+    LoginFormComponent,
+    HomePageComponent,
+    TradeHistoryComponent,
+    PortfolioComponent,
+    BuyTradeComponent,
+    SellTradeComponent,
+    PageNotFoundComponent,
+  ],
   imports: [
     CommonModule,
     MatFormFieldModule,
