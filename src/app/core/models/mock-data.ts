@@ -504,10 +504,10 @@ export var dummy_data_order: TradeStock[] = [
 
 export var bank_accounts: BankAccount[] = [
   {
-    bank_name: 'Bank Of America',
+    name: 'Bank Of America',
     balance: 12421,
-    account_number: 123412341234,
+    accno: '123412341234',
   },
-  { bank_name: 'Citi Bank', balance: 3563, account_number: 234256786534 },
-  { bank_name: 'U.S. Bank', balance: 5612, account_number: 982167897543 },
+  { name: 'Citi Bank', balance: 3563, accno: '234256786534' },
+  { name: 'U.S. Bank', balance: 5612, accno: '982167897543' },
 ];
