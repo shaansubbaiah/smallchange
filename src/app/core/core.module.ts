@@ -4,9 +4,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, FooterComponent],
   imports: [CommonModule, MatToolbarModule, MatButtonModule],
   exports: [NavbarComponent],
 })

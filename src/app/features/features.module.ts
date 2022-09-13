@@ -9,9 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginFormComponent } from './login-page/login-form/login-form.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
-  declarations: [LoginPageComponent, LoginFormComponent],
+  declarations: [LoginPageComponent, LoginFormComponent, HomePageComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -20,6 +21,6 @@ import { LoginFormComponent } from './login-page/login-form/login-form.component
     MatCardModule,
     MatButtonModule,
   ],
-  exports: [LoginPageComponent],
+  exports: [LoginPageComponent, HomePageComponent],
 })
 export class FeaturesModule {}
