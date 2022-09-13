@@ -13,6 +13,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { TradeHistoryComponent } from './trade-history/trade-history.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { BuyTradeComponent } from './buy-trade/buy-trade.component';
+import { MatTabsModule } from '@angular/material/tabs';
 import { SellTradeComponent } from './sell-trade/sell-trade.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -34,6 +35,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatIconModule,
     MatCardModule,
     MatButtonModule,
+    MatTabsModule, 
+    MatInputModule, 
+    MatFormFieldModule, 
+    MatCardModule,
+    
+    MatButtonModule,
+    
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })

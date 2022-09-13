@@ -1,1 +1,23 @@
-<p>portfolio works!</p>
+<div class="head">
+    <h1 class="bolder">CURRENT HOLDINGS:</h1>
+ </div>
+ <div class="overview">
+     <span class="child">
+         <h4>Total Investment:</h4>
+         <h2>$ {{invested_amount | number: '1.2-2'}}</h2>
+     </span>
+     <span class="child">
+         <h4>Current Value:</h4>
+         <h2>$ {{current_amount | number: '1.2-2'}}</h2>
+     </span>
+     <span class="child">
+         <h4>Net Profit/Loss:</h4>
+         <h2 [ngClass]="{'green':current_amount>invested_amount,'red':current_amount<invested_amount}">$ {{current_amount-invested_amount| number:'1.2-2'}}
+             ({{((current_amount-invested_amount)/invested_amount)|percent:'1.2-2'}})
+         </h2>
+     </span>
+
+ </div>
+ 
+ <!---STOCK PORTFOLIO-->>
+ 
