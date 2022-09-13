@@ -10,6 +10,6 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [NavbarComponent, FooterComponent],
   imports: [CommonModule, MatToolbarModule, MatButtonModule, RouterModule],
-  exports: [NavbarComponent],
+  exports: [NavbarComponent, FooterComponent],
 })
 export class CoreModule {}
