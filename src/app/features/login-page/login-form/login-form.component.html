@@ -1,24 +1,37 @@
-<div class="frmLoginContainer">
-  <form class="frmLogin">
-    <mat-form-field class="fullWidth" appearance="fill">
-      <mat-label>Enter your username</mat-label>
-      <input matInput [type]="'text'" title="username"/>
-    </mat-form-field>
-
-    <mat-form-field class="fullWidth" appearance="fill">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" title="password"/>
-      <button
+<mat-card class="my-card">
+  <mat-card-title>Log In</mat-card-title>
+  <form [formGroup]="loginDetails" (ngSubmit)="onSubmit()">
+  <mat-card-content class="login-content">
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" placeholder="Username" formControlName="username" />
+        <mat-error *ngIf="!(loginDetails.get('username')?.valid) && !loginDetails.get('username')?.hasError('required')">
+          Username should be alphanumeric within 10 characters!
+        </mat-error>
+        <mat-error *ngIf="loginDetails.get('username')?.hasError('required')">
+          Please enter a valid username!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Password" formControlName="password" />
+        <button
         mat-icon-button
         matSuffix
-        (click)="hide = !hide"
+        (click)="hidePassword = !hidePassword"
         [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide"
+        [attr.aria-pressed]="hidePassword"
         type="button"
       >
-        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-    </mat-form-field>
-    <button mat-raised-button color="primary" appearance="fill" class="fullWidth" type="button">Log In</button>
-  </form>
-</div>
+      </mat-form-field>
+      <span>
+        <mat-error *ngIf="!loginValid">User details are invalid! Please try again!</mat-error>
+      </span>
+  </mat-card-content>
+  <mat-card-actions>
+    <button type="submit" mat-raised-button color="primary">LOGIN</button>
+  </mat-card-actions>
+</form>
+</mat-card>
