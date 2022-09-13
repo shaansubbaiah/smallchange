@@ -9,9 +9,13 @@ import { CoreModule } from './core/core.module';
 import { FeaturesModule } from './features/features.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BuyTradeComponent } from './pages/buy-trade/buy-trade.component';
+import { SellTradeComponent } from './pages/sell-trade/sell-trade.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio.component';
+import { TradeHistoryComponent } from './pages/trade-history/trade-history.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BuyTradeComponent, SellTradeComponent, PortfolioComponent, TradeHistoryComponent],
   imports: [
     CoreModule,
     BrowserModule,
