@@ -1,3 +1,5 @@
+<app-title titleText="Buy Trade"></app-title>
+
 <form class="buy-trade-form" [formGroup]="buyTradeGrp">
   <mat-form-field appearance="fill">
     <mat-label>Choose asset</mat-label>
@@ -5,7 +7,8 @@
       <mat-optgroup *ngFor="let group of assetGroups" [label]="group.name">
         <mat-option
           *ngFor="let assetClass of group.assetClasses"
-          [value]="assetClass.name">
+          [value]="assetClass.name"
+        >
           {{ assetClass.viewName }}
         </mat-option>
       </mat-optgroup>
@@ -14,16 +17,19 @@
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Choose company</mat-label>
-    <input formControlName="txtCompany"
+    <input
+      formControlName="txtCompany"
       type="text"
       placeholder="Enter stock symbol (or) company name"
       aria-label="Company"
       matInput
-      [matAutocomplete]="auto" />
+      [matAutocomplete]="auto"
+    />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option
         *ngFor="let option of filteredOptions | async"
-        [value]="option">
+        [value]="option"
+      >
         {{ option.displayName }}
       </mat-option>
     </mat-autocomplete>

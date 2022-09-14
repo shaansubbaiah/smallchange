@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatCardModule } from "@angular/material/card";
+import { MatCardModule } from '@angular/material/card';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginFormComponent } from './login-page/login-form/login-form.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -17,8 +17,9 @@ import { BuyTradeComponent } from './buy-trade/buy-trade.component';
 import { SellTradeComponent } from './sell-trade/sell-trade.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from "@angular/material/select";
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -43,7 +45,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatButtonModule,
     MatTableModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })
