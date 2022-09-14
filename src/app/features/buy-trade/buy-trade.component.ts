@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { startWith, map, Observable, EMPTY } from 'rxjs';
+import { startWith, map, Observable, EMPTY, filter, zip, combineLatest, merge } from 'rxjs';
 import { BondList } from 'src/app/core/models/bond-list';
 import { bond_asset_classes, stock_asset_classes } from 'src/app/core/models/mock-data';
 import { main_index_stocks, small_cap_company_stocks, international_market_stocks } from "src/app/core/models/mock-data";
@@ -44,48 +44,60 @@ export class BuyTradeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filteredOptions = this.buyTradeGrp.get('txtCompany')?.valueChanges.pipe(
+    let o1 = this.buyTradeGrp.get('cbxAssetClass')?.valueChanges.pipe(
       startWith(''),
       map(value => {
-        let toReturn = this._filterStocks(value);
-        if (toReturn.length === 0)
-          return this._filterBonds(value);
-
-        else return this._filterStocks(value);
+        if (this.assetClass.includes('stock'))
+          return this.getDisplayData(this.assetClassStockMap.get(this.assetClass));
+        else
+          return this.getDisplayData(this.assetClassBondMap.get(this.assetClass));
       }),
     ) || EMPTY;
+
+    let o2 = this.buyTradeGrp.get('txtCompany')?.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        console.log('o2, value:"' + value + '"');
+        if (this.assetClass.includes('stock'))
+          return this._filterStocks(value);
+        else
+          return this._filterBonds(value);
+      }),
+    ) || EMPTY;
+
+    this.filteredOptions = merge(o1, o2);
   }
 
   private _filterStocks(value: string): any[] {
+    if (value === null || typeof(value) === 'undefined' || value.length === 0) return this.getDisplayData(this.assetClassStockMap.get(this.assetClass));
     const filterValue = value.toLowerCase();
 
     let filteredList = this.assetClassStockMap.get(this.assetClass)?.filter(option => {
       return (option.name.toLowerCase().includes(filterValue) || option.code.toLowerCase().includes(filterValue))
     });
-    let toReturn = [];
-    if (typeof(filteredList) === 'undefined') return [{displayName: '', item: null}];
+    return this.getDisplayData(filteredList);
 
-    for (let item of filteredList)
-      toReturn.push({
-        displayName: item.name + '(' + item.code + ')',
-        companyItem: item
-      });
-
-    return toReturn;
   }
 
   private _filterBonds(value: string): any[] {
+    if (value === null || typeof(value) === 'undefined' || value.length === 0) return this.getDisplayData(this.assetClassBondMap.get(this.assetClass));
     const filterValue = value.toLowerCase();
     let filteredList = this.assetClassBondMap.get(this.assetClass)?.filter(option => (option.name.toLowerCase().includes(filterValue) || option.code.toLowerCase().includes(filterValue)));
+
+    return this.getDisplayData(filteredList);
+  }
+
+  getDisplayData(rawData: BondList[] | StockList[] | undefined): any[] {
     let toReturn = [];
-    if (typeof(filteredList) === 'undefined') return [{displayName: '', item: null}];
+      if (typeof(rawData) === 'undefined' || rawData.length === 0) return [{displayName: '', item: null}];
 
-    for (let item of filteredList)
-      toReturn.push({
-        displayName: item.name + '(' + item.code + ')',
-        companyItem: item
-      });
-
-    return toReturn;
+      for (let item of rawData)
+        toReturn.push({
+          displayName: item.name + '(' + item.code + ')',
+          companyItem: item
+        });
+      console.log('toReturn:');
+      console.log(toReturn);
+      return toReturn;
   }
 }
