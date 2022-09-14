@@ -1,1 +1,31 @@
-<p>buy-trade works!</p>
+<form class="buy-trade-form" [formGroup]="buyTradeGrp">
+  <mat-form-field appearance="fill">
+    <mat-label>Choose asset</mat-label>
+    <mat-select [(value)]="assetClass" formControlName="cbxAssetClass">
+      <mat-optgroup *ngFor="let group of assetGroups" [label]="group.name">
+        <mat-option
+          *ngFor="let assetClass of group.assetClasses"
+          [value]="assetClass.name">
+          {{ assetClass.viewName }}
+        </mat-option>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Choose company</mat-label>
+    <input formControlName="txtCompany"
+      type="text"
+      placeholder="Enter stock symbol (or) company name"
+      aria-label="Company"
+      matInput
+      [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptions | async"
+        [value]="option">
+        {{ option.displayName }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

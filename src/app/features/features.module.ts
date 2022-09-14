@@ -17,6 +17,8 @@ import { BuyTradeComponent } from './buy-trade/buy-trade.component';
 import { SellTradeComponent } from './sell-trade/sell-trade.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from "@angular/material/select";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatButtonModule,
     MatTableModule,
+    MatSelectModule,
+    MatAutocompleteModule
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })

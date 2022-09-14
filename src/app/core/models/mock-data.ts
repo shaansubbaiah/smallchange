@@ -8,14 +8,14 @@ import { BondList } from './bond-list';
 import { BankAccount } from './bank-account';
 
 export var stock_asset_classes: AssetClass[] = [
-  { name: 'Main index stocks' },
-  { name: 'Small cap company stocks' },
-  { name: 'International market stocks' },
+  { viewName: 'Main index stocks', name: 'main_index_stocks' },
+  { viewName: 'Small cap company stocks', name: 'small_cap_company_stocks' },
+  { viewName: 'International market stocks', name: 'international_market_stocks' },
 ];
 
 export var bond_asset_classes: AssetClass[] = [
-  { name: 'Corporate bonds' },
-  { name: 'Government bonds' },
+  { viewName: 'Corporate bonds', name: 'corporate_bonds' },
+  { viewName: 'Government bonds', name: 'government_bonds' },
 ];
 
 export var main_index_stocks: StockList[] = [
