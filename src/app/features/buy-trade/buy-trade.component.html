@@ -4,7 +4,7 @@
   <div class="buy-content">
   <mat-form-field appearance="fill">
     <mat-label>Choose asset</mat-label>
-    <mat-select [(value)]="assetClass" formControlName="cbxAssetClass">
+    <mat-select [(value)]="assetClass" (valueChange)="buyTradeGrp.get('txtCompany')?.setValue('')" formControlName="cbxAssetClass">
       <mat-optgroup *ngFor="let group of assetGroups" [label]="group.name">
         <mat-option
           *ngFor="let assetClass of group.assetClasses"
