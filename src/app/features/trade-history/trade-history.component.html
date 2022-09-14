@@ -3,7 +3,7 @@
   {{ tradeHistory | json }}
 </code> -->
 <h1 class="title">Trade History</h1>
-<div class="table-container mat-elevation-z6">
+<div class="table-container">
   <table mat-table [dataSource]="dataSource" class="data-table">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -40,7 +40,7 @@
           sell: e.trade_type == 'sell'
         }"
       >
-        {{ e.trade_type }}
+        {{ e.trade_type | uppercase }}
       </td>
     </ng-container>
 

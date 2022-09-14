@@ -1,65 +1,102 @@
-<div class="head">
-    <h1 class="bolder">CURRENT HOLDINGS:</h1>
- </div>
- <div class="overview">
-     <span class="child">
-         <h4>Total Investment:</h4>
-         <h2>$ {{invested_amount | number: '1.2-2'}}</h2>
-     </span>
-     <span class="child">
-         <h4>Current Value:</h4>
-         <h2>$ {{current_amount | number: '1.2-2'}}</h2>
-     </span>
-     <span class="child">
-         <h4>Net Profit/Loss:</h4>
-         <h2 [ngClass]="{'green':current_amount>invested_amount,'red':current_amount<invested_amount}">$ {{current_amount-invested_amount| number:'1.2-2'}}
-             ({{((current_amount-invested_amount)/invested_amount)|percent:'1.2-2'}})
-         </h2>
-     </span>
+<h1 class="title">Current Holdings</h1>
 
- </div>
- 
- <div class="stock-portfolio">
-  <div class="stock-table">
-      <table  datatable>
-          <colgroup>
-              <col span="1" style="width: 20%;">
-              <col span="1" style="width: 7%;">
-              <col span="1" style="width: 7%;">
-              <col span="1" style="width: 10%;">
-              <col span="1" style="width: 10%;">
-              <col span="1" style="width: 13%;">
-              <col span="1" style="width: 13%;">
-              <col span="1" style="width: 10%;">
-              <col span="1" style="width: 10%;">
-           </colgroup>
-          <thead>
-              <tr>
-                  <th>Script</th>
-                  <th>Code</th>
-                  <th>Qty.</th>
-                  <th>Buy Price</th>
-                  <th>LTP</th>
-                  <th>Invested Amount</th>
-                  <th>Current Value</th>
-                  <th>Profit/Loss</th>
-                  <th>%Change</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let entry of data">
-                  <td>{{entry.name}}</td>
-                  <td>{{entry.code}}</td>
-                  <td>{{entry.quantity}}</td>
-                  <td>{{entry.buy_price | number: '1.2-2'}}</td>
-                  <td>{{entry.LTP | number: '1.2-2'}}</td>
-                  <td>{{entry.buy_price*entry.quantity | number: '1.2-2'}}</td>
-                  <td class="bolder" [ngClass]="{'green':entry.LTP>entry.buy_price,'red':entry.LTP<entry.buy_price}">{{entry.LTP*entry.quantity | number: '1.2-2'}}</td>
-                  <td class="bolder" [ngClass]="{'green':entry.LTP>entry.buy_price,'red':entry.LTP<entry.buy_price}">{{(entry.LTP-entry.buy_price)*entry.quantity | number: '1.2-2'}}</td>
-                  <td class="bolder" [ngClass]="{'green':entry.LTP>entry.buy_price,'red':entry.LTP<entry.buy_price}">{{((entry.LTP-entry.buy_price)/entry.buy_price)|percent:'1.2-2'}}</td>
-              </tr>
-          </tbody>
-      </table>
+<div class="portfolio-overview">
+  <div class="portfolio-card">
+    <span class="portfolio-card-title">Total Investment:</span><br />
+    <span class="portfolio-card-content">{{
+      invested_amount | currency: "USD"
+    }}</span>
   </div>
+  <div class="portfolio-card">
+    <span class="portfolio-card-title">Current Value:</span><br />
+    <span class="portfolio-card-content">{{
+      current_amount | currency: "USD"
+    }}</span>
+  </div>
+  <div class="portfolio-card">
+    <span class="portfolio-card-title">Net Profit/Loss:</span><br />
+    <span
+      class="portfolio-card-content"
+      [ngClass]="{
+        green: current_amount > invested_amount,
+        red: current_amount < invested_amount
+      }"
+    >
+      {{ current_amount - invested_amount | currency: "USD" }} ({{
+        (current_amount - invested_amount) / invested_amount | percent: "1.2-2"
+      }})
+    </span>
+  </div>
+</div>
 
+<div class="stock-portfolio">
+  <div class="stock-table">
+    <table datatable>
+      <colgroup>
+        <col span="1" style="width: 20%" />
+        <col span="1" style="width: 7%" />
+        <col span="1" style="width: 7%" />
+        <col span="1" style="width: 10%" />
+        <col span="1" style="width: 10%" />
+        <col span="1" style="width: 13%" />
+        <col span="1" style="width: 13%" />
+        <col span="1" style="width: 10%" />
+        <col span="1" style="width: 10%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Script</th>
+          <th>Code</th>
+          <th>Qty.</th>
+          <th>Buy Price</th>
+          <th>LTP</th>
+          <th>Invested Amount</th>
+          <th>Current Value</th>
+          <th>Profit/Loss</th>
+          <th>%Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of data">
+          <td>{{ entry.name }}</td>
+          <td>{{ entry.code }}</td>
+          <td>{{ entry.quantity }}</td>
+          <td>{{ entry.buy_price | number: "1.2-2" }}</td>
+          <td>{{ entry.LTP | number: "1.2-2" }}</td>
+          <td>{{ entry.buy_price * entry.quantity | number: "1.2-2" }}</td>
+          <td
+            class="bolder"
+            [ngClass]="{
+              green: entry.LTP > entry.buy_price,
+              red: entry.LTP < entry.buy_price
+            }"
+          >
+            {{ entry.LTP * entry.quantity | number: "1.2-2" }}
+          </td>
+          <td
+            class="bolder"
+            [ngClass]="{
+              green: entry.LTP > entry.buy_price,
+              red: entry.LTP < entry.buy_price
+            }"
+          >
+            {{
+              (entry.LTP - entry.buy_price) * entry.quantity | number: "1.2-2"
+            }}
+          </td>
+          <td
+            class="bolder"
+            [ngClass]="{
+              green: entry.LTP > entry.buy_price,
+              red: entry.LTP < entry.buy_price
+            }"
+          >
+            {{
+              (entry.LTP - entry.buy_price) / entry.buy_price | percent: "1.2-2"
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

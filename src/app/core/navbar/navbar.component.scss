@@ -1,3 +1,20 @@
-.spacer{
-    flex: 1 1 auto;
+mat-toolbar {
+  border-radius: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  font-family: Poppins;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  font-size: 2rem;
+}
+
+.logo-superscript {
+  font-family: Poppins;
+  font-weight: 300;
+  font-size: 1.5rem;
 }

@@ -1,4 +1,10 @@
-<footer class="footer">
-    <span>Copyright &copy; {{timestamp | date:'yyyy'}} Fidelity Investments</span>
-    <span>{{timestamp | date:'mediumDate'}}</span>
+<footer>
+  <span class="footer-text"
+    >Copyright &copy; {{ timestamp | date: "yyyy" }} Fidelity Investments
+    LLC</span
+  >
+  <span class="footer-symbol">|</span>
+  <span class="footer-text current-date">
+    {{ timestamp | date: "longDate" }}</span
+  >
 </footer>

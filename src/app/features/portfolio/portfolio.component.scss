@@ -1,56 +1,57 @@
-.table-area{
-    width: 95%;
-    margin-left: 2.5%;
-    border: grey 2px solid;
-    overflow: scroll;
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 50px 0;
 }
 
-.head{
-    margin-left: 2.5%;
-    font-weight: bolder;
-    margin-top: 2%;
+.table-area {
+  width: 95%;
+  margin-left: 2.5%;
+  border: grey 2px solid;
+  overflow: scroll;
 }
 
-.overview{
-    display: flex;
-    width: 95%;
-    margin-left: 2.5%;
-    margin-bottom: 20px;
-    margin-top: 15px;
+.portfolio-overview {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
 }
+
 @media only screen and (max-width: 700px) {
-  .overview{
+  .overview {
     flex-direction: column;
   }
 }
-.child{
-    flex:1;
-    margin:0 10% 0 0;
-    box-shadow: 2px 2px rgba(128, 128, 128, 0.418);
-}
-.child:last-child{
-    margin-right: 0;
-}
-h2,h4,h3{
-    margin: 0;
+
+.portfolio-card {
+  box-shadow: 2px 2px rgba(128, 128, 128, 0.418);
+  background-color: white;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  border-radius: 18px;
 }
 
-h1{
-    text-align: center;
-}
-.red{
-  color:rgba(160, 7, 7, 0.877);
+.portfolio-card-content {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 5px 0;
 }
 
-.green{
+.red {
+  color: rgba(160, 7, 7, 0.877);
+}
+
+.green {
   color: rgb(7, 124, 42);
 }
 
-.bolder{
+.bolder {
   font-weight: bolder;
 }
 
-.slide{
+.slide {
   overflow: overlay;
 }
 
