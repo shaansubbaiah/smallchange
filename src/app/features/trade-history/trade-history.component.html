@@ -22,7 +22,7 @@
 
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>Price</th>
-      <td mat-cell *matCellDef="let e">{{ e.price }}</td>
+      <td mat-cell *matCellDef="let e">{{ e.price | currency: "USD" }}</td>
     </ng-container>
 
     <ng-container matColumnDef="asset_class">
@@ -46,7 +46,7 @@
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef>Date</th>
-      <td mat-cell *matCellDef="let e">{{ e.date }}</td>
+      <td mat-cell *matCellDef="let e">{{ e.date | date: "shortDate" }}</td>
     </ng-container>
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef>Time</th>
