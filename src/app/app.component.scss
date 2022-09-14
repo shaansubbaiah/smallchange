@@ -1,4 +1,10 @@
-.login-page {
-  width: 25%;
-  height: 25%;
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.main {
+  width: 95%;
+  max-width: 1200px;
 }
