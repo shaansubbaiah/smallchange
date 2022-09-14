@@ -1,11 +1,21 @@
-<mat-card class="my-card">
-  <mat-card-title>Log In</mat-card-title>
+<p class="title">Log In</p>
+<div class="login-card">
   <form [formGroup]="loginDetails" (ngSubmit)="onSubmit()">
-  <mat-card-content class="login-content">
+    <div class="login-content">
       <mat-form-field>
         <mat-label>Username</mat-label>
-        <input matInput type="text" placeholder="Username" formControlName="username" />
-        <mat-error *ngIf="!(loginDetails.get('username')?.valid) && !loginDetails.get('username')?.hasError('required')">
+        <input
+          matInput
+          type="text"
+          placeholder="Username"
+          formControlName="username"
+        />
+        <mat-error
+          *ngIf="
+            !loginDetails.get('username')?.valid &&
+            !loginDetails.get('username')?.hasError('required')
+          "
+        >
           Username should be alphanumeric within 10 characters!
         </mat-error>
         <mat-error *ngIf="loginDetails.get('username')?.hasError('required')">
@@ -14,24 +24,31 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput type="password" placeholder="Password" formControlName="password" />
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Password"
+          formControlName="password"
+        />
         <button
-        mat-icon-button
-        matSuffix
-        (click)="hidePassword = !hidePassword"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hidePassword"
-        type="button"
-      >
-        <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+          type="button"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
       </mat-form-field>
       <span>
-        <mat-error *ngIf="!loginValid">User details are invalid! Please try again!</mat-error>
+        <mat-error *ngIf="!loginValid"
+          >User details are invalid! Please try again!</mat-error
+        >
       </span>
-  </mat-card-content>
-  <mat-card-actions>
-    <button type="submit" mat-raised-button color="primary">LOGIN</button>
-  </mat-card-actions>
-</form>
-</mat-card>
+      <button type="submit" mat-raised-button color="primary">LOGIN</button>
+    </div>
+  </form>
+</div>

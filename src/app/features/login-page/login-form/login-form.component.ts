@@ -1,26 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { LoginAuthService } from "src/app/core/services/login-auth.service";
+import { LoginAuthService } from 'src/app/core/services/login-auth.service';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent implements OnInit, ErrorStateMatcher {
-loginValid: boolean = true;
-hidePassword: boolean = true;
-authenticate(): void {
-  this.loginValid = this.authService.authenticate(this.loginDetails.get('username')?.value, this.loginDetails.get('password')?.value);
-}
+  loginValid: boolean = true;
+  hidePassword: boolean = true;
+  authenticate(): void {
+    this.loginValid = this.authService.authenticate(
+      this.loginDetails.get('username')?.value,
+      this.loginDetails.get('password')?.value
+    );
+  }
 
-loginDetails;
+  loginDetails;
 
   constructor(fb: FormBuilder, private authService: LoginAuthService) {
     this.loginDetails = fb.group({
       username: ['', [Validators.required, Validators.maxLength(10)]],
-      password: ['', [Validators.required, Validators.maxLength(15)]]
+      password: ['', [Validators.required, Validators.maxLength(15)]],
     });
   }
 
@@ -36,11 +46,16 @@ loginDetails;
     this.authenticate();
   }
 
-  isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(
+    control: AbstractControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
   }
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }
