@@ -14,13 +14,7 @@ export class MfTableComponent implements AfterViewInit {
   mfs: MfHolding[] = [];
   dataSource!: MatTableDataSource<MfHolding>;
 
-  displayedColumns: string[] = [
-    'name',
-    'code',
-    'buy_price',
-    'LTP',
-    'asset_class',
-  ];
+  displayedColumns: string[] = ['name', 'code', 'quantity', 'buy_price', 'LTP'];
 
   constructor(private dataService: DataService) {}
 

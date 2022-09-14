@@ -13,7 +13,7 @@
 
     <ng-container matColumnDef="buy_price">
       <th mat-header-cell *matHeaderCellDef>Price</th>
-      <td mat-cell *matCellDef="let e">{{ e.buy_price }}</td>
+      <td mat-cell *matCellDef="let e">{{ e.buy_price | currency: "USD" }}</td>
     </ng-container>
 
     <ng-container matColumnDef="LTP">
@@ -21,9 +21,9 @@
       <td mat-cell *matCellDef="let e">{{ e.LTP }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="asset_class">
-      <th mat-header-cell *matHeaderCellDef>Asset Class</th>
-      <td mat-cell *matCellDef="let e">{{ e.asset_class }}</td>
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let e">{{ e.quantity }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
