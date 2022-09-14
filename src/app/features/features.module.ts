@@ -30,7 +30,7 @@ import { SharedModule } from '../shared/shared.module';
     PortfolioComponent,
     BuyTradeComponent,
     SellTradeComponent,
-    PageNotFoundComponent,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
