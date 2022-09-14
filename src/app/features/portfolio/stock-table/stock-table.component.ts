@@ -14,6 +14,9 @@ export class StockTableComponent implements AfterViewInit {
   stocks: StockHolding[] = [];
   dataSource!: MatTableDataSource<StockHolding>;
 
+  invested_amount: number = 0;
+  current_amount: number = 0;
+
   displayedColumns: string[] = [
     'name',
     'code',
@@ -31,5 +34,13 @@ export class StockTableComponent implements AfterViewInit {
     this.stocks = this.dataService.getStockHolding();
     this.dataSource = new MatTableDataSource<StockHolding>(this.stocks);
     this.dataSource.paginator = this.paginator;
+
+    this.invested_amount = 0;
+    this.current_amount = 0;
+    for (var i = 0; i < this.stocks.length; i++) {
+      this.invested_amount +=
+        this.stocks[i].buy_price * this.stocks[i].quantity;
+      this.current_amount += this.stocks[i].LTP * this.stocks[i].quantity;
+    }
   }
 }

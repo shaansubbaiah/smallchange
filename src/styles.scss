@@ -153,7 +153,7 @@ $mat-dark-theme-background: (
 // Theme Config
 
 body {
-  --primary-color: #004eff;
+  --primary-color: #0a1172;
   --primary-lighter-color: #b3caff;
   --primary-darker-color: #0035ff;
   --text-primary-color: #{$light-primary-text};
@@ -161,10 +161,10 @@ body {
   --text-primary-darker-color: #{$light-primary-text};
 }
 $mat-primary: (
-  main: #004eff,
-  lighter: #b3caff,
-  darker: #0035ff,
-  200: #004eff,
+  main: #3620ab,
+  lighter: #c3bce6,
+  darker: #221391,
+  200: #3620ab,
   // For slide toggle,
   contrast:
     (
