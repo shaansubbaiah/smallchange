@@ -26,6 +26,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { StockTableComponent } from './portfolio/stock-table/stock-table.component';
 import { MfTableComponent } from './portfolio/mf-table/mf-table.component';
 import { BondTableComponent } from './portfolio/bond-table/bond-table.component';
+import { MatTooltipModule } from "@angular/material/tooltip";
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { BondTableComponent } from './portfolio/bond-table/bond-table.component'
     MatSelectModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatTooltipModule,
+    MatSortModule
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })

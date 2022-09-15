@@ -4,6 +4,8 @@ import { DataService } from 'src/app/core/services/data.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { StockHolding } from 'src/app/core/models/stock-holding';
+import { Sort } from '@angular/material/sort';
+import { CommonUtils } from "src/app/utils";
 
 @Component({
   selector: 'app-stock-table',
@@ -43,4 +45,10 @@ export class StockTableComponent implements AfterViewInit {
       this.current_amount += this.stocks[i].LTP * this.stocks[i].quantity;
     }
   }
+
+  sortData($event: Sort) {
+    let sortedData = CommonUtils.sortData<StockHolding>(this.stocks, $event);
+    if (typeof(sortedData) !== 'undefined') this.dataSource = sortedData;
+  }
+
 }
