@@ -16,9 +16,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
-  registerValid: boolean = true;
   hidePassword: boolean = true;
-
   registerDetails: FormGroup;
 
   constructor(fb: FormBuilder, private authService: AuthService) {
@@ -38,29 +36,20 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(15),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[^da-zA-Z]).*$'), // Atleast 1 uppercase, 1 lowercase, 1 symbol
+          // Atleast 1 uppercase, 1 lowercase, 1 symbol
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[^da-zA-Z]).*$'),
         ],
       ],
     });
   }
 
-  authenticate(): void {
-    this.registerValid = this.authService.authenticate(
+  onSubmit() {
+    console.log(this.registerDetails.value);
+    this.authService.register(
       this.registerDetails.get('username')?.value,
+      this.registerDetails.get('email')?.value,
       this.registerDetails.get('password')?.value
     );
-  }
-
-  get username() {
-    return this.registerDetails.get('username');
-  }
-
-  get password() {
-    return this.registerDetails.get('password');
-  }
-
-  onSubmit() {
-    this.authenticate();
   }
 
   isErrorState(

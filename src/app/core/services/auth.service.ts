@@ -9,4 +9,8 @@ export class AuthService {
   public authenticate(username: string, password: string): boolean {
     return true; //username === 'admin' && password === 'admin';
   }
+
+  public register(username: string, email: string, password: string): boolean {
+    return true;
+  }
 }

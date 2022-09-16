@@ -3,6 +3,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormControl,
+  FormGroup,
   FormGroupDirective,
   NgForm,
   Validators,
@@ -18,14 +19,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginFormComponent implements OnInit, ErrorStateMatcher {
   loginValid: boolean = true;
   hidePassword: boolean = true;
-  authenticate(): void {
-    this.loginValid = this.authService.authenticate(
-      this.loginDetails.get('username')?.value,
-      this.loginDetails.get('password')?.value
-    );
-  }
 
-  loginDetails;
+  loginDetails: FormGroup;
 
   constructor(fb: FormBuilder, private authService: AuthService) {
     this.loginDetails = fb.group({
@@ -57,7 +52,11 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
   }
 
   onSubmit() {
-    this.authenticate();
+    console.log(this.loginDetails.value);
+    this.authService.authenticate(
+      this.loginDetails.get('username')?.value,
+      this.loginDetails.get('password')?.value
+    );
   }
 
   isErrorState(
