@@ -4,6 +4,8 @@ import { DataService } from 'src/app/core/services/data.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BondHolding } from '../../../core/models/bond-holding';
+import { Sort } from '@angular/material/sort';
+import { CommonUtils } from 'src/app/utils';
 @Component({
   selector: 'app-bond-table',
   templateUrl: './bond-table.component.html',
@@ -31,5 +33,9 @@ export class BondTableComponent implements AfterViewInit {
     this.bonds = this.dataService.getBondHolding();
     this.dataSource = new MatTableDataSource<BondHolding>(this.bonds);
     this.dataSource.paginator = this.paginator;
+  }
+  sortData($event: Sort) {
+    let sortedData = CommonUtils.sortData<BondHolding>(this.bonds, $event);
+    if (typeof(sortedData) !== 'undefined') this.dataSource = sortedData;
   }
 }

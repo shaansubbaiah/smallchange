@@ -1,33 +1,33 @@
 <!-- <code>{{ dataSource }}</code> -->
 <div class="table-container">
-  <table mat-table [dataSource]="dataSource" class="data-table">
+  <table matSort mat-table (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" class="data-table">
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-header-cell mat-sort-header="name" *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let e">{{ e.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef>Code</th>
+      <th mat-header-cell mat-sort-header="code" *matHeaderCellDef>Code</th>
       <td mat-cell *matCellDef="let e">{{ e.code }}</td>
     </ng-container>
 
     <ng-container matColumnDef="buy_price">
-      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <th mat-header-cell mat-sort-header="buy_price" *matHeaderCellDef>Price</th>
       <td mat-cell *matCellDef="let e">{{ e.buy_price | currency: "USD" }}</td>
     </ng-container>
 
     <ng-container matColumnDef="LTP">
-      <th mat-header-cell *matHeaderCellDef>LTP</th>
-      <td mat-cell *matCellDef="let e">{{ e.LTP }}</td>
+      <th mat-header-cell mat-sort-header="ltp" *matHeaderCellDef matTooltip="Last Traded Price">LTP</th>
+      <td mat-cell *matCellDef="let e">{{ e.LTP | currency: "USD" }}</td>
     </ng-container>
 
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <th mat-header-cell mat-sort-header="quantity" *matHeaderCellDef>Quantity</th>
       <td mat-cell *matCellDef="let e">{{ e.quantity }}</td>
     </ng-container>
 
     <ng-container matColumnDef="asset_class">
-      <th mat-header-cell *matHeaderCellDef>Asset Class</th>
+      <th mat-header-cell mat-sort-header="asset_class" *matHeaderCellDef>Asset Class</th>
       <td mat-cell *matCellDef="let e">{{ e.asset_class }}</td>
     </ng-container>
 

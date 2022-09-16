@@ -14,6 +14,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSortModule } from '@angular/material/sort';
 
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginFormComponent } from './login-page/login-form/login-form.component';
@@ -61,6 +63,8 @@ import { RegisterFormComponent } from './register-page/register-form/register-fo
     MatSelectModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatTooltipModule,
+    MatSortModule,
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })
