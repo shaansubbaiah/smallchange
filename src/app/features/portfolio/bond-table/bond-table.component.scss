@@ -22,3 +22,39 @@ table {
 .mat-column-code {
   font-weight: 500;
 }
+
+.portfolio-overview {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 700px) {
+  .overview {
+    flex-direction: column;
+  }
+}
+
+.portfolio-card {
+  background-color: white;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  border-radius: 18px;
+}
+
+.portfolio-card-content {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.red {
+  color: rgba(160, 7, 7, 0.877);
+}
+
+.green {
+  color: rgb(7, 124, 42);
+}
+

@@ -1,3 +1,34 @@
+
+<!-- <code>{{ dataSource }}</code> -->
+<div class="portfolio-overview">
+  <div class="portfolio-card">
+    <span class="portfolio-card-title">Total Investment:</span><br />
+    <span class="portfolio-card-content">{{
+      invested_amount | currency: "USD"
+    }}</span>
+  </div>
+  <div class="portfolio-card">
+    <span class="portfolio-card-title">Current Value:</span><br />
+    <span class="portfolio-card-content">{{
+      current_amount | currency: "USD"
+    }}</span>
+  </div>
+  <div class="portfolio-card">
+    <span class="portfolio-card-title">Net {{ current_amount >= invested_amount ? 'Profit' : 'Loss' }}:</span><br />
+    <span
+      class="portfolio-card-content"
+      [ngClass]="{
+        green: current_amount > invested_amount,
+        red: current_amount < invested_amount
+      }"
+    >
+      {{ current_amount - invested_amount | currency: "USD" }} ({{
+        (current_amount - invested_amount) / invested_amount | percent: "1.2-2"
+      }})
+    </span>
+  </div>
+</div>
+
 <!-- <code>{{ dataSource }}</code> -->
 <div class="table-container">
   <table matSort mat-table (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" class="data-table">

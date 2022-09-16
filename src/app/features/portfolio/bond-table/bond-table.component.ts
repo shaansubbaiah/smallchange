@@ -12,6 +12,8 @@ import { CommonUtils } from 'src/app/utils';
   styleUrls: ['./bond-table.component.scss'],
 })
 export class BondTableComponent implements AfterViewInit {
+  invested_amount: number = 0;
+  current_amount: number = 0;
   bonds: BondHolding[] = [];
   dataSource!: MatTableDataSource<BondHolding>;
 
@@ -33,6 +35,14 @@ export class BondTableComponent implements AfterViewInit {
     this.bonds = this.dataService.getBondHolding();
     this.dataSource = new MatTableDataSource<BondHolding>(this.bonds);
     this.dataSource.paginator = this.paginator;
+
+    this.invested_amount = 0;
+    this.current_amount = 0;
+    for (var i = 0; i < this.bonds.length; i++) {
+      this.invested_amount +=
+        this.bonds[i].buy_price * this.bonds[i].quantity;
+      this.current_amount += this.bonds[i].LTP * this.bonds[i].quantity;
+    }
   }
   sortData($event: Sort) {
     let sortedData = CommonUtils.sortData<BondHolding>(this.bonds, $event);

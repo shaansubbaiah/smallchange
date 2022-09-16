@@ -13,6 +13,9 @@ import { CommonUtils } from 'src/app/utils';
   styleUrls: ['./mf-table.component.scss'],
 })
 export class MfTableComponent implements AfterViewInit {
+
+  invested_amount: number = 0;
+  current_amount: number = 0;
   mfs: MfHolding[] = [];
   dataSource!: MatTableDataSource<MfHolding>;
 
@@ -27,6 +30,13 @@ export class MfTableComponent implements AfterViewInit {
     this.mfs = this.dataService.getMFHolding();
     this.dataSource = new MatTableDataSource<MfHolding>(this.mfs);
     this.dataSource.paginator = this.paginator;
+    this.invested_amount = 0;
+    this.current_amount = 0;
+    for (var i = 0; i < this.mfs.length; i++) {
+      this.invested_amount +=
+        this.mfs[i].buy_price * this.mfs[i].quantity;
+      this.current_amount += this.mfs[i].LTP * this.mfs[i].quantity;
+    }
   }
 
   sortData($event: Sort) {
