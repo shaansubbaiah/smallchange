@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { LoginAuthService } from 'src/app/core/services/login-auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -27,7 +27,7 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
 
   loginDetails;
 
-  constructor(fb: FormBuilder, private authService: LoginAuthService) {
+  constructor(fb: FormBuilder, private authService: AuthService) {
     this.loginDetails = fb.group({
       username: ['', [Validators.required, Validators.maxLength(10)]],
       password: ['', [Validators.required, Validators.maxLength(15)]],

@@ -26,6 +26,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { StockTableComponent } from './portfolio/stock-table/stock-table.component';
 import { MfTableComponent } from './portfolio/mf-table/mf-table.component';
 import { BondTableComponent } from './portfolio/bond-table/bond-table.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
+import { RegisterFormComponent } from './register-page/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { BondTableComponent } from './portfolio/bond-table/bond-table.component'
     StockTableComponent,
     MfTableComponent,
     BondTableComponent,
+    RegisterPageComponent,
+    RegisterFormComponent,
   ],
   imports: [
     CommonModule,
