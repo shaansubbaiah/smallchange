@@ -29,8 +29,22 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
 
   constructor(fb: FormBuilder, private authService: AuthService) {
     this.loginDetails = fb.group({
-      username: ['', [Validators.required, Validators.maxLength(10)]],
-      password: ['', [Validators.required, Validators.maxLength(15)]],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(10),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(15),
+        ],
+      ],
     });
   }
 

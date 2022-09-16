@@ -1,0 +1,118 @@
+<div class="register-card">
+  <form [formGroup]="registerDetails" (ngSubmit)="onSubmit()">
+    <div class="register-content">
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Username"
+          formControlName="username"
+        />
+        <mat-error
+          *ngIf="
+            registerDetails.get('username')?.invalid &&
+            registerDetails.get('username')?.hasError('required')
+          "
+        >
+          Username is required.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            (registerDetails.get('username')?.invalid &&
+              registerDetails.get('username')?.hasError('minlength')) ||
+            registerDetails.get('username')?.hasError('maxlength')
+          "
+        >
+          Username should be 3 - 10 characters long.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Email"
+          formControlName="email"
+        />
+        <mat-error
+          *ngIf="
+            registerDetails.get('email')?.invalid &&
+            registerDetails.get('email')?.hasError('required')
+          "
+        >
+          Email is required.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            registerDetails.get('email')?.invalid &&
+            registerDetails.get('email')?.hasError('email')
+          "
+        >
+          Please enter a valid email address.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+          type="button"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error
+          *ngIf="
+            registerDetails.get('password')?.invalid &&
+            registerDetails.get('password')?.hasError('required')
+          "
+        >
+          Password is required.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            (registerDetails.get('password')?.invalid &&
+              registerDetails.get('password')?.hasError('minlength')) ||
+            registerDetails.get('password')?.hasError('maxlength')
+          "
+        >
+          Password should be 8 - 15 characters long.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            registerDetails.get('password')?.invalid &&
+            registerDetails.get('password')?.hasError('pattern')
+          "
+        >
+          Password should contain atleast 1 uppercase letter, 1 lowercase letter
+          and 1 symbol.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- <mat-error *ngIf="!registerValid"
+        >User details are invalid! Please try again!</mat-error
+      > -->
+
+      <button
+        class="form-button"
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="registerDetails.invalid"
+      >
+        Register
+      </button>
+    </div>
+  </form>
+</div>

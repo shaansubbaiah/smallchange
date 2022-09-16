@@ -1,0 +1,21 @@
+.register-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-card {
+  background-color: white;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  padding: 28px;
+  border-radius: 18px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+mat-form-field {
+  margin: 5px 0;
+}
+
+.form-button {
+  margin-top: 32px;
+}

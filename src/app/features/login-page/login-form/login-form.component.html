@@ -9,16 +9,17 @@
           placeholder="Username"
           formControlName="username"
         />
+        <mat-error *ngIf="loginDetails.get('username')?.hasError('required')">
+          Please enter your username.
+        </mat-error>
         <mat-error
           *ngIf="
-            !loginDetails.get('username')?.valid &&
-            !loginDetails.get('username')?.hasError('required')
+            (loginDetails.get('username')?.invalid &&
+              loginDetails.get('username')?.hasError('minlength')) ||
+            loginDetails.get('username')?.hasError('maxlength')
           "
         >
-          Username should be alphanumeric within 10 characters!
-        </mat-error>
-        <mat-error *ngIf="loginDetails.get('username')?.hasError('required')">
-          Please enter a valid username!
+          Username should be 3 - 10 chracters long.
         </mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -41,13 +42,32 @@
             hidePassword ? "visibility_off" : "visibility"
           }}</mat-icon>
         </button>
+        <mat-error *ngIf="loginDetails.get('password')?.hasError('required')">
+          Please enter your password.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            (loginDetails.get('password')?.invalid &&
+              loginDetails.get('password')?.hasError('minlength')) ||
+            loginDetails.get('password')?.hasError('maxlength')
+          "
+        >
+          Password should be 3 - 10 chracters long.
+        </mat-error>
       </mat-form-field>
-      <span>
+      <!-- <span>
         <mat-error *ngIf="!loginValid"
           >User details are invalid! Please try again!</mat-error
         >
-      </span>
-      <button type="submit" mat-raised-button color="primary">LOGIN</button>
+      </span> -->
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="loginDetails.invalid"
+      >
+        LOGIN
+      </button>
     </div>
   </form>
 </div>
