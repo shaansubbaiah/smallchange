@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 import { BuyTradeComponent } from './features/buy-trade/buy-trade.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
@@ -14,10 +15,18 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
-  { path: 'portfolio', component: PortfolioComponent },
-  { path: 'trade-history', component: TradeHistoryComponent },
-  { path: 'buy', component: BuyTradeComponent },
-  { path: 'sell', component: SellTradeComponent },
+  {
+    path: 'portfolio',
+    component: PortfolioComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trade-history',
+    component: TradeHistoryComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'buy', component: BuyTradeComponent, canActivate: [AuthGuard] },
+  { path: 'sell', component: SellTradeComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent },
 ];
 

@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -22,7 +23,11 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
 
   loginDetails: FormGroup;
 
-  constructor(fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginDetails = fb.group({
       username: [
         '',
@@ -53,10 +58,20 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
 
   onSubmit() {
     console.log(this.loginDetails.value);
+
     this.authService.authenticate(
       this.loginDetails.get('username')?.value,
       this.loginDetails.get('password')?.value
     );
+
+    // this.authService.saveToLocalStorage({
+    //   token: 'DUMMY TOKEN',
+    //   user: JSON.stringify({ username: 'DUMMY USER' }),
+    // });
+
+    this.authService.setLoggedIn(true);
+
+    this.router.navigateByUrl('/home');
   }
 
   isErrorState(
