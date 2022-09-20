@@ -4,6 +4,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { BuyTradeComponent } from './features/buy-trade/buy-trade.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
+import { MarketPlaceComponent } from './features/market-place/market-place.component';
 import { PageNotFoundComponent } from './features/page-not-found/page-not-found.component';
 import { PortfolioComponent } from './features/portfolio/portfolio.component';
 import { RegisterPageComponent } from './features/register-page/register-page.component';
@@ -25,8 +26,13 @@ const routes: Routes = [
     component: TradeHistoryComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'buy', component: BuyTradeComponent, canActivate: [AuthGuard] },
-  { path: 'sell', component: SellTradeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'market-place',
+    component: MarketPlaceComponent,
+    canActivate: [AuthGuard],
+  },
+  // { path: 'buy', component: BuyTradeComponent, canActivate: [AuthGuard] },
+  // { path: 'sell', component: SellTradeComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent },
 ];
 

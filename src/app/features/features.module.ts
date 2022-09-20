@@ -30,8 +30,15 @@ import { MfTableComponent } from './portfolio/mf-table/mf-table.component';
 import { BondTableComponent } from './portfolio/bond-table/bond-table.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { RegisterFormComponent } from './register-page/register-form/register-form.component';
+<<<<<<< HEAD
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
+=======
+import { MarketPlaceComponent } from './market-place/market-place.component';
+import { MarketBondTableComponent } from './market-place/market-bond-table/market-bond-table.component';
+import { MarketMfTableComponent } from './market-place/market-mf-table/market-mf-table.component';
+import { MarketStockTableComponent } from './market-place/market-stock-table/market-stock-table.component';
+>>>>>>> 97c7482ac5c66c35878a3d9f3f72a26b657d2aaf
 
 @NgModule({
   declarations: [
@@ -48,6 +55,10 @@ import { FormsModule } from '@angular/forms';
     BondTableComponent,
     RegisterPageComponent,
     RegisterFormComponent,
+    MarketPlaceComponent,
+    MarketBondTableComponent,
+    MarketMfTableComponent,
+    MarketStockTableComponent,
   ],
   imports: [
     CommonModule,
