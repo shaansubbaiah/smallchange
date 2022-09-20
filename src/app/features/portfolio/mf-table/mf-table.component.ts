@@ -48,4 +48,8 @@ export class MfTableComponent implements OnInit, AfterViewInit {
     let sortedData = CommonUtils.sortData<MfHolding>(this.holdings, $event);
     if (typeof(sortedData) !== 'undefined') this.dataSource = sortedData;
   }
+  applyFilter(filterValue: string){
+    
+    this.dataSource.filter= filterValue.trim();
+  }
 }

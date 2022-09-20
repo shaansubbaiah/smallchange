@@ -31,6 +31,9 @@
 
 <!-- <code>{{ dataSource }}</code> -->
 <div class="table-container">
+  <mat-form-field>
+    <input (keyup)="applyFilter($any($event.target).value)" matInput placeholder="Search">
+  </mat-form-field>
   <table matSort mat-table (matSortChange)="sortData($event)" mat-table [dataSource]="dataSource" class="data-table">
     <ng-container matColumnDef="name">
       <th mat-sort-header="name" mat-header-cell *matHeaderCellDef>Name</th>

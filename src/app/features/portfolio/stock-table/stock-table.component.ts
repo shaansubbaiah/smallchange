@@ -19,7 +19,7 @@ import { CommonUtils } from 'src/app/utils';
 })
 export class StockTableComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<StockHolding> = new MatTableDataSource();
-
+  searchText:any;
   invested_amount: number = 0;
   current_amount: number = 0;
 
@@ -51,6 +51,8 @@ export class StockTableComponent implements OnInit, AfterViewInit {
   @Input()
   holdings!: StockHolding[];
 
+ 
+
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource<StockHolding>(this.holdings);
     this.dataSource.paginator = this.paginator;
@@ -60,4 +62,10 @@ export class StockTableComponent implements OnInit, AfterViewInit {
     let sortedData = CommonUtils.sortData<StockHolding>(this.holdings, $event);
     if (typeof sortedData !== 'undefined') this.dataSource = sortedData;
   }
+
+  applyFilter(filterValue: string){
+    
+    this.dataSource.filter= filterValue.trim();
+  }
+  
 }

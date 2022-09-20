@@ -16,7 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSortModule } from '@angular/material/sort';
-
+import { MatTableDataSource } from '@angular/material/table';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginFormComponent } from './login-page/login-form/login-form.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -30,6 +30,8 @@ import { MfTableComponent } from './portfolio/mf-table/mf-table.component';
 import { BondTableComponent } from './portfolio/bond-table/bond-table.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { RegisterFormComponent } from './register-page/register-form/register-form.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { RegisterFormComponent } from './register-page/register-form/register-fo
     MatTabsModule,
     MatTooltipModule,
     MatSortModule,
+    Ng2SearchPipeModule,
+    FormsModule,
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })
