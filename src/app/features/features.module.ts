@@ -30,6 +30,10 @@ import { MfTableComponent } from './portfolio/mf-table/mf-table.component';
 import { BondTableComponent } from './portfolio/bond-table/bond-table.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { RegisterFormComponent } from './register-page/register-form/register-form.component';
+import { MarketPlaceComponent } from './market-place/market-place.component';
+import { MarketBondTableComponent } from './market-place/market-bond-table/market-bond-table.component';
+import { MarketMfTableComponent } from './market-place/market-mf-table/market-mf-table.component';
+import { MarketStockTableComponent } from './market-place/market-stock-table/market-stock-table.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +50,10 @@ import { RegisterFormComponent } from './register-page/register-form/register-fo
     BondTableComponent,
     RegisterPageComponent,
     RegisterFormComponent,
+    MarketPlaceComponent,
+    MarketBondTableComponent,
+    MarketMfTableComponent,
+    MarketStockTableComponent,
   ],
   imports: [
     CommonModule,

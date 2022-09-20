@@ -22,8 +22,9 @@ export class NavbarComponent implements OnInit {
           { name: 'Home', url: '/home' },
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Trade History', url: '/trade-history' },
-          { name: 'Buy', url: '/buy' },
-          { name: 'Sell', url: '/sell' },
+          // { name: 'Buy', url: '/buy' },
+          // { name: 'Sell', url: '/sell' },
+          { name: 'Market Place', url: '/market-place'},
         ];
       } else {
         this.navLinks = [
