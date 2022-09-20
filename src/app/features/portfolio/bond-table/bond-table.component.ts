@@ -1,21 +1,26 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { DataService } from 'src/app/core/services/data.service';
+import { Component, AfterViewInit, ViewChild, Input, OnInit } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BondHolding } from '../../../core/models/bond-holding';
 import { Sort } from '@angular/material/sort';
 import { CommonUtils } from 'src/app/utils';
+
 @Component({
   selector: 'app-bond-table',
   templateUrl: './bond-table.component.html',
   styleUrls: ['./bond-table.component.scss'],
 })
-export class BondTableComponent implements AfterViewInit {
+
+export class BondTableComponent implements OnInit, AfterViewInit {
+
   invested_amount: number = 0;
   current_amount: number = 0;
-  bonds: BondHolding[] = [];
-  dataSource!: MatTableDataSource<BondHolding>;
+
+  @Input()
+  holdings: BondHolding[] = [];
+
+  dataSource: MatTableDataSource<BondHolding> = new MatTableDataSource();
 
   displayedColumns: string[] = [
     'name',
@@ -26,26 +31,27 @@ export class BondTableComponent implements AfterViewInit {
     'asset_class',
   ];
 
-  constructor(private dataService: DataService) {}
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  ngAfterViewInit() {
-    this.bonds = this.dataService.getBondHolding();
-    this.dataSource = new MatTableDataSource<BondHolding>(this.bonds);
-    this.dataSource.paginator = this.paginator;
-
+  ngOnInit(): void {
     this.invested_amount = 0;
     this.current_amount = 0;
-    for (var i = 0; i < this.bonds.length; i++) {
+    for (var i = 0; i < this.holdings.length; i++) {
       this.invested_amount +=
-        this.bonds[i].buy_price * this.bonds[i].quantity;
-      this.current_amount += this.bonds[i].LTP * this.bonds[i].quantity;
+        this.holdings[i].buy_price * this.holdings[i].quantity;
+      this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
     }
   }
+
+  ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource<BondHolding>(this.holdings);
+    this.dataSource.paginator = this.paginator;
+  }
+
   sortData($event: Sort) {
-    let sortedData = CommonUtils.sortData<BondHolding>(this.bonds, $event);
+    let sortedData = CommonUtils.sortData<BondHolding>(this.holdings, $event);
     if (typeof(sortedData) !== 'undefined') this.dataSource = sortedData;
   }
 }

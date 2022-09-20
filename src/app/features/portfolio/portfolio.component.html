@@ -3,17 +3,17 @@
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Stocks">
     <ng-template matTabContent>
-      <app-stock-table></app-stock-table>
+      <app-stock-table [holdings]="userPortfolio.stockHoldings"></app-stock-table>
     </ng-template>
   </mat-tab>
   <mat-tab label="Mutual Funds">
     <ng-template matTabContent>
-      <app-mf-table></app-mf-table>
+      <app-mf-table [holdings]="userPortfolio.mfHoldings"></app-mf-table>
     </ng-template>
   </mat-tab>
   <mat-tab label="Bonds">
     <ng-template matTabContent>
-      <app-bond-table></app-bond-table>
+      <app-bond-table [holdings]="userPortfolio.bondHoldings"></app-bond-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

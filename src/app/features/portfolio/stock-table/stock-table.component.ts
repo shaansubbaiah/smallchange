@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from 'src/app/core/services/data.service';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,9 +11,8 @@ import { CommonUtils } from "src/app/utils";
   templateUrl: './stock-table.component.html',
   styleUrls: ['./stock-table.component.scss'],
 })
-export class StockTableComponent implements AfterViewInit {
-  stocks: StockHolding[] = [];
-  dataSource!: MatTableDataSource<StockHolding>;
+export class StockTableComponent implements OnInit, AfterViewInit {
+  dataSource: MatTableDataSource<StockHolding> = new MatTableDataSource();
 
   invested_amount: number = 0;
   current_amount: number = 0;
@@ -27,27 +25,35 @@ export class StockTableComponent implements AfterViewInit {
     'asset_class',
   ];
 
-  constructor(private dataService: DataService) {}
+  constructor() { }
+
+  ngOnInit(): void {
+    this.invested_amount = 0;
+    this.current_amount = 0;
+
+    for (var i = 0; i < this.holdings.length; i++) {
+      this.invested_amount +=
+        this.holdings[i].buy_price * this.holdings[i].quantity;
+      this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
+    }
+  }
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  ngAfterViewInit() {
-    this.stocks = this.dataService.getStockHolding();
-    this.dataSource = new MatTableDataSource<StockHolding>(this.stocks);
-    this.dataSource.paginator = this.paginator;
+  @Input()
+  holdings! : StockHolding[];
 
-    this.invested_amount = 0;
-    this.current_amount = 0;
-    for (var i = 0; i < this.stocks.length; i++) {
-      this.invested_amount +=
-        this.stocks[i].buy_price * this.stocks[i].quantity;
-      this.current_amount += this.stocks[i].LTP * this.stocks[i].quantity;
-    }
+  ngAfterViewInit() {
+
+    this.dataSource = new MatTableDataSource<StockHolding>(this.holdings);
+    this.dataSource.paginator = this.paginator;
   }
 
+
+
   sortData($event: Sort) {
-    let sortedData = CommonUtils.sortData<StockHolding>(this.stocks, $event);
+    let sortedData = CommonUtils.sortData<StockHolding>(this.holdings, $event);
     if (typeof(sortedData) !== 'undefined') this.dataSource = sortedData;
   }
 
