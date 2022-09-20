@@ -1,10 +1,16 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { StockHolding } from 'src/app/core/models/stock-holding';
 import { Sort } from '@angular/material/sort';
-import { CommonUtils } from "src/app/utils";
+import { CommonUtils } from 'src/app/utils';
 
 @Component({
   selector: 'app-stock-table',
@@ -22,10 +28,11 @@ export class StockTableComponent implements OnInit, AfterViewInit {
     'code',
     'buy_price',
     'LTP',
+    'quantity',
     'asset_class',
   ];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.invested_amount = 0;
@@ -42,19 +49,15 @@ export class StockTableComponent implements OnInit, AfterViewInit {
   paginator!: MatPaginator;
 
   @Input()
-  holdings! : StockHolding[];
+  holdings!: StockHolding[];
 
   ngAfterViewInit() {
-
     this.dataSource = new MatTableDataSource<StockHolding>(this.holdings);
     this.dataSource.paginator = this.paginator;
   }
 
-
-
   sortData($event: Sort) {
     let sortedData = CommonUtils.sortData<StockHolding>(this.holdings, $event);
-    if (typeof(sortedData) !== 'undefined') this.dataSource = sortedData;
+    if (typeof sortedData !== 'undefined') this.dataSource = sortedData;
   }
-
 }
