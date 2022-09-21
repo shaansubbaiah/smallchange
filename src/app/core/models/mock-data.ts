@@ -6,6 +6,7 @@ import { AssetClass } from './asset-class';
 import { StockList } from './stock-list';
 import { BondList } from './bond-list';
 import { BankAccount } from './bank-account';
+import { User } from './user';
 
 export var stock_asset_classes: AssetClass[] = [
   { viewName: 'Main index stocks', name: 'main_index_stocks' },
@@ -502,12 +503,24 @@ export var dummy_data_order: TradeStock[] = [
   },
 ];
 
-export var bank_accounts: BankAccount[] = [
+export var users: User[] = [
   {
-    name: 'Bank Of America',
-    balance: 12421,
-    accno: '123412341234',
+    userName: 'admin',
+    passwordHash: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', //admin
+    email: 'admin@fmr.com',
+    lastLogin: 0,
+    bankAccounts: [
+      {name: 'Bank Of America', balance: 12421, accno: '123412341234'},
+      {name: 'Citi Bank', balance: 3563, accno: '234256786534'}
+    ]
   },
-  { name: 'Citi Bank', balance: 3563, accno: '234256786534' },
-  { name: 'U.S. Bank', balance: 5612, accno: '982167897543' },
+  {
+    userName: 'test',
+    passwordHash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', //test
+    email: 'admin@fmr.com',
+    lastLogin: 0,
+    bankAccounts: [
+      { name: 'U.S. Bank', balance: 5612, accno: '982167897543' }
+    ]
+  }
 ];
