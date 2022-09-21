@@ -10,19 +10,19 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './trade-history.component.html',
   styleUrls: ['./trade-history.component.scss'],
 })
-export class TradeHistoryComponent implements AfterViewInit {
+export class TradeHistoryComponent implements OnInit, AfterViewInit {
   tradeHistory: TradeStock[] = [];
   dataSource!: MatTableDataSource<TradeStock>;
 
-  displayedColumns: string[] = [
-    'name',
-    'code',
-    'quantity',
-    'price',
-    'asset_class',
-    'trade_type',
-    'date',
-    'time',
+  tableColumns = [
+    { name: 'name', displayName: 'Name', type: 'text' },
+    { name: 'code', displayName: 'Code', type: 'text' },
+    { name: 'price', displayName: 'Price', type: 'currency' },
+    { name: 'quantity', displayName: 'Quantity', type: 'text' },
+    { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
+    { name: 'trade_type', displayName: 'Action', type: 'buysell' },
+    { name: 'date', displayName: 'Date', type: 'date' },
+    { name: 'time', displayName: 'Time', type: 'time' },
   ];
 
   constructor(private dataService: DataService) {}
@@ -30,9 +30,12 @@ export class TradeHistoryComponent implements AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.tradeHistory = this.dataService.getTradeHistory();
     this.dataSource = new MatTableDataSource<TradeStock>(this.tradeHistory);
+  }
+
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 }
