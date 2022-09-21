@@ -30,14 +30,25 @@
   </div>
 </div>
 
-<div class="table-container">
-  <mat-form-field>
+<div id="search-container">
+  <div id="search-box">
     <input
+      id="search-input"
       (keyup)="applyFilter($any($event.target).value)"
       matInput
-      placeholder="Search"
+      placeholder="Search..."
     />
-  </mat-form-field>
+
+    <mat-icon
+      id="search-icon"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      >search</mat-icon
+    >
+  </div>
+</div>
+
+<div class="table-container">
   <table
     matSort
     mat-table
@@ -91,7 +102,11 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="onRowClick(row)"
+    ></tr>
   </table>
 
   <mat-paginator
