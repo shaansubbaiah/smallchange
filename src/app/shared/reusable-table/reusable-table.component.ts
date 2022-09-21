@@ -22,9 +22,11 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   searchText: any;
   displayedColumns: string[] = [];
+  noResultsFound : boolean = false;
 
   @Input() tableRows: any[] = [];
   @Input() tableColumns: any[] = [];
+  @Input() filterColumns: string[] = [];
 
   constructor() {}
 
@@ -32,6 +34,7 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
     this.tableColumns.forEach((e) => {
       this.displayedColumns.push(e.name);
     });
+    this.setFilterColumns();
   }
 
   @ViewChild(MatPaginator)
@@ -40,6 +43,7 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource<any>(this.tableRows);
     this.dataSource.paginator = this.paginator;
+    this.setFilterColumns();
   }
 
   sortData($event: Sort) {
@@ -47,11 +51,30 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
     if (typeof sortedData !== 'undefined') this.dataSource = sortedData;
   }
 
+  setFilterColumns() {
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+
+      let flg : boolean = false;
+      for (let col of this.filterColumns) {
+        if (flg = (data[col] !== null && (String)(data[col]).includes(filter))) return true;
+      }
+      return flg;
+     };
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim();
+    if(this.dataSource.filteredData.length == 0) {
+      this.noResultsFound = true;
+    }
+    else{
+      this.noResultsFound = false;
+
+    }
   }
 
   onRowClick(row: any) {
     console.log(row);
   }
 }
+

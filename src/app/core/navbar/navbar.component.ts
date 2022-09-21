@@ -19,7 +19,6 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = val;
       if (val == true) {
         this.navLinks = [
-          { name: 'Home', url: '/home' },
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Trade History', url: '/trade-history' },
           // { name: 'Buy', url: '/buy' },
@@ -28,7 +27,6 @@ export class NavbarComponent implements OnInit {
         ];
       } else {
         this.navLinks = [
-          { name: 'Home', url: '/home' },
           { name: 'Sign In', url: '/login' },
         ];
       }

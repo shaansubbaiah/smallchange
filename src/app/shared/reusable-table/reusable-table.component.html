@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div class="table-container">
+<div class="table-container" *ngIf="!noResultsFound">
   <table
     matSort
     mat-table
@@ -59,3 +59,4 @@
     showFirstLastButtons
   ></mat-paginator>
 </div>
+<div *ngIf="noResultsFound" style="text-align: center;">Nothing to see here!</div>
