@@ -1,0 +1,61 @@
+<div id="search-container">
+  <div id="search-box">
+    <input
+      id="search-input"
+      (keyup)="applyFilter($any($event.target).value)"
+      matInput
+      placeholder="Search..."
+    />
+    <mat-icon id="search-icon" aria-hidden="false" aria-label="home icon">
+      search
+    </mat-icon>
+  </div>
+</div>
+
+<div class="table-container">
+  <table
+    matSort
+    mat-table
+    (matSortChange)="sortData($event)"
+    [dataSource]="dataSource"
+    class="data-table"
+  >
+    <ng-container
+      *ngFor="let col of tableColumns"
+      matColumnDef="{{ col.name }}"
+    >
+      <th mat-sort-header="{{ col.name }}" mat-header-cell *matHeaderCellDef>
+        {{ col.displayName }}
+      </th>
+      <td mat-cell *matCellDef="let e">
+        <ng-container *ngIf="col.type == 'text'">
+          {{ e[col.name] }}
+        </ng-container>
+        <ng-container *ngIf="col.type == 'currency'">
+          {{ e[col.name] | currency: "USD" }}
+        </ng-container>
+        <ng-container *ngIf="col.type == 'time'">
+          {{ e[col.name] }}
+        </ng-container>
+        <ng-container *ngIf="col.type == 'date'">
+          {{ e[col.name] | date: "shortDate" }}
+        </ng-container>
+        <ng-container *ngIf="col.type == 'buysell'">
+          {{ e[col.name] | uppercase }}
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="onRowClick(row)"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
