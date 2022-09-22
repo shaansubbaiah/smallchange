@@ -24,8 +24,8 @@ import { LoginFormComponent } from './login-page/login-form/login-form.component
 import { HomePageComponent } from './home-page/home-page.component';
 import { TradeHistoryComponent } from './trade-history/trade-history.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
-import { BuyTradeComponent } from './buy-trade/buy-trade.component';
-import { SellTradeComponent } from './sell-trade/sell-trade.component';
+// import { BuyTradeComponent } from './buy-trade/buy-trade.component';
+// import { SellTradeComponent } from './sell-trade/sell-trade.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { StockTableComponent } from './portfolio/stock-table/stock-table.component';
 import { MfTableComponent } from './portfolio/mf-table/mf-table.component';
@@ -45,8 +45,8 @@ import { StockTableDialogComponent } from './portfolio/stock-table/stock-table-d
     HomePageComponent,
     TradeHistoryComponent,
     PortfolioComponent,
-    BuyTradeComponent,
-    SellTradeComponent,
+    // BuyTradeComponent,
+    // SellTradeComponent,
     PageNotFoundComponent,
     StockTableComponent,
     MfTableComponent,

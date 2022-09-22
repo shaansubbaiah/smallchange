@@ -3,5 +3,5 @@ export interface StockList {
   code: string;
   buy_price: number;
   LTP: number;
-  asset_class: number;
+  asset_class: string;
 }
