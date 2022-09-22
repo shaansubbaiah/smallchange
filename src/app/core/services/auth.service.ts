@@ -47,4 +47,10 @@ export class AuthService {
       this.clearLocalStorage();
     }
   }
+
+  setInitialLoginStatus() {
+    if (this.getToken()) {
+      this.setLoggedIn(true);
+    }
+  }
 }
