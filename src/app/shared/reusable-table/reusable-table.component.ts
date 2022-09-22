@@ -48,7 +48,10 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
 
   sortData($event: Sort) {
     let sortedData = CommonUtils.sortData<any>(this.tableRows, $event);
-    if (typeof sortedData !== 'undefined') this.dataSource = sortedData;
+    if (typeof sortedData !== 'undefined') {
+      this.dataSource = sortedData;
+      this.setFilterColumns();
+    }
   }
 
   setFilterColumns() {
@@ -56,8 +59,10 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
 
       let flg : boolean = false;
       for (let col of this.filterColumns) {
-        if (flg = (data[col] !== null && (String)(data[col]).includes(filter))) return true;
+        flg = (data[col] !== null && data[col].toLowerCase().includes(filter));
+        if (flg) break;
       }
+
       return flg;
      };
   }
