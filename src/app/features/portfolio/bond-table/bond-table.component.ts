@@ -19,6 +19,7 @@ export class BondTableComponent implements OnInit {
     { name: 'quantity', displayName: 'Quantity', type: 'text' },
     { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
   ];
+
   ngOnInit(): void {
     this.invested_amount = 0;
     this.current_amount = 0;

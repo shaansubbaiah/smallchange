@@ -43,6 +43,9 @@
         <ng-container *ngIf="col.type == 'buysell'">
           {{ e[col.name] | uppercase }}
         </ng-container>
+        <ng-container *ngIf="col.type == 'percentile'">
+          {{ e[col.name] }}%
+        </ng-container>
       </td>
     </ng-container>
 
@@ -59,4 +62,6 @@
     showFirstLastButtons
   ></mat-paginator>
 </div>
-<div *ngIf="noResultsFound" style="text-align: center;">Nothing to see here!</div>
+<div *ngIf="noResultsFound" style="text-align: center">
+  Nothing to see here!
+</div>

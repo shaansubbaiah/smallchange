@@ -11,7 +11,10 @@ import { User } from './user';
 export var stock_asset_classes: AssetClass[] = [
   { viewName: 'Main index stocks', name: 'main_index_stocks' },
   { viewName: 'Small cap company stocks', name: 'small_cap_company_stocks' },
-  { viewName: 'International market stocks', name: 'international_market_stocks' },
+  {
+    viewName: 'International market stocks',
+    name: 'international_market_stocks',
+  },
 ];
 
 export var bond_asset_classes: AssetClass[] = [
@@ -19,139 +22,175 @@ export var bond_asset_classes: AssetClass[] = [
   { viewName: 'Government bonds', name: 'government_bonds' },
 ];
 
-export var main_index_stocks: StockList[] = [
+export var market_stocks: StockList[] = [
   {
     name: 'Apple Inc',
     code: 'AAPL',
     buy_price: 155.34,
     LTP: 170,
-    asset_class: 1,
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Tesla Inc',
     code: 'TSLA',
     buy_price: 657.65,
     LTP: 650,
-    asset_class: 1,
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Amazon.com Inc',
     code: 'AMZN',
     buy_price: 2354.35,
     LTP: 2360,
-    asset_class: 1,
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Alphabet Inc',
     code: 'GOOG',
     buy_price: 2895.5,
     LTP: 2900,
-    asset_class: 1,
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Facebook Inc',
     code: 'FB',
     buy_price: 376.26,
     LTP: 350,
-    asset_class: 1,
+    asset_class: 'main_index_stocks',
   },
-];
-
-export var small_cap_company_stocks: StockList[] = [
   {
     name: 'Vinco Ventures',
     code: 'BBIG',
     buy_price: 5.56,
     LTP: 7.4,
-    asset_class: 2,
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'Microsoft Corp',
     code: 'MSFT',
     buy_price: 350.76,
     LTP: 350,
-    asset_class: 2,
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'Sphere 3D Corp',
     code: 'ANY',
     buy_price: 6.42,
     LTP: 8.3,
-    asset_class: 2,
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'Bank of America Corp',
     code: 'BAC',
     buy_price: 41.05,
     LTP: 45.3,
-    asset_class: 2,
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'Comcast Corp',
     code: 'CMCSA',
     buy_price: 61.72,
     LTP: 61,
-    asset_class: 2,
+    asset_class: 'small_cap_company_stocks',
   },
-];
-
-export var international_market_stocks: StockList[] = [
   {
     name: 'Lucid Group Inc Shs',
     code: 'LCID',
     buy_price: 22.33,
     LTP: 24,
-    asset_class: 3,
+    asset_class: 'international_market_stocks',
   },
   {
     name: 'Pfizer Inc',
     code: 'PFE',
     buy_price: 46.84,
     LTP: 42.34,
-    asset_class: 3,
+    asset_class: 'international_market_stocks',
   },
   {
     name: 'Mastercard Inc',
     code: 'MA',
     buy_price: 181,
     LTP: 183.34,
-    asset_class: 3,
+    asset_class: 'international_market_stocks',
   },
   {
     name: 'NVDIA Corp',
     code: 'NVDA',
     buy_price: 228.43,
     LTP: 231.43,
-    asset_class: 3,
+    asset_class: 'international_market_stocks',
   },
   {
     name: 'Aliaba Group Holding Ltd ADR',
     code: 'BABA',
     buy_price: 175.5,
     LTP: 174.3,
-    asset_class: 3,
+    asset_class: 'international_market_stocks',
   },
 ];
 
-export var corporate_bonds: BondList[] = [
-  { name: 'Schwab Corp', code: 'SCHI', interest: 1.18, asset_class: 4 },
-  { name: 'Invesco', code: 'INV', interest: 1.02, asset_class: 4 },
-  { name: 'Vanguard', code: 'VNG', interest: 1.19, asset_class: 4 },
-  { name: 'iShares', code: 'IGSB', interest: 0.39, asset_class: 4 },
-  { name: 'BlackRock', code: 'BLRC', interest: 0.23, asset_class: 4 },
-];
-
-export var government_bonds: BondList[] = [
+export var market_bonds: BondList[] = [
+  {
+    name: 'Schwab Corp',
+    code: 'SCHI',
+    interest: 1.18,
+    asset_class: 'corporate_bonds',
+  },
+  {
+    name: 'Invesco',
+    code: 'INV',
+    interest: 1.02,
+    asset_class: 'corporate_bonds',
+  },
+  {
+    name: 'Vanguard',
+    code: 'VNG',
+    interest: 1.19,
+    asset_class: 'corporate_bonds',
+  },
+  {
+    name: 'iShares',
+    code: 'IGSB',
+    interest: 0.39,
+    asset_class: 'corporate_bonds',
+  },
+  {
+    name: 'BlackRock',
+    code: 'BLRC',
+    interest: 0.23,
+    asset_class: 'corporate_bonds',
+  },
   {
     name: 'SPDR Bloomberg Barclays',
     code: 'BIL',
     interest: 1.58,
-    asset_class: 5,
+    asset_class: 'government_bonds',
   },
-  { name: 'iShares US Treasury', code: 'GOVT', interest: 0.56, asset_class: 5 },
-  { name: 'PIMCO', code: 'MINT', interest: 1.12, asset_class: 5 },
-  { name: 'ProShares', code: 'TBX', interest: 0.28, asset_class: 5 },
-  { name: 'FlexShares', code: 'TDTT', interest: 1.43, asset_class: 5 },
+  {
+    name: 'iShares US Treasury',
+    code: 'GOVT',
+    interest: 0.56,
+    asset_class: 'government_bonds',
+  },
+  {
+    name: 'PIMCO',
+    code: 'MINT',
+    interest: 1.12,
+    asset_class: 'government_bonds',
+  },
+  {
+    name: 'ProShares',
+    code: 'TBX',
+    interest: 0.28,
+    asset_class: 'government_bonds',
+  },
+  {
+    name: 'FlexShares',
+    code: 'TDTT',
+    interest: 1.43,
+    asset_class: 'government_bonds',
+  },
 ];
 
 export var dummy_data_stocks: StockHolding[] = [
@@ -506,21 +545,21 @@ export var dummy_data_order: TradeStock[] = [
 export var users: User[] = [
   {
     userName: 'admin',
-    passwordHash: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', //admin
+    passwordHash:
+      '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', //admin
     email: 'admin@fmr.com',
     lastLogin: 0,
     bankAccounts: [
-      {name: 'Bank Of America', balance: 12421, accno: '123412341234'},
-      {name: 'Citi Bank', balance: 3563, accno: '234256786534'}
-    ]
+      { name: 'Bank Of America', balance: 12421, accno: '123412341234' },
+      { name: 'Citi Bank', balance: 3563, accno: '234256786534' },
+    ],
   },
   {
     userName: 'test',
-    passwordHash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', //test
+    passwordHash:
+      '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', //test
     email: 'admin@fmr.com',
     lastLogin: 0,
-    bankAccounts: [
-      { name: 'U.S. Bank', balance: 5612, accno: '982167897543' }
-    ]
-  }
+    bankAccounts: [{ name: 'U.S. Bank', balance: 5612, accno: '982167897543' }],
+  },
 ];
