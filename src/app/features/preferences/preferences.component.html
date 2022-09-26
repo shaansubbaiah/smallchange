@@ -1,0 +1,86 @@
+<div class="buy-card">
+    <!-- <app-header></app-header>
+    <app-nav-bar></app-nav-bar>
+    <br><br> -->
+    <app-title titleText="Investment Preferences"></app-title>
+    <!-- <div id="preferences">Investment Preferences</div><br> -->
+    <form class="row g-3 needs-validation mx-md-5 px-md-5 mx-1 px-1" novalidate id="formIP">
+        <div class="mb-3">
+            <label for="validationCustom01" class="form-label">Investment Purpose <span>*</span></label>
+            <textarea required id="validationCustom01" class="form-control" style="height: 100px"></textarea>
+            <div class="invalid-feedback">
+                Please provide your Investment Purpose.
+            </div>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="validationCustom02" class="form-label">Risk Tolerance <span>*</span></label>
+            <select class="form-select" id="validationCustom02" required>
+                <option selected disabled value="">Select a valid Risk Tolerance Level</option>
+                <option value="1">Conservative</option>
+                <option value="2">Below Average</option>
+                <option value="3">Average</option>
+                <option value="4">Above Average</option>
+                <option value="5">Aggressive</option>
+            </select>
+            <div class="invalid-feedback">
+                Please select a valid Tolerance Level.
+            </div>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="validationCustom03" class="form-label">Income Category <span>*</span></label>
+            <select class="form-select" id="validationCustom03" required>
+                <option selected disabled value="">Select a valid monthly Income Category in Rupees</option>
+                <option value="1">Below 20,000</option>
+                <option value="2">20,001 - 40,000</option>
+                <option value="3">40,001 - 60,000</option>
+                <option value="4">60,001 - 80,000</option>
+                <option value="5">80,001 - 1,00,000</option>
+                <option value="5">1,00,001 - 1,50,000</option>
+                <option value="5">Above 1,50,000</option>
+            </select>
+            <div class="invalid-feedback">
+                Please select a valid monthly Income Category.
+            </div>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="validationCustom04" class="form-label">Duration of Investments <span>*</span></label>
+            <select class="form-select" id="validationCustom04" required>
+                <option selected disabled value="">Select a valid duration for your investments</option>
+                <option value="1">Below 5 years</option>
+                <option value="2">6 - 7 years</option>
+                <option value="3">8 - 10 years</option>
+                <option value="4">11 - 15 years</option>
+                <option value="5">Above 15 years</option>
+            </select>
+            <div class="invalid-feedback">
+                Please select a valid duration for your investments.
+            </div>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">Agree to terms and conditions <span>*</span>
+                </label>
+                <div class="invalid-feedback">
+                    You must agree before submitting.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button (click)="setPreferences()" class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+    <!-- <app-footer></app-footer> -->
+</div>

@@ -37,6 +37,7 @@ import { MarketBondTableComponent } from './market-place/market-bond-table/marke
 import { MarketMfTableComponent } from './market-place/market-mf-table/market-mf-table.component';
 import { MarketStockTableComponent } from './market-place/market-stock-table/market-stock-table.component';
 import { StockTableDialogComponent } from './portfolio/stock-table/stock-table-dialog/stock-table-dialog.component';
+import { PreferencesComponent } from './preferences/preferences.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,6 @@ import { StockTableDialogComponent } from './portfolio/stock-table/stock-table-d
     HomePageComponent,
     TradeHistoryComponent,
     PortfolioComponent,
-    // BuyTradeComponent,
-    // SellTradeComponent,
     PageNotFoundComponent,
     StockTableComponent,
     MfTableComponent,
@@ -58,6 +57,7 @@ import { StockTableDialogComponent } from './portfolio/stock-table/stock-table-d
     MarketMfTableComponent,
     MarketStockTableComponent,
     StockTableDialogComponent,
+    PreferencesComponent,
   ],
   imports: [
     CommonModule,

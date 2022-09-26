@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
           // { name: 'Buy', url: '/buy' },
           // { name: 'Sell', url: '/sell' },
           { name: 'Market Place', url: '/market-place'},
+          {name: 'Preferences', url: '/preferences'},
         ];
       } else {
         this.navLinks = [
