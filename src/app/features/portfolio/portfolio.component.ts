@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserPortfolio } from 'src/app/core/models/user-portfolio';
 import { DataService } from 'src/app/core/services/data.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PortfolioDialogComponent } from './portfolio-dialog/portfolio-dialog.component';
+import { InfoDialogComponent } from 'src/app/shared/info-dialog/info-dialog.component';
 
 @Component({
   selector: 'app-portfolio',
@@ -23,7 +23,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   openDialog(data: any) {
-    const dialogRef = this.dialog.open(PortfolioDialogComponent);
+    const dialogRef = this.dialog.open(InfoDialogComponent);
     dialogRef.componentInstance.data = data;
   }
 }

@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
-  currentUser! : User;
+  currentUser!: User;
   navLinks: any;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -26,13 +26,11 @@ export class NavbarComponent implements OnInit {
         this.navLinks = [
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Trade History', url: '/trade-history' },
-          { name: 'Market Place', url: '/market-place'},
-          {name: 'Preferences', url: '/preferences'},
+          { name: 'Market Place', url: '/market-place' },
+          { name: 'Preferences', url: '/preferences' },
         ];
       } else {
-        this.navLinks = [
-          { name: 'Sign In', url: '/login' },
-        ];
+        this.navLinks = [{ name: 'Sign In', url: '/login' }];
       }
     });
   }

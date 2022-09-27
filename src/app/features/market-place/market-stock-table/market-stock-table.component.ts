@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StockList } from 'src/app/core/models/stock-list';
 @Component({
   selector: 'app-market-stock-table',
@@ -7,6 +7,7 @@ import { StockList } from 'src/app/core/models/stock-list';
 })
 export class MarketStockTableComponent implements OnInit {
   @Input() holdings!: StockList[];
+  @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
@@ -17,4 +18,8 @@ export class MarketStockTableComponent implements OnInit {
   ];
 
   ngOnInit(): void {}
+
+  openDialog(data: any) {
+    this.openDialogEvent.emit({ dialog_type: 'stock', data: data });
+  }
 }

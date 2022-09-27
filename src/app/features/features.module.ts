@@ -24,8 +24,6 @@ import { LoginFormComponent } from './login-page/login-form/login-form.component
 import { HomePageComponent } from './home-page/home-page.component';
 import { TradeHistoryComponent } from './trade-history/trade-history.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
-// import { BuyTradeComponent } from './buy-trade/buy-trade.component';
-// import { SellTradeComponent } from './sell-trade/sell-trade.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { StockTableComponent } from './portfolio/stock-table/stock-table.component';
 import { MfTableComponent } from './portfolio/mf-table/mf-table.component';
@@ -37,7 +35,6 @@ import { MarketBondTableComponent } from './market-place/market-bond-table/marke
 import { MarketMfTableComponent } from './market-place/market-mf-table/market-mf-table.component';
 import { MarketStockTableComponent } from './market-place/market-stock-table/market-stock-table.component';
 import { PreferencesComponent } from './preferences/preferences.component';
-import { PortfolioDialogComponent } from './portfolio/portfolio-dialog/portfolio-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +54,6 @@ import { PortfolioDialogComponent } from './portfolio/portfolio-dialog/portfolio
     MarketMfTableComponent,
     MarketStockTableComponent,
     PreferencesComponent,
-    PortfolioDialogComponent,
   ],
   imports: [
     CommonModule,

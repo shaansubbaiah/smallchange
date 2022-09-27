@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { MfHolding } from '../../../core/models/mf-holding';
 
 @Component({
@@ -11,6 +11,7 @@ export class MfTableComponent implements OnInit {
   current_amount: number = 0;
 
   @Input() holdings: MfHolding[] = [];
+  @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
@@ -20,8 +21,6 @@ export class MfTableComponent implements OnInit {
     { name: 'quantity', displayName: 'Quantity', type: 'text' },
   ];
 
-  constructor() {}
-
   ngOnInit(): void {
     this.invested_amount = 0;
     this.current_amount = 0;
@@ -30,5 +29,9 @@ export class MfTableComponent implements OnInit {
         this.holdings[i].buy_price * this.holdings[i].quantity;
       this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
     }
+  }
+
+  openDialog(data: any) {
+    this.openDialogEvent.emit({ dialog_type: 'mf', data: data });
   }
 }

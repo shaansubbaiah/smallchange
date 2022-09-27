@@ -2,4 +2,5 @@
   [tableRows]="holdings"
   [tableColumns]="tableColumns"
   [filterColumns]="['name', 'code', 'asset_class']"
+  (rowClickEvent)="openDialog($event)"
 ></app-reusable-table>

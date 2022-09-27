@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MfList } from 'src/app/core/models/mf-list';
 
 @Component({
@@ -8,6 +8,7 @@ import { MfList } from 'src/app/core/models/mf-list';
 })
 export class MarketMfTableComponent implements OnInit {
   @Input() holdings!: MfList[];
+  @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
@@ -16,4 +17,8 @@ export class MarketMfTableComponent implements OnInit {
   ];
 
   ngOnInit(): void {}
+
+  openDialog(data: any) {
+    this.openDialogEvent.emit({ dialog_type: 'mf', data: data });
+  }
 }

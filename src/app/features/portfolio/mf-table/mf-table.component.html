@@ -7,4 +7,5 @@
   [tableRows]="holdings"
   [tableColumns]="tableColumns"
   [filterColumns]="['name', 'code']"
+  (rowClickEvent)="openDialog($event)"
 ></app-reusable-table>

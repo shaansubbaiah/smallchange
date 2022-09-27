@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StockHolding } from 'src/app/core/models/stock-holding';
-import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
@@ -22,8 +21,6 @@ export class StockTableComponent implements OnInit {
     { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
   ];
 
-  constructor(public dialog: MatDialog) {}
-
   ngOnInit(): void {
     this.invested_amount = 0;
     this.current_amount = 0;
@@ -37,7 +34,5 @@ export class StockTableComponent implements OnInit {
 
   openDialog(data: any) {
     this.openDialogEvent.emit({ dialog_type: 'stock', data: data });
-    // const dialogRef = this.dialog.open(StockTableDialogComponent);
-    // dialogRef.componentInstance.data = data;
   }
 }

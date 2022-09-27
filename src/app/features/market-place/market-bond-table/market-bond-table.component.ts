@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BondList } from 'src/app/core/models/bond-list';
 @Component({
   selector: 'app-market-bond-table',
@@ -7,6 +7,7 @@ import { BondList } from 'src/app/core/models/bond-list';
 })
 export class MarketBondTableComponent implements OnInit {
   @Input() holdings: BondList[] = [];
+  @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
@@ -16,4 +17,8 @@ export class MarketBondTableComponent implements OnInit {
   ];
 
   ngOnInit(): void {}
+
+  openDialog(data: any) {
+    this.openDialogEvent.emit({ dialog_type: 'bond', data: data });
+  }
 }

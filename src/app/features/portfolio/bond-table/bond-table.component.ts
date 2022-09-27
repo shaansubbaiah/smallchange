@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BondHolding } from '../../../core/models/bond-holding';
 
 @Component({
@@ -11,9 +11,11 @@ export class BondTableComponent implements OnInit {
   current_amount: number = 0;
 
   @Input() holdings: BondHolding[] = [];
+  @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
+    { name: 'code', displayName: 'Code', type: 'text' },
     { name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
     { name: 'LTP', displayName: 'LTP', type: 'currency' },
     { name: 'quantity', displayName: 'Quantity', type: 'text' },
@@ -28,5 +30,9 @@ export class BondTableComponent implements OnInit {
         this.holdings[i].buy_price * this.holdings[i].quantity;
       this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
     }
+  }
+
+  openDialog(data: any) {
+    this.openDialogEvent.emit({ dialog_type: 'bond', data: data });
   }
 }

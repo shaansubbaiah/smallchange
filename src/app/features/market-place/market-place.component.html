@@ -5,6 +5,7 @@
     <ng-template matTabContent>
       <app-market-stock-table
         [holdings]="marketAssets.marketStocks"
+        (openDialogEvent)="openDialog($event)"
       ></app-market-stock-table>
     </ng-template>
   </mat-tab>
@@ -12,6 +13,7 @@
     <ng-template matTabContent>
       <app-market-mf-table
         [holdings]="marketAssets.marketMfs"
+        (openDialogEvent)="openDialog($event)"
       ></app-market-mf-table>
     </ng-template>
   </mat-tab>
@@ -19,6 +21,7 @@
     <ng-template matTabContent>
       <app-market-bond-table
         [holdings]="marketAssets.marketBonds"
+        (openDialogEvent)="openDialog($event)"
       ></app-market-bond-table>
     </ng-template>
   </mat-tab>
