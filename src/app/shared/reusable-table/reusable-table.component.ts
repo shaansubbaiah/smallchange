@@ -4,6 +4,8 @@ import {
   OnInit,
   ViewChild,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,6 +25,8 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
   @Input() tableRows: any[] = [];
   @Input() tableColumns: any[] = [];
   @Input() filterColumns: string[] = [];
+  @Input() rowClickable: boolean = true;
+  @Output() rowClickEvent = new EventEmitter<any>();
 
   ngOnInit(): void {
     this.tableColumns.forEach((e) => {
@@ -78,5 +82,6 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
 
   onRowClick(row: any) {
     console.log(row);
+    this.rowClickEvent.emit(row);
   }
 }

@@ -1,8 +1,6 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { TradeStock } from '../../core/models/trade-stock';
-
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
