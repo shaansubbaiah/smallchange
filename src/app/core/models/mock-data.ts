@@ -543,23 +543,23 @@ export var dummy_data_order: TradeStock[] = [
 ];
 
 export var users: User[] = [
-  {
-    userName: 'admin',
-    passwordHash:
-      '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', //admin
-    email: 'admin@fmr.com',
-    lastLogin: 0,
-    bankAccounts: [
+  new User('admin',
+    'SmallChange',
+    'Admin',
+    '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', //admin
+    'admin@fmr.com',
+    0,
+    [
       { name: 'Bank Of America', balance: 12421, accno: '123412341234' },
       { name: 'Citi Bank', balance: 3563, accno: '234256786534' },
     ],
-  },
-  {
-    userName: 'test',
-    passwordHash:
-      '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', //test
-    email: 'admin@fmr.com',
-    lastLogin: 0,
-    bankAccounts: [{ name: 'U.S. Bank', balance: 5612, accno: '982167897543' }],
-  },
+  ),
+  new User ('test',
+    'Test',
+    'User',
+    '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', //test
+    'admin@fmr.com',
+    0,
+    [{ name: 'U.S. Bank', balance: 5612, accno: '982167897543' }],
+  ),
 ];

@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
+import { users } from '../models/mock-data';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
   public isLoggedIn = new BehaviorSubject<any>(false);
 
   constructor() {}
@@ -46,6 +49,10 @@ export class AuthService {
     } else {
       this.clearLocalStorage();
     }
+  }
+
+  getUserDetails(): User {
+    return users[Math.floor(Math.random()*users.length)];
   }
 
   setInitialLoginStatus() {

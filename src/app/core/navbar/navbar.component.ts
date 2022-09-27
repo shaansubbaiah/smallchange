@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
-
+  currentUser! : User;
   navLinks: any;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -17,12 +18,14 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getLoggedIn().subscribe((val) => {
       this.isLoggedIn = val;
-      if (val == true) {
+      if (this.isLoggedIn) {
+        this.currentUser = this.authService.getUserDetails();
+        if (this.currentUser === null || typeof this.currentUser == 'undefined')
+          throw new Error('Unable to fetch user details!!');
+
         this.navLinks = [
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Trade History', url: '/trade-history' },
-          // { name: 'Buy', url: '/buy' },
-          // { name: 'Sell', url: '/sell' },
           { name: 'Market Place', url: '/market-place'},
           {name: 'Preferences', url: '/preferences'},
         ];
