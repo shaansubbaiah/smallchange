@@ -5,13 +5,10 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
-
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Sort } from '@angular/material/sort';
 import { CommonUtils } from 'src/app/utils';
-// import { MatDialog } from '@angular/material/dialog';
-// import { StockTableDialogComponent } from './stock-table-dialog/stock-table-dialog.component';
 
 @Component({
   selector: 'app-reusable-table',
@@ -20,15 +17,12 @@ import { CommonUtils } from 'src/app/utils';
 })
 export class ReusableTableComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  searchText: any;
   displayedColumns: string[] = [];
-  noResultsFound : boolean = false;
+  noResultsFound: boolean = false;
 
   @Input() tableRows: any[] = [];
   @Input() tableColumns: any[] = [];
   @Input() filterColumns: string[] = [];
-
-  constructor() {}
 
   ngOnInit(): void {
     this.tableColumns.forEach((e) => {
@@ -56,25 +50,22 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
 
   setFilterColumns() {
     this.dataSource.filterPredicate = (data: any, filter: string) => {
-
-      let flg : boolean = false;
+      let flg: boolean = false;
       for (let col of this.filterColumns) {
-        flg = (data[col] !== null && data[col].toLowerCase().includes(filter));
+        flg = data[col] !== null && data[col].toLowerCase().includes(filter);
         if (flg) break;
       }
 
       return flg;
-     };
+    };
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim();
-    if(this.dataSource.filteredData.length == 0) {
+    if (this.dataSource.filteredData.length == 0) {
       this.noResultsFound = true;
-    }
-    else{
+    } else {
       this.noResultsFound = false;
-
     }
   }
 
@@ -82,4 +73,3 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
     console.log(row);
   }
 }
-
