@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './trade-history.component.html',
   styleUrls: ['./trade-history.component.scss'],
 })
-export class TradeHistoryComponent implements OnInit, AfterViewInit {
+export class TradeHistoryComponent implements OnInit {
   tradeHistory: TradeStock[] = [];
   dataSource!: MatTableDataSource<TradeStock>;
 
@@ -27,15 +27,7 @@ export class TradeHistoryComponent implements OnInit, AfterViewInit {
 
   constructor(private dataService: DataService) {}
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-
   ngOnInit() {
     this.tradeHistory = this.dataService.getTradeHistory();
-    this.dataSource = new MatTableDataSource<TradeStock>(this.tradeHistory);
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 }

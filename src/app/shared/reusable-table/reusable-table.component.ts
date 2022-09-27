@@ -49,10 +49,17 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
   }
 
   setFilterColumns() {
+    if (this.filterColumns === null || this.filterColumns.length == 0) {
+      this.filterColumns = [];
+      console.log('using default sort');
+      this.tableColumns.forEach(e => {
+        this.filterColumns.push(e.name);
+      });
+    }
     this.dataSource.filterPredicate = (data: any, filter: string) => {
       let flg: boolean = false;
       for (let col of this.filterColumns) {
-        flg = data[col] !== null && data[col].toLowerCase().includes(filter);
+        flg = (data[col] !== null && String(data[col]).toLowerCase().includes(filter));
         if (flg) break;
       }
 
