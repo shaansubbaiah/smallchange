@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StockHolding } from 'src/app/core/models/stock-holding';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
@@ -10,6 +11,7 @@ export class StockTableComponent implements OnInit {
   current_amount: number = 0;
 
   @Input() holdings!: StockHolding[];
+  @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
@@ -20,7 +22,7 @@ export class StockTableComponent implements OnInit {
     { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
   ];
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.invested_amount = 0;
@@ -31,5 +33,11 @@ export class StockTableComponent implements OnInit {
         this.holdings[i].buy_price * this.holdings[i].quantity;
       this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
     }
+  }
+
+  openDialog(data: any) {
+    this.openDialogEvent.emit({ dialog_type: 'stock', data: data });
+    // const dialogRef = this.dialog.open(StockTableDialogComponent);
+    // dialogRef.componentInstance.data = data;
   }
 }

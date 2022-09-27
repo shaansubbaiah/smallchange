@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StockTableDialogComponent } from './stock-table-dialog.component';
+import { PortfolioDialogComponent } from './portfolio-dialog.component';
 
-describe('StockTableDialogComponent', () => {
-  let component: StockTableDialogComponent;
-  let fixture: ComponentFixture<StockTableDialogComponent>;
+describe('PortfolioDialogComponent', () => {
+  let component: PortfolioDialogComponent;
+  let fixture: ComponentFixture<PortfolioDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StockTableDialogComponent ]
+      declarations: [ PortfolioDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StockTableDialogComponent);
+    fixture = TestBed.createComponent(PortfolioDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

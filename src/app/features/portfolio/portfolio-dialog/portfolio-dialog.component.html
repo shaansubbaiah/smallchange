@@ -1,4 +1,5 @@
+<h1>{{ data.dialog_type }}</h1>
 <h2>Company_Name (Symbol)</h2>
-<div *ngFor="let e of data | keyvalue">{{ e.key }} : {{ e.value }}</div>
+<div *ngFor="let e of data.data | keyvalue">{{ e.key }} : {{ e.value }}</div>
 <button mat-button color="primary">BUY</button>
 <button mat-button color="warn">SELL</button>
