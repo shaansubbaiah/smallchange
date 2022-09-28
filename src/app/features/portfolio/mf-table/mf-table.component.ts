@@ -32,6 +32,6 @@ export class MfTableComponent implements OnInit {
   }
 
   openDialog(data: any) {
-    this.openDialogEvent.emit({ dialog_type: 'mf', data: data });
+    this.openDialogEvent.emit({ index_type: 'mf', data: data });
   }
 }

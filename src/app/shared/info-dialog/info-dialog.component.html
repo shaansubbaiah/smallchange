@@ -1,5 +1,122 @@
-<h1>{{ data.dialog_type }}</h1>
-<h2>Company_Name (Symbol)</h2>
-<div *ngFor="let e of data.data | keyvalue">{{ e.key }} : {{ e.value }}</div>
-<button mat-button color="primary">BUY</button>
-<button mat-button color="warn">SELL</button>
+<div>
+  <div class="index-title">
+    <span class="index-name">{{ indexData.name || "Company_Name" }}</span>
+    <span class="index-code">{{
+      "(" + indexData.code + ")" || "(CODE)" | uppercase
+    }}</span>
+  </div>
+  <p *ngIf="indexData.asset_class" class="index-assetclass">
+    {{ indexData.asset_class | uppercase }}
+  </p>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="index-description">
+  <div *ngIf="indexData.LTP" class="index-desc-row">
+    <span class="index-desc-label">Last Traded Price:</span>
+    <span class="index-desc-value">{{ indexData.LTP | currency: "USD" }}</span>
+  </div>
+  <div *ngIf="indexData.buy_price" class="index-desc-row">
+    <span class="index-desc-label">Buy Price:</span>
+    <span class="index-desc-value">{{
+      indexData.buy_price | currency: "USD"
+    }}</span>
+  </div>
+  <div *ngIf="indexData.interest" class="index-desc-row">
+    <span class="index-desc-label">Interest:</span>
+    <span class="index-desc-value">{{ indexData.interest }}%</span>
+  </div>
+  <div *ngIf="indexData.quantity" class="index-desc-row">
+    <span class="index-desc-label">Owned Units:</span>
+    <span class="index-desc-value">{{ indexData.quantity }} units</span>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<mat-tab-group mat-align-tabs="center" dynamicHeight>
+  <mat-tab label="BUY" class="buy-tab">
+    <ng-template matTabContent>
+      <mat-form-field class="" appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="orderQuantity"
+          min="0"
+          max="{{ indexData.quantity || 100 }}"
+          width="100%"
+          placeholder="0"
+        />
+      </mat-form-field>
+
+      <div
+        *ngIf="orderQuantity > 0 && indexData.buy_price"
+        class="index-desc-row"
+      >
+        <span class="index-desc-label"
+          >{{
+            (indexData.buy_price | currency: "USD") + "/unit x " + orderQuantity
+          }}
+        </span>
+        <span class="index-desc-value">
+          {{ orderQuantity * indexData.buy_price | currency: "USD" }}
+        </span>
+      </div>
+
+      <button
+        mat-raised-button
+        class="buysell-button"
+        color="primary"
+        type="button"
+        [disabled]="orderQuantity == 0"
+        (click)="onBuyIndex(orderQuantity)"
+      >
+        PURCHASE
+      </button>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="SELL" *ngIf="indexData.quantity > 0" class="sell-tab">
+    <ng-template matTabContent>
+      <mat-form-field class="" appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="orderQuantity"
+          min="0"
+          max="{{ indexData.quantity }}"
+          width="100%"
+          placeholder="0"
+        />
+      </mat-form-field>
+
+      <div
+        *ngIf="orderQuantity > 0 && indexData.buy_price"
+        class="index-desc-row"
+      >
+        <span class="index-desc-label"
+          >{{
+            (indexData.buy_price | currency: "USD") + "/unit x " + orderQuantity
+          }}
+        </span>
+        <span class="index-desc-value">
+          {{ orderQuantity * indexData.buy_price | currency: "USD" }}
+        </span>
+      </div>
+
+      <button
+        mat-raised-button
+        class="buysell-button"
+        color="primary"
+        type="button"
+        [disabled]="orderQuantity == 0"
+        (click)="onSellIndex(orderQuantity)"
+      >
+        SELL
+      </button>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

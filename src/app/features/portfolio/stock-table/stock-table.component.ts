@@ -33,6 +33,6 @@ export class StockTableComponent implements OnInit {
   }
 
   openDialog(data: any) {
-    this.openDialogEvent.emit({ dialog_type: 'stock', data: data });
+    this.openDialogEvent.emit({ index_type: 'stock', data: data });
   }
 }

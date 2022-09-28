@@ -6,9 +6,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info-dialog.component.scss'],
 })
 export class InfoDialogComponent implements OnInit {
-  public data = { dialog_type: '', data: {} };
+  public data = { index_type: '', data: {} };
+  indexData: any;
+  orderQuantity = 0;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.indexData = this.data.data;
+  }
+
+  onSellIndex(quantity: number) {
+    console.log(
+      `Sold ${
+        this.data.index_type
+      } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
+    );
+  }
+
+  onBuyIndex(quantity: number) {
+    console.log(
+      `Purchased  ${
+        this.data.index_type
+      } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
+    );
+  }
 }
