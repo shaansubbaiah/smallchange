@@ -64,7 +64,6 @@ import { PreferencesComponent } from './preferences/preferences.component';
     MatInputModule,
     MatCardModule,
     MatIconModule,
-    MatCardModule,
     MatPaginatorModule,
     MatButtonModule,
     MatTableModule,
