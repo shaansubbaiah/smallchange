@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import { users } from '../models/mock-data';
 import { User } from '../models/user';
+import * as CryptoJS from "crypto-js";
+import { CommonUtils } from 'src/app/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +14,17 @@ export class AuthService {
 
   constructor() {}
 
-  public authenticate(username: string, password: string): boolean {
-    return true; //username === 'admin' && password === 'admin';
+  public authenticate(username: string, password: string): Observable<boolean> {
+    let passwordHash = CryptoJS.SHA256(password).toString();
+    for (let user of users) {
+      if (username === user.userName)
+        if (passwordHash === user.passwordHash) {
+          console.log('login success');
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          return of(true);
+        }
+    }
+    return of(false);
   }
 
   public register(username: string, email: string, password: string): boolean {
@@ -21,7 +32,7 @@ export class AuthService {
   }
 
   getToken(): boolean {
-    return localStorage.getItem('token') ? true : false;
+    return CommonUtils.getUserDetail('token') ? true : false;
   }
 
   saveToLocalStorage(data: any) {

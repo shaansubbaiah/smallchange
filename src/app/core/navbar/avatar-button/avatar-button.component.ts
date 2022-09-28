@@ -8,7 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AvatarButtonComponent implements OnInit {
   @Input() buttonText: string = '';
 
-  constructor() {}
+  showUserMenu : boolean = false;
+
+  constructor() { }
 
   ngOnInit(): void {}
 }

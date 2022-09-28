@@ -41,7 +41,7 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
         '',
         [
           Validators.required,
-          Validators.minLength(8),
+          Validators.minLength(3),
           Validators.maxLength(15),
         ],
       ],
@@ -62,16 +62,12 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
     this.authService.authenticate(
       this.loginDetails.get('username')?.value,
       this.loginDetails.get('password')?.value
-    );
+    ).subscribe((isLoginSuccessful : boolean) => {
+      this.authService.setLoggedIn(isLoginSuccessful);
 
-    // this.authService.saveToLocalStorage({
-    //   token: 'DUMMY TOKEN',
-    //   user: JSON.stringify({ username: 'DUMMY USER' }),
-    // });
-
-    this.authService.setLoggedIn(true);
-
-    this.router.navigateByUrl('/home');
+      if (isLoginSuccessful)
+        this.router.navigateByUrl('/home');
+    });
   }
 
   isErrorState(

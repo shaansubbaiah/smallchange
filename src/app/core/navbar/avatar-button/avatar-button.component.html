@@ -1,1 +1,2 @@
-<button mat-mini-fab color="fab-color" aria-label="">{{ buttonText }}</button>
+<button mat-mini-fab color="fab-color" (click)="showUserMenu = !showUserMenu" aria-label=""><ng-content></ng-content></button>
+<app-user-menu-actions *ngIf="showUserMenu"></app-user-menu-actions>
