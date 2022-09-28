@@ -6,5 +6,8 @@
     <a mat-button routerLink="{{ navLink.url }}">{{ navLink.name }}</a>
   </div>
   <a *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</a>
-  <app-avatar-button *ngIf="isLoggedIn">{{ currentUser.getInitials() }}</app-avatar-button>
+  <app-avatar-button
+    *ngIf="isLoggedIn"
+    buttonText="{{ currentUser.getInitials() }}"
+  ></app-avatar-button>
 </mat-toolbar>
