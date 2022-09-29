@@ -44,8 +44,8 @@
           matInput
           type="number"
           [(ngModel)]="orderQuantity"
+          required
           min="0"
-          max="{{ indexData.quantity || 100 }}"
           width="100%"
           placeholder="0"
         />
@@ -70,7 +70,7 @@
         class="buysell-button"
         color="primary"
         type="button"
-        [disabled]="orderQuantity == 0"
+        [disabled]="orderQuantity == 0 || orderQuantity == null"
         (click)="onBuyIndex(orderQuantity)"
       >
         PURCHASE
@@ -86,6 +86,7 @@
           matInput
           type="number"
           [(ngModel)]="orderQuantity"
+          required
           min="0"
           max="{{ indexData.quantity }}"
           width="100%"
@@ -112,7 +113,11 @@
         class="buysell-button"
         color="primary"
         type="button"
-        [disabled]="orderQuantity == 0"
+        [disabled]="
+          orderQuantity == 0 ||
+          orderQuantity > indexData.quantity ||
+          orderQuantity == null
+        "
         (click)="onSellIndex(orderQuantity)"
       >
         SELL
