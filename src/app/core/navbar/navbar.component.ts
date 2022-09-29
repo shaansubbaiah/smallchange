@@ -1,6 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { EventEmitter } from 'stream';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
@@ -15,7 +14,7 @@ export class NavbarComponent implements OnInit {
   navLinks: any;
 
   @Output()
-  userAvatarButtonClicked : EventEmitter = new EventEmitter();
+  userAvatarButtonClicked : EventEmitter<void> = new EventEmitter();
 
   constructor(private authService: AuthService, private router: Router) {}
 

@@ -13,6 +13,6 @@ import { MatCardModule } from "@angular/material/card";
 @NgModule({
   declarations: [NavbarComponent, FooterComponent, AvatarButtonComponent, UserMenuActionsComponent],
   imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, MatCardModule],
-  exports: [NavbarComponent, FooterComponent],
+  exports: [NavbarComponent, FooterComponent, UserMenuActionsComponent],
 })
 export class CoreModule {}
