@@ -551,8 +551,8 @@ export var users: User[] = [
     '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', //admin
     0,
     [
-      { name: 'Bank Of America', balance: 12421, accno: '123412341234' },
-      { name: 'Citi Bank', balance: 3563, accno: '234256786534' },
+      { name: 'Bank Of America', accno: '123412341234' },
+      { name: 'Citi Bank', accno: '234256786534' },
     ],
     'eyJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjY0MzM5NDI4LCJpYXQiOjE2NjQzMzk0Mjh9.zOlVX1PR6cw2ip0MpzSAGChooJ4ipT8bzt7O6CLdmDg'
   ),
@@ -563,7 +563,7 @@ export var users: User[] = [
     'testuser@fmr.com',
     '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', //test
     0,
-    [{ name: 'U.S. Bank', balance: 5612, accno: '982167897543' }],
+    [{ name: 'U.S. Bank', accno: '982167897543' }],
     'eyJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6InRlc3QiLCJleHAiOjE2NjQzMzk0MjgsImlhdCI6MTY2NDMzOTQyOH0.Y6x59p-Z4VYJZvM5xYqZigL7azc7ivfFaV2SzQfVNzY'
   ),
 ];
