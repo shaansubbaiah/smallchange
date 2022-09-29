@@ -64,7 +64,7 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
       this.loginDetails.get('password')?.value
     ).subscribe((isLoginSuccessful : boolean) => {
       this.authService.setLoggedIn(isLoginSuccessful);
-
+      this.loginValid = isLoginSuccessful;
       if (isLoginSuccessful)
         this.router.navigateByUrl('/home');
     });

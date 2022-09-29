@@ -8,6 +8,6 @@
   <a *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</a>
   <app-avatar-button
     *ngIf="isLoggedIn"
-    buttonText="{{ currentUser.getInitials() }}"
+    [buttonText]="currentUser.getInitials()"
   ></app-avatar-button>
 </mat-toolbar>
