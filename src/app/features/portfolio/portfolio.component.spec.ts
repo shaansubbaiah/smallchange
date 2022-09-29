@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { PortfolioComponent } from './portfolio.component';
 
@@ -8,6 +10,10 @@ describe('PortfolioComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        MatDialogModule
+      ],
       declarations: [ PortfolioComponent ]
     })
     .compileComponents();

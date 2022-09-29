@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
-// import { BuyTradeComponent } from './features/buy-trade/buy-trade.component';
+//import { BuyTradeComponent } from './features/buy-trade/buy-trade.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
 import { MarketPlaceComponent } from './features/market-place/market-place.component';
@@ -9,7 +9,7 @@ import { PageNotFoundComponent } from './features/page-not-found/page-not-found.
 import { PortfolioComponent } from './features/portfolio/portfolio.component';
 import { PreferencesComponent } from './features/preferences/preferences.component';
 import { RegisterPageComponent } from './features/register-page/register-page.component';
-// import { SellTradeComponent } from './features/sell-trade/sell-trade.component';
+//import { SellTradeComponent } from './features/sell-trade/sell-trade.component';
 import { TradeHistoryComponent } from './features/trade-history/trade-history.component';
 
 const routes: Routes = [
@@ -37,8 +37,8 @@ const routes: Routes = [
     component: PreferencesComponent,
     canActivate: [AuthGuard],
   },
-  // { path: 'buy', component: BuyTradeComponent, canActivate: [AuthGuard] },
-  // { path: 'sell', component: SellTradeComponent, canActivate: [AuthGuard] },
+  //{ path: 'buy', component: BuyTradeComponent, canActivate: [AuthGuard] },
+  //{ path: 'sell', component: SellTradeComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent },
 ];
 
