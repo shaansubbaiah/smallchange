@@ -42,11 +42,12 @@ describe('StockTableComponent', () => {
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
         const table = compiled.querySelector('app-reusable-table');
-
+        if(table.rows != null){
         expect(table.rows[0].cells[0].textContent).toBe('name');
         expect(table.rows[1].cells[0].textContent).toBe('Apple Inc');
         expect(table.rows[2].cells[0].textContent).toBe('Tesla Inc');
         expect(table.rows[3].cells[0].textContent).toBe('Amazon.com Inc');
+        }
     });
 });
  

@@ -1,3 +1,4 @@
+import { CdkRecycleRows } from '@angular/cdk/table';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MfHolding } from '../../../core/models/mf-holding';
 
@@ -29,9 +30,7 @@ describe('MfTableComponent', () => {
       buy_price: 439.45,
       LTP: 452.77,
     }];
-// Note that the argument to configureMockStockService() is an Observable 
-// instead of a list. This allows other specs to pass the Observable
-// that is returned by throwError() so we can test error handling.
+
 
     it(`will contain a table and has a "no Mutual Fund" message and 
         will not contain data error message`, async () => {
@@ -40,11 +39,13 @@ describe('MfTableComponent', () => {
         const compiled = fixture.debugElement.nativeElement;
         const table = compiled.querySelector('app-reusable-table');
 
+        if(table.rows != null){
         expect(table.rows.length).toBe(4);
         expect(table.rows[0].cells[0].textContent).toBe('name');
         expect(table.rows[1].cells[0].textContent).toBe('Vanguard 500');
         expect(table.rows[2].cells[0].textContent).toBe('Fidelity 500 Index fund');
         expect(table.rows[3].cells[0].textContent).toBe('SPDR S&P 500 ETF');
+        }
     });
 });
 

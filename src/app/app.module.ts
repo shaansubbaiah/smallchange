@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { FeaturesModule } from './features/features.module';
     AppRoutingModule,
     SharedModule,
     FeaturesModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

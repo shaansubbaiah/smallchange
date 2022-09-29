@@ -36,17 +36,18 @@ describe('BondTableComponent', () => {
 // instead of a list. This allows other specs to pass the Observable
 // that is returned by throwError() so we can test error handling.
 
-    it(`will contain a table and has a "no Stock" message and 
+    it(`will contain a table and has a "no Bond Holding" message and 
         will not contain data error message`, async () => {
 
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
         const table = compiled.querySelector('app-reusable-table');
-
+        if(table.rows!= null){
         expect(table.rows[0].cells[0].textContent).toBe('name');
         expect(table.rows[1].cells[0].textContent).toBe('Vanguard 500 Idx:Adm');
         expect(table.rows[2].cells[0].textContent).toBe('Fidelity 500 Index fund');
         expect(table.rows[3].cells[0].textContent).toBe('SPDR S&P 500 ETF');
+          }
     });
 });
 

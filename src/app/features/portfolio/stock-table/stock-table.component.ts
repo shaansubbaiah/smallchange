@@ -24,12 +24,13 @@ export class StockTableComponent implements OnInit {
   ngOnInit(): void {
     this.invested_amount = 0;
     this.current_amount = 0;
-
+    if(this.holdings != null){
     for (var i = 0; i < this.holdings.length; i++) {
       this.invested_amount +=
         this.holdings[i].buy_price * this.holdings[i].quantity;
       this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
     }
+  }
   }
 
   openDialog(data: any) {
