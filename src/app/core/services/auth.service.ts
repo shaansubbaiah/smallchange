@@ -52,18 +52,30 @@ export class AuthService {
   setLoggedIn(val: boolean) {
     this.isLoggedIn.next(val);
 
-    if (val == true) {
-      this.saveToLocalStorage({
-        token: 'DUMMY TOKEN',
-        user: JSON.stringify({ username: 'DUMMY USER' }),
-      });
-    } else {
+    if (!val) {
       this.clearLocalStorage();
     }
   }
 
-  getUserDetails(): User {
-    return users[Math.floor(Math.random()*users.length)];
+  getUserDetails(): User | null {
+    let currentUserJSON = localStorage.getItem('currentUser');
+    try {
+      if (currentUserJSON === null) throw new Error('Unable to fetch current user details!');
+      let currentUser = JSON.parse(currentUserJSON);
+      return new User(
+        currentUser.userName,
+        currentUser.firstName,
+        currentUser.lastName,
+        currentUser.email,
+        currentUser.passwordHash,
+        currentUser.lastLogin,
+        currentUser.bankAccounts,
+        currentUser.token
+      );
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
 
   setInitialLoginStatus() {

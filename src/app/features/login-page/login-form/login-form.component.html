@@ -52,14 +52,15 @@
             loginDetails.get('password')?.hasError('maxlength')
           "
         >
-          Password should be 3 - 10 chracters long.
+          Password should be 3 - 10 characters long
         </mat-error>
       </mat-form-field>
-      <!-- <span>
+      <span>
         <mat-error *ngIf="!loginValid"
           >User details are invalid! Please try again!</mat-error
         >
-      </span> -->
+      </span>
+      <br>
       <button
         type="submit"
         mat-raised-button
