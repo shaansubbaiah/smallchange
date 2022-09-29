@@ -1,0 +1,53 @@
+.container,
+.title {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  align-items: center;
+  //   justify-content: center;
+}
+
+.container {
+  gap: 10px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.warning {
+  color: rgb(255, 0, 76);
+}
+
+.success {
+  color: rgb(8, 192, 17);
+}
+
+.alert {
+  color: #3620ab;
+}
+
+.message {
+  color: black;
+}
+
+// Changing the colors of material 2-tone colors
+// is kinda bugyy, have to use 'filter' instead
+// of regular 'color' or 'fill' param
+//
+// From: https://codepen.io/sosuke/pen/Pjoqqp
+
+.w {
+  filter: invert(19%) sepia(98%) saturate(6265%) hue-rotate(335deg)
+    brightness(96%) contrast(111%);
+}
+
+.s {
+  filter: invert(50%) sepia(68%) saturate(2162%) hue-rotate(85deg)
+    brightness(98%) contrast(101%);
+}
+
+.a {
+  filter: invert(19%) sepia(96%) saturate(2856%) hue-rotate(246deg)
+    brightness(66%) contrast(108%);
+}

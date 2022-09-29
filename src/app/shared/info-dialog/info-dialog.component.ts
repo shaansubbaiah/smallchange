@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-info-dialog',
@@ -10,7 +11,7 @@ export class InfoDialogComponent implements OnInit {
   indexData: any;
   orderQuantity = 0;
 
-  constructor() {}
+  constructor(private alertService: AlertService) {}
 
   ngOnInit(): void {
     this.indexData = this.data.data;
@@ -22,6 +23,14 @@ export class InfoDialogComponent implements OnInit {
         this.data.index_type
       } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     );
+
+    // send an event back to the portfolio
+    // from there,
+    // 1. use a service to buy/sell
+    // 2. display alert on success/fail
+    // 3. close the dialog
+
+    this.alertService.open({ type: 'success', message: 'Sold stock!' });
   }
 
   onBuyIndex(quantity: number) {
@@ -30,5 +39,10 @@ export class InfoDialogComponent implements OnInit {
         this.data.index_type
       } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     );
+
+    this.alertService.open({
+      type: 'success',
+      message: 'Purchased stock!',
+    });
   }
 }

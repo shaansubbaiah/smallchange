@@ -6,6 +6,7 @@ import { TitleComponent } from './title/title.component';
 import { ReusableTableComponent } from './reusable-table/reusable-table.component';
 import { ReusableTableOverviewComponent } from './reusable-table-overview/reusable-table-overview.component';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     ReusableTableComponent,
     ReusableTableOverviewComponent,
     InfoDialogComponent,
+    SnackbarComponent,
   ],
   imports: [
     CommonModule,
@@ -36,12 +39,14 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatDividerModule,
     MatTabsModule,
     MatButtonToggleModule,
+    MatSnackBarModule,
   ],
   exports: [
     TitleComponent,
     ReusableTableComponent,
     ReusableTableOverviewComponent,
     InfoDialogComponent,
+    SnackbarComponent,
   ],
 })
 export class SharedModule {}

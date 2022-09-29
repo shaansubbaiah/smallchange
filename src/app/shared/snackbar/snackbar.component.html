@@ -1,0 +1,18 @@
+<div class="container">
+  <div
+    class="title"
+    [ngClass]="{
+      warning: data.type == 'warning',
+      success: data.type == 'success',
+      alert: data.type != 'warning' && data.type != 'success'
+    }"
+  >
+    <mat-icon *ngIf="data.type == 'warning'" class="w">warning</mat-icon>
+    <mat-icon *ngIf="data.type == 'success'" class="s">check</mat-icon>
+    <mat-icon *ngIf="data.type != 'warning' && data.type != 'success'" class="a"
+      >info</mat-icon
+    >
+    <span>{{ data.type | uppercase }}:</span>
+  </div>
+  <span class="message">{{ data.message }}</span>
+</div>
