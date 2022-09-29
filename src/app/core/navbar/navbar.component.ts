@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit {
         this.navLinks = [
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Trade History', url: '/trade-history' },
-          { name: 'Market Place', url: '/market-place' },
+          { name: 'Marketplace', url: '/market-place' },
           { name: 'Preferences', url: '/preferences' },
         ];
       } else {

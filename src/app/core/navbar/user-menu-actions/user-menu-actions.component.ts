@@ -12,10 +12,19 @@ export class UserMenuActionsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  getUserName() : string {
-    let username = CommonUtils.getUserDetail('username');
-    if (username === null) return '';
-    else return username;
+  getUserInitials() : string {
+    let firstName = this.getUserDetail('firstName'), lastName = this.getUserDetail('lastName');
+    let initials = '';
+    if (firstName.length > 0) initials += firstName.charAt(0);
+    if (lastName.length > 0) initials += lastName.charAt(0);
+
+    return initials;
   }
 
+  getUserDetail(key : string) : any {
+    let val = CommonUtils.getUserDetail(key);
+    console.log(val);
+    if (val === null) return '';
+    else return val;
+  }
 }

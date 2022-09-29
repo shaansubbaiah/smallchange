@@ -4,20 +4,23 @@
   border-radius: 50%;
   background: #512DA8;
   font-size: 35px;
-  color: #fff;
-  text-align: center;
+  color: rgb(236, 236, 226);
+  margin-left: auto;
+  margin-right: auto;
   line-height: 75px;
-  margin: 20px 0;
+}
+
+#profileImageContainer {
+  width: 95%;
 }
 
 .user-actions-card {
   background-color: white;
-  position: absolute;
-  left: 80%;
-  margin-top: 45px;
+  width: 400px;
+  position:absolute;
+  top: 80px;
+  right:3%;
+  text-align: center;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
-  padding: 28px;
   border-radius: 18px;
-  max-width: 400px;
-  margin: 0 auto;
 }
