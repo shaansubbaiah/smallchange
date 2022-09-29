@@ -309,7 +309,7 @@ export var dummy_data_mfs: MfHolding[] = [
     LTP: 419.68,
   },
   {
-    name: 'Fidelity 500 Index fund',
+    name: 'Finance 500 Index fund',
     code: 'FXAIX',
     quantity: 20,
     buy_price: 160.45,
@@ -323,7 +323,7 @@ export var dummy_data_mfs: MfHolding[] = [
     LTP: 452.77,
   },
   {
-    name: 'Fidelity Govt Cash Rsrvs',
+    name: 'Finance Govt Cash Rsrvs',
     code: 'FDRXX',
     quantity: 550,
     buy_price: 1.0,
@@ -337,7 +337,7 @@ export var dummy_data_mfs: MfHolding[] = [
     LTP: 79.11,
   },
   {
-    name: 'Fidelity Contrafund',
+    name: 'Finance Contrafund',
     code: 'FCNTX',
     quantity: 85,
     buy_price: 12.22,
@@ -362,7 +362,7 @@ export var dummy_data_bonds: BondHolding[] = [
     asset_class: 'Government bonds',
   },
   {
-    name: 'Fidelity 500 Index fund',
+    name: 'Finance 500 Index fund',
     code: 'FXAIX',
     quantity: 20,
     buy_price: 160.45,
@@ -543,7 +543,8 @@ export var dummy_data_order: TradeStock[] = [
 ];
 
 export var users: User[] = [
-  new User('admin',
+  new User(
+    'admin',
     'SmallChange',
     'Admin',
     'admin@fmr.com',
@@ -555,7 +556,8 @@ export var users: User[] = [
     ],
     'eyJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjY0MzM5NDI4LCJpYXQiOjE2NjQzMzk0Mjh9.zOlVX1PR6cw2ip0MpzSAGChooJ4ipT8bzt7O6CLdmDg'
   ),
-  new User ('test',
+  new User(
+    'test',
     'Test',
     'User',
     'testuser@fmr.com',
