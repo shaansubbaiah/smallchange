@@ -1,0 +1,51 @@
+.action-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.index-title {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.index-name {
+  font-size: 1.3rem;
+}
+
+.index-code {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.index-assetclass {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.mat-tab-group {
+  font-family: unset !important;
+}
+
+mat-divider {
+  margin: 5px 0;
+}
+
+.index-desc-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.index-desc-value {
+  font-weight: bold;
+}
+
+mat-form-field,
+.buysell-button {
+  width: 100%;
+  margin-top: 10px;
+}

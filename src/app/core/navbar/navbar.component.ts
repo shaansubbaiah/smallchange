@@ -16,13 +16,15 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.getLoggedIn().subscribe((val) => {
+    this.authService.getLoggedIn().subscribe((val : boolean) => {
       this.isLoggedIn = val;
       if (this.isLoggedIn) {
-        this.currentUser = this.authService.getUserDetails();
-        if (this.currentUser === null || typeof this.currentUser == 'undefined')
+        let currentUser = this.authService.getUserDetails();
+
+        if (currentUser === null || typeof currentUser == 'undefined')
           throw new Error('Unable to fetch user details!!');
 
+        this.currentUser = currentUser;
         this.navLinks = [
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Trade History', url: '/trade-history' },

@@ -19,6 +19,6 @@ export class MarketMfTableComponent implements OnInit {
   ngOnInit(): void {}
 
   openDialog(data: any) {
-    this.openDialogEvent.emit({ dialog_type: 'mf', data: data });
+    this.openDialogEvent.emit({ index_type: 'mf', data: data });
   }
 }
