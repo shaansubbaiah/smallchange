@@ -7,7 +7,8 @@ import { AuthService } from './core/services/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'sc-module2';
+  title = 'SmallChange';
+  showUserMenu : boolean = false;
 
   constructor(private authService: AuthService) {}
 

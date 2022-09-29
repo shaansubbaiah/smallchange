@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventEmitter } from 'stream';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
@@ -12,6 +13,9 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   currentUser!: User;
   navLinks: any;
+
+  @Output()
+  userAvatarButtonClicked : EventEmitter = new EventEmitter();
 
   constructor(private authService: AuthService, private router: Router) {}
 

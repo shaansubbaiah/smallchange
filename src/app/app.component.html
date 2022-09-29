@@ -1,6 +1,7 @@
 <div class="container">
   <div class="main">
-    <app-navbar></app-navbar>
+    <app-navbar (userAvatarButtonClicked)="showUserMenu = !showUserMenu"></app-navbar>
+    <app-user-menu-actions *ngIf="showUserMenu"></app-user-menu-actions>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
   </div>
