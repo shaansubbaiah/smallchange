@@ -1,18 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './navbar/navbar.component';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AvatarButtonComponent } from './navbar/avatar-button/avatar-button.component';
-import { UserMenuActionsComponent } from './navbar/user-menu-actions/user-menu-actions.component';
-import { MatCardModule } from "@angular/material/card";
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, AvatarButtonComponent, UserMenuActionsComponent],
-  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, MatCardModule],
-  exports: [NavbarComponent, FooterComponent, UserMenuActionsComponent],
+  declarations: [NavbarComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule,
+    MatCardModule,
+    MatDividerModule,
+    MatMenuModule,
+  ],
+  exports: [NavbarComponent, FooterComponent],
 })
 export class CoreModule {}

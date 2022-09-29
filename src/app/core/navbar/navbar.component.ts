@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonUtils } from 'src/app/utils';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
@@ -13,13 +14,10 @@ export class NavbarComponent implements OnInit {
   currentUser!: User;
   navLinks: any;
 
-  @Output()
-  userAvatarButtonClicked : EventEmitter<void> = new EventEmitter();
-
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.getLoggedIn().subscribe((val : boolean) => {
+    this.authService.getLoggedIn().subscribe((val: boolean) => {
       this.isLoggedIn = val;
       if (this.isLoggedIn) {
         let currentUser = this.authService.getUserDetails();
@@ -32,12 +30,27 @@ export class NavbarComponent implements OnInit {
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Trade History', url: '/trade-history' },
           { name: 'Marketplace', url: '/market-place' },
-          { name: 'Preferences', url: '/preferences' },
         ];
       } else {
         this.navLinks = [{ name: 'Sign In', url: '/login' }];
       }
     });
+  }
+
+  getUserInitials(): string {
+    let firstName = this.getUserDetail('firstName'),
+      lastName = this.getUserDetail('lastName');
+    let initials = '';
+    if (firstName.length > 0) initials += firstName.charAt(0);
+    if (lastName.length > 0) initials += lastName.charAt(0);
+
+    return initials;
+  }
+
+  getUserDetail(key: string): any {
+    let val = CommonUtils.getUserDetail(key);
+    if (val === null) return '';
+    else return val;
   }
 
   logout() {

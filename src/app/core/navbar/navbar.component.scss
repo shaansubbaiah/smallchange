@@ -1,5 +1,61 @@
-mat-toolbar {
+@media only screen and (max-width: 700px) {
+  .show-on-small {
+    display: block !important;
+  }
+
+  .hide-on-small {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .show-on-small {
+    display: none !important;
+  }
+
+  .hide-on-small {
+    display: block !important;
+  }
+
+  .toolbar {
+    flex-direction: column !important;
+  }
+}
+
+.show-on-small {
+  display: none;
+}
+
+.hide-on-small {
+  display: block;
+}
+
+.toolbar {
+  background: #3620ab;
+  color: white;
+  padding: 10px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.flex-row-no-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.flex-row-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .spacer {
@@ -19,4 +75,35 @@ mat-toolbar {
   font-weight: 300;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.user-menu {
+  position: absolute;
+  z-index: 42; // the answer to everything
+  right: 4%;
+}
+
+.user-menu-options a {
+  width: 100%;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-image {
+  height: 100px;
+  width: 100px;
+  border-radius: 18px;
+  background: pink;
+}
+
+.user-name {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 5px 20px;
+  margin-top: 10px;
 }

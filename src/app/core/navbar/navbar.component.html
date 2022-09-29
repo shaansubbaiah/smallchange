@@ -1,14 +1,38 @@
-<mat-toolbar color="primary">
-  <span routerLink="/home" class="logo">SmallChange</span>
-  <span class="logo-superscript">™</span>
-  <div class="spacer"></div>
-  <div *ngFor="let navLink of navLinks">
-    <a mat-button routerLink="{{ navLink.url }}">{{ navLink.name }}</a>
+<div class="toolbar" color="primary">
+  <div class="flex-row-no-wrap">
+    <span routerLink="/home" class="logo hide-on-small">SmallChange</span>
+    <span routerLink="/home" class="logo show-on-small">SC</span>
+    <span class="logo-superscript">™</span>
   </div>
-  <a *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</a>
-  <app-avatar-button
-    *ngIf="isLoggedIn"
-    (click)="userAvatarButtonClicked.emit()"
-    [buttonText]="currentUser.getInitials()"
-  ></app-avatar-button>
-</mat-toolbar>
+  <div class="flex-row-wrap">
+    <div *ngFor="let navLink of navLinks" class="flex-row-no-wrap">
+      <a mat-button routerLink="{{ navLink.url }}">{{ navLink.name }}</a>
+    </div>
+    <button
+      *ngIf="isLoggedIn"
+      mat-mini-fab
+      color="fab-color"
+      aria-label=""
+      [matMenuTriggerFor]="menu"
+    >
+      {{ currentUser.getInitials() }}
+    </button>
+  </div>
+</div>
+
+<mat-menu #menu="matMenu">
+  <div class="user-details">
+    <div class="user-image"></div>
+    <p class="user-name">
+      {{ getUserDetail("firstName") + " " + getUserDetail("lastName") }}
+    </p>
+  </div>
+  <mat-divider></mat-divider>
+  <button mat-menu-item routerLink="/home">Home(test)</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item routerLink="/trade-history">Trade History(test)</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item routerLink="/preferences">Preferences</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>
