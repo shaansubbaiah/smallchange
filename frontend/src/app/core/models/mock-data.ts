@@ -2,25 +2,9 @@ import { BondHolding } from './bond-holding';
 import { MfHolding } from './mf-holding';
 import { StockHolding } from './stock-holding';
 import { TradeStock } from './trade-stock';
-import { AssetClass } from './asset-class';
 import { StockList } from './stock-list';
 import { BondList } from './bond-list';
-import { BankAccount } from './bank-account';
 import { User } from './user';
-
-export var stock_asset_classes: AssetClass[] = [
-  { viewName: 'Main index stocks', name: 'main_index_stocks' },
-  { viewName: 'Small cap company stocks', name: 'small_cap_company_stocks' },
-  {
-    viewName: 'International market stocks',
-    name: 'international_market_stocks',
-  },
-];
-
-export var bond_asset_classes: AssetClass[] = [
-  { viewName: 'Corporate bonds', name: 'corporate_bonds' },
-  { viewName: 'Government bonds', name: 'government_bonds' },
-];
 
 export var market_stocks: StockList[] = [
   {
@@ -200,7 +184,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 100,
     buy_price: 155.34,
     LTP: 154.29,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Tesla Inc',
@@ -208,7 +192,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 20,
     buy_price: 657.65,
     LTP: 733.8,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Amazon.com Inc',
@@ -216,7 +200,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 12,
     buy_price: 2354.34,
     LTP: 3471.2,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Vinco Ventures',
@@ -224,7 +208,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 550,
     buy_price: 5.56,
     LTP: 7.65,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'Microsoft Corp',
@@ -232,7 +216,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 34,
     buy_price: 350.76,
     LTP: 300.88,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'Sphere 3D Corp',
@@ -240,7 +224,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 85,
     buy_price: 6.42,
     LTP: 6.39,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'Lucid Group Inc Shs',
@@ -248,7 +232,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 188,
     buy_price: 22.33,
     LTP: 19.42,
-    asset_class: 'International market stocks',
+    asset_class: 'international_market_stocks',
   },
   {
     name: 'Aliaba Group Holding Ltd ADR',
@@ -256,7 +240,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 30,
     buy_price: 175.5,
     LTP: 170.71,
-    asset_class: 'International market stocks',
+    asset_class: 'international_market_stocks',
   },
   {
     name: 'Facebook Inc',
@@ -264,7 +248,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 43,
     buy_price: 389.56,
     LTP: 376.71,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Walmart Inc',
@@ -272,7 +256,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 20,
     buy_price: 151.34,
     LTP: 145.65,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Mastercard Incorporated',
@@ -280,7 +264,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 45,
     buy_price: 302.34,
     LTP: 347.2,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
   },
   {
     name: 'Aterian',
@@ -288,7 +272,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 1000,
     buy_price: 5.56,
     LTP: 17.89,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
   },
   {
     name: 'BHL Group Limited',
@@ -296,7 +280,7 @@ export var dummy_data_stocks: StockHolding[] = [
     quantity: 324,
     buy_price: 67.8,
     LTP: 61.09,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
   },
 ];
 
@@ -359,7 +343,7 @@ export var dummy_data_bonds: BondHolding[] = [
     quantity: 100,
     buy_price: 400.34,
     LTP: 419.68,
-    asset_class: 'Government bonds',
+    asset_class: 'government_bonds',
   },
   {
     name: 'Finance 500 Index fund',
@@ -367,7 +351,7 @@ export var dummy_data_bonds: BondHolding[] = [
     quantity: 20,
     buy_price: 160.45,
     LTP: 157.76,
-    asset_class: 'Government bonds',
+    asset_class: 'government_bonds',
   },
   {
     name: 'SPDR S&P 500 ETF',
@@ -375,7 +359,7 @@ export var dummy_data_bonds: BondHolding[] = [
     quantity: 12,
     buy_price: 439.45,
     LTP: 452.77,
-    asset_class: 'Corporate bonds',
+    asset_class: 'corporate_bonds',
   },
 ];
 
@@ -385,7 +369,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'AAPL',
     quantity: 100,
     price: 155.34,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
     trade_type: 'buy',
     date: '2021/02/28',
     time: '09:10',
@@ -395,7 +379,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'TSLA',
     quantity: 20,
     price: 657.65,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
     trade_type: 'buy',
     date: '2021/03/23',
     time: '11:40',
@@ -405,7 +389,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'AMZN',
     quantity: 12,
     price: 2354.34,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
     trade_type: 'buy',
     date: '2021/04/23',
     time: '14:00',
@@ -415,7 +399,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'BBIG',
     quantity: 550,
     price: 5.56,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
     trade_type: 'buy',
     date: '2021/07/08',
     time: '12:20',
@@ -425,7 +409,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'MSFT',
     quantity: 34,
     price: 350.76,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
     trade_type: 'buy',
     date: '2021/07/02',
     time: '13:18',
@@ -435,7 +419,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'ANY',
     quantity: 85,
     price: 6.42,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
     trade_type: 'buy',
     date: '2021/07/13',
     time: '10:10',
@@ -445,7 +429,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'LCID',
     quantity: 188,
     price: 22.33,
-    asset_class: 'International market stocks',
+    asset_class: 'international_market_stocks',
     trade_type: 'buy',
     date: '2021/06/18',
     time: '14:54',
@@ -455,7 +439,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'BABA',
     quantity: 30,
     price: 175.5,
-    asset_class: 'International market stocks',
+    asset_class: 'international_market_stocks',
     trade_type: 'buy',
     date: '2021/04/23',
     time: '14:22',
@@ -465,7 +449,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'TSLA',
     quantity: 20,
     price: 657.65,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
     trade_type: 'sell',
     date: '2021/08/03',
     time: '13:12',
@@ -475,7 +459,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'AMZN',
     quantity: 12,
     price: 2354.34,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
     trade_type: 'sell',
     date: '2021/05/28',
     time: '11:04',
@@ -485,7 +469,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'BBIG',
     quantity: 550,
     price: 5.56,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
     trade_type: 'sell',
     date: '2021/05/23',
     time: '10:07',
@@ -495,7 +479,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'MSFT',
     quantity: 34,
     price: 350.76,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
     trade_type: 'sell',
     date: '2021/06/23',
     time: '9:45',
@@ -505,7 +489,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'TSLA',
     quantity: 20,
     price: 650.65,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
     trade_type: 'buy',
     date: '2021/09/03',
     time: '11:12',
@@ -515,7 +499,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'AMZN',
     quantity: 12,
     price: 2154.34,
-    asset_class: 'Main index stocks',
+    asset_class: 'main_index_stocks',
     trade_type: 'buy',
     date: '2021/08/28',
     time: '13:04',
@@ -525,7 +509,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'BBIG',
     quantity: 550,
     price: 4.56,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
     trade_type: 'buy',
     date: '2021/07/23',
     time: '11:07',
@@ -535,7 +519,7 @@ export var dummy_data_order: TradeStock[] = [
     code: 'MSFT',
     quantity: 34,
     price: 310.76,
-    asset_class: 'Small cap company stocks',
+    asset_class: 'small_cap_company_stocks',
     trade_type: 'buy',
     date: '2021/07/26',
     time: '12:45',

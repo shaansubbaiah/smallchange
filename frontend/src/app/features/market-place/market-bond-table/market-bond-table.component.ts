@@ -13,7 +13,7 @@ export class MarketBondTableComponent implements OnInit {
     { name: 'name', displayName: 'Name', type: 'text' },
     { name: 'code', displayName: 'Code', type: 'text' },
     { name: 'interest', displayName: 'Interest', type: 'percentile' },
-    { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
+    { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
   ];
 
   ngOnInit(): void {}

@@ -18,19 +18,19 @@ export class StockTableComponent implements OnInit {
     { name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
     { name: 'LTP', displayName: 'LTP', type: 'currency' },
     { name: 'quantity', displayName: 'Quantity', type: 'text' },
-    { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
+    { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
   ];
 
   ngOnInit(): void {
     this.invested_amount = 0;
     this.current_amount = 0;
-    if(this.holdings != null){
-    for (var i = 0; i < this.holdings.length; i++) {
-      this.invested_amount +=
-        this.holdings[i].buy_price * this.holdings[i].quantity;
-      this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
+    if (this.holdings != null) {
+      for (var i = 0; i < this.holdings.length; i++) {
+        this.invested_amount +=
+          this.holdings[i].buy_price * this.holdings[i].quantity;
+        this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
+      }
     }
-  }
   }
 
   openDialog(data: any) {

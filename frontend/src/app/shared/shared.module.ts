@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnakeToTitlePipe } from '../core/pipes/snake-to-title.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReusableTableOverviewComponent,
     InfoDialogComponent,
     SnackbarComponent,
+    SnakeToTitlePipe,
   ],
   imports: [
     CommonModule,

@@ -14,7 +14,7 @@ export class MarketStockTableComponent implements OnInit {
     { name: 'code', displayName: 'Code', type: 'text' },
     { name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
     { name: 'LTP', displayName: 'LTP', type: 'currency' },
-    { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
+    { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
   ];
 
   ngOnInit(): void {}

@@ -19,7 +19,7 @@ export class BondTableComponent implements OnInit {
     { name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
     { name: 'LTP', displayName: 'LTP', type: 'currency' },
     { name: 'quantity', displayName: 'Quantity', type: 'text' },
-    { name: 'asset_class', displayName: 'Asset Class', type: 'text' },
+    { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
   ];
 
   ngOnInit(): void {

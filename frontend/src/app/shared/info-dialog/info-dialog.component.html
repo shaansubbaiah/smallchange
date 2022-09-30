@@ -6,7 +6,7 @@
     }}</span>
   </div>
   <p *ngIf="indexData.asset_class" class="index-assetclass">
-    {{ indexData.asset_class | uppercase }}
+    {{ indexData.asset_class | snakeToTitle }}
   </p>
 </div>
 

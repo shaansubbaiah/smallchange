@@ -31,6 +31,9 @@
         <ng-container *ngIf="col.type == 'text'">
           {{ e[col.name] }}
         </ng-container>
+        <ng-container *ngIf="col.type == 'snakecase'">
+          {{ e[col.name] | snakeToTitle }}
+        </ng-container>
         <ng-container *ngIf="col.type == 'currency'">
           {{ e[col.name] | currency: "USD" }}
         </ng-container>
