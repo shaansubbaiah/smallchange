@@ -20,6 +20,10 @@ export class AuthService {
       if (username === user.userName)
         if (passwordHash === user.passwordHash) {
           console.log('login success');
+          user.lastLogin = Date.now();
+
+          //NOTE:
+            //FRONTEND METHODS, ONLY FOR TESTING! SHOULD BE REMOVED AFTER IMPLEMENTING BACKEND
           localStorage.setItem('currentUser', JSON.stringify(user));
           return of(true);
         }
@@ -31,8 +35,8 @@ export class AuthService {
     return true;
   }
 
-  getToken(): boolean {
-    return CommonUtils.getUserDetail('token') ? true : false;
+  getToken(): string | null {
+    return CommonUtils.getUserDetail('token');
   }
 
   saveToLocalStorage(data: any) {

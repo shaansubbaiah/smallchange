@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { BuySellService } from 'src/app/core/services/buy-sell.service';
 
 @Component({
   selector: 'app-info-dialog',
@@ -11,7 +12,7 @@ export class InfoDialogComponent implements OnInit {
   indexData: any;
   orderQuantity = 0;
 
-  constructor(private alertService: AlertService) {}
+  constructor(private alertService: AlertService, private buySellService : BuySellService) {}
 
   ngOnInit(): void {
     this.indexData = this.data.data;
