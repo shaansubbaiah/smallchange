@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
         this.currentUser = currentUser;
         this.navLinks = [
           { name: 'Portfolio', url: '/portfolio' },
-          { name: 'Trade History', url: '/trade-history' },
+          // { name: 'Trade History', url: '/trade-history' },
           { name: 'Marketplace', url: '/market-place' },
         ];
       } else {
