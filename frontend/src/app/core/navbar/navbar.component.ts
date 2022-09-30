@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   currentUser!: User;
   navLinks: any;
+  userInitials: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -27,30 +28,30 @@ export class NavbarComponent implements OnInit {
 
         this.currentUser = currentUser;
         this.navLinks = [
+          { name: 'Home', url: '/home' },
           { name: 'Portfolio', url: '/portfolio' },
-          // { name: 'Trade History', url: '/trade-history' },
           { name: 'Marketplace', url: '/market-place' },
         ];
       } else {
         this.navLinks = [{ name: 'Sign In', url: '/login' }];
       }
+
+      this.getUserInitials();
     });
   }
 
-  getUserInitials(): string {
-    let firstName = this.getUserDetail('firstName'),
-      lastName = this.getUserDetail('lastName');
+  getUserInitials() {
     let initials = '';
-    if (firstName.length > 0) initials += firstName.charAt(0);
-    if (lastName.length > 0) initials += lastName.charAt(0);
+    if (this.currentUser.firstName.length > 0)
+      initials += this.currentUser.firstName.charAt(0);
+    if (this.currentUser.lastName.length > 0)
+      initials += this.currentUser.lastName.charAt(0);
 
-    return initials;
+    this.userInitials = initials;
   }
 
-  getUserDetail(key: string): any {
-    let val = CommonUtils.getUserDetail(key);
-    if (val === null) return '';
-    else return val;
+  getUserBgColor(): string {
+    return CommonUtils.stringToColor(this.userInitials);
   }
 
   logout() {

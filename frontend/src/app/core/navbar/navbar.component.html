@@ -15,24 +15,22 @@
       aria-label=""
       [matMenuTriggerFor]="menu"
     >
-      {{ currentUser.getInitials() }}
+      {{ userInitials }}
     </button>
   </div>
 </div>
 
 <mat-menu #menu="matMenu">
   <div class="user-details">
-    <div class="user-image">{{ currentUser.getInitials() }}</div>
+    <div class="user-image" [ngStyle]="{ backgroundColor: getUserBgColor() }">
+      {{ userInitials }}
+    </div>
     <p class="user-name">
-      {{ getUserDetail("firstName") + " " + getUserDetail("lastName") }}
+      {{ currentUser.firstName + " " + currentUser.lastName }}
     </p>
   </div>
   <mat-divider></mat-divider>
-  <!-- <button mat-menu-item routerLink="/home">Home(test)</button>
-  <mat-divider></mat-divider> -->
   <button mat-menu-item routerLink="/trade-history">Trade History</button>
-  <mat-divider></mat-divider>
-  <!-- <button mat-menu-item routerLink="/preferences">Preferences</button> -->
   <mat-divider></mat-divider>
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>
