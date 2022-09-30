@@ -22,17 +22,17 @@
 
 <mat-menu #menu="matMenu">
   <div class="user-details">
-    <div class="user-image"></div>
+    <div class="user-image">{{ currentUser.getInitials() }}</div>
     <p class="user-name">
       {{ getUserDetail("firstName") + " " + getUserDetail("lastName") }}
     </p>
   </div>
   <mat-divider></mat-divider>
-  <button mat-menu-item routerLink="/home">Home(test)</button>
+  <!-- <button mat-menu-item routerLink="/home">Home(test)</button>
+  <mat-divider></mat-divider> -->
+  <button mat-menu-item routerLink="/trade-history">Trade History</button>
   <mat-divider></mat-divider>
-  <button mat-menu-item routerLink="/trade-history">Trade History(test)</button>
-  <mat-divider></mat-divider>
-  <button mat-menu-item routerLink="/preferences">Preferences</button>
+  <!-- <button mat-menu-item routerLink="/preferences">Preferences</button> -->
   <mat-divider></mat-divider>
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>
