@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
           { name: 'Marketplace', url: '/market-place' },
         ];
       } else {
-        this.navLinks = [{ name: 'Sign In', url: '/login' }];
+        this.navLinks = [{ name: 'Log In', url: '/login' }];
       }
 
       this.getUserInitials();
@@ -42,6 +42,10 @@ export class NavbarComponent implements OnInit {
 
   getUserInitials() {
     let initials = '';
+    if (this.currentUser === null) {
+      this.userInitials = '';
+      return;
+    }
     if (this.currentUser.firstName.length > 0)
       initials += this.currentUser.firstName.charAt(0);
     if (this.currentUser.lastName.length > 0)
