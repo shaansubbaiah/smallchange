@@ -36,13 +36,13 @@ export class InfoDialogComponent implements OnInit {
       if (result.result === 'SUCCESS') {
         this.alertService.open({
           type: 'success',
-          message: 'Purchased stock!',
+          message: 'Sold stock!',
         });
       }
       else {
         this.alertService.open({
           type: 'warning',
-          message: 'Purchase failed!',
+          message: 'Sell failed!',
         });
       }
       console.log(JSON.stringify(result));
