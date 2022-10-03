@@ -81,7 +81,6 @@ export class ReusableTableComponent implements OnInit, AfterViewInit {
   }
 
   onRowClick(row: any) {
-    console.log(row);
     this.rowClickEvent.emit(row);
   }
 }

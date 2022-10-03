@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TransactionResult } from 'src/app/core/models/transaction-result';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { BuySellService } from 'src/app/core/services/buy-sell.service';
+import { CommonUtils } from 'src/app/utils';
 
 @Component({
   selector: 'app-info-dialog',
@@ -20,30 +22,59 @@ export class InfoDialogComponent implements OnInit {
 
   onSellIndex(quantity: number) {
     console.log(
-      `Sold ${
+      `Trying to sell${
         this.data.index_type
-      } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
+      }\nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     );
 
-    // send an event back to the portfolio
-    // from there,
-    // 1. use a service to buy/sell
-    // 2. display alert on success/fail
-    // 3. close the dialog
-
-    this.alertService.open({ type: 'success', message: 'Sold stock!' });
+    this.buySellService.attemptSell({
+      index_code: this.indexData.code,
+      asset_class : this.indexData.asset_class,
+      quantity: `${quantity}`,
+      user_id: `${CommonUtils.getUserDetail('userName')}`,
+    }).subscribe((result : TransactionResult) => {
+      if (result.result === 'SUCCESS') {
+        this.alertService.open({
+          type: 'success',
+          message: 'Purchased stock!',
+        });
+      }
+      else {
+        this.alertService.open({
+          type: 'warning',
+          message: 'Purchase failed!',
+        });
+      }
+      console.log(JSON.stringify(result));
+    });
   }
 
   onBuyIndex(quantity: number) {
     console.log(
-      `Purchased  ${
+      `Trying to buy  ${
         this.data.index_type
       } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     );
 
-    this.alertService.open({
-      type: 'success',
-      message: 'Purchased stock!',
+    this.buySellService.attemptBuy({
+      index_code: this.indexData.code,
+      asset_class : this.indexData.asset_class,
+      quantity: `${quantity}`,
+      user_id: `${CommonUtils.getUserDetail('userName')}`,
+    }).subscribe((result : TransactionResult) => {
+      if (result.result === 'SUCCESS') {
+        this.alertService.open({
+          type: 'success',
+          message: 'Purchased stock!',
+        });
+      }
+      else {
+        this.alertService.open({
+          type: 'warning',
+          message: 'Purchase failed!',
+        });
+      }
+      console.log(JSON.stringify(result));
     });
   }
 }
