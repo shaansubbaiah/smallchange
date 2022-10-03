@@ -14,7 +14,10 @@ export class InfoDialogComponent implements OnInit {
   indexData: any;
   orderQuantity = 0;
 
-  constructor(private alertService: AlertService, private buySellService : BuySellService) {}
+  constructor(
+    private alertService: AlertService,
+    private buySellService: BuySellService
+  ) {}
 
   ngOnInit(): void {
     this.indexData = this.data.data;
@@ -27,26 +30,27 @@ export class InfoDialogComponent implements OnInit {
       }\nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     );
 
-    this.buySellService.attemptSell({
-      index_code: this.indexData.code,
-      asset_class : this.indexData.asset_class,
-      quantity: `${quantity}`,
-      user_id: `${CommonUtils.getUserDetail('userName')}`,
-    }).subscribe((result : TransactionResult) => {
-      if (result.result === 'SUCCESS') {
-        this.alertService.open({
-          type: 'success',
-          message: 'Sold stock!',
-        });
-      }
-      else {
-        this.alertService.open({
-          type: 'warning',
-          message: 'Sell failed!',
-        });
-      }
-      console.log(JSON.stringify(result));
-    });
+    this.buySellService
+      .attemptSell({
+        index_code: this.indexData.code,
+        asset_class: this.indexData.asset_class,
+        quantity: `${quantity}`,
+        user_id: `${CommonUtils.getUserDetail('userName')}`,
+      })
+      .subscribe((result: TransactionResult) => {
+        if (result.result === 'SUCCESS') {
+          this.alertService.open({
+            type: 'success',
+            message: 'Sold stock!',
+          });
+        } else {
+          this.alertService.open({
+            type: 'error',
+            message: 'Sell failed!',
+          });
+        }
+        console.log(JSON.stringify(result));
+      });
   }
 
   onBuyIndex(quantity: number) {
@@ -56,25 +60,26 @@ export class InfoDialogComponent implements OnInit {
       } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     );
 
-    this.buySellService.attemptBuy({
-      index_code: this.indexData.code,
-      asset_class : this.indexData.asset_class,
-      quantity: `${quantity}`,
-      user_id: `${CommonUtils.getUserDetail('userName')}`,
-    }).subscribe((result : TransactionResult) => {
-      if (result.result === 'SUCCESS') {
-        this.alertService.open({
-          type: 'success',
-          message: 'Purchased stock!',
-        });
-      }
-      else {
-        this.alertService.open({
-          type: 'warning',
-          message: 'Purchase failed!',
-        });
-      }
-      console.log(JSON.stringify(result));
-    });
+    this.buySellService
+      .attemptBuy({
+        index_code: this.indexData.code,
+        asset_class: this.indexData.asset_class,
+        quantity: `${quantity}`,
+        user_id: `${CommonUtils.getUserDetail('userName')}`,
+      })
+      .subscribe((result: TransactionResult) => {
+        if (result.result === 'SUCCESS') {
+          this.alertService.open({
+            type: 'success',
+            message: 'Purchased stock!',
+          });
+        } else {
+          this.alertService.open({
+            type: 'error',
+            message: 'Purchase failed!',
+          });
+        }
+        console.log(JSON.stringify(result));
+      });
   }
 }
