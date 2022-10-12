@@ -55,7 +55,9 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserBgColor(): string {
-    return CommonUtils.stringToColor(this.userInitials);
+    return CommonUtils.getPseudoRandomColor(
+      this.currentUser.firstName + this.currentUser.lastName
+    );
   }
 
   logout() {
