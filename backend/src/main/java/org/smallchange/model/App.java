@@ -1,4 +1,4 @@
-package org.smallchange;
+package org.smallchange.model;
 
 /**
  * Hello world!

@@ -1,4 +1,4 @@
-package org.smallchange;
+package org.smallchange.model;
 
 public class Asset {
     private String name,code,assetClass;

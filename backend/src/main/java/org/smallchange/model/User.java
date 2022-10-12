@@ -1,5 +1,5 @@
-package org.smallchange;
-import java.util.*;
+package org.smallchange.model;
+import org.smallchange.model.Account;
 
 
 public class User {
@@ -7,13 +7,6 @@ public class User {
     Account account;
 
 
-    public User(String userId, String name, String email, String password, Account account) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.account = account;
-    }
 
     public String getUserId() {
         return userId;

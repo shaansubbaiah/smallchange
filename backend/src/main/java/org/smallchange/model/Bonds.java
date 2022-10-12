@@ -1,6 +1,8 @@
-package org.smallchange;
+package org.smallchange.model;
 
-public class Bonds extends Asset{
+import org.smallchange.model.Asset;
+
+public class Bonds extends Asset {
     private float interestRate;
 
 

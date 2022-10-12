@@ -1,6 +1,7 @@
-package org.smallchange;
+package org.smallchange.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Trade {
     private String tradeType;
@@ -46,5 +47,28 @@ public class Trade {
 
     public void setAsset(Asset asset) {
         this.asset = asset;
+    }
+
+    @Override
+    public String toString() {
+        return "Trade{" +
+                "tradeType='" + tradeType + '\'' +
+                ", date=" + date +
+                ", tradeQuantity=" + tradeQuantity +
+                ", asset=" + asset +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Trade)) return false;
+        Trade trade = (Trade) o;
+        return getTradeQuantity() == trade.getTradeQuantity() && Objects.equals(getTradeType(), trade.getTradeType()) && Objects.equals(getDate(), trade.getDate()) && Objects.equals(getAsset(), trade.getAsset());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTradeType(), getDate(), getTradeQuantity(), getAsset());
     }
 }

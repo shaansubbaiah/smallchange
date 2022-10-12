@@ -1,4 +1,4 @@
-package org.smallchange;
+package org.smallchange.model;
 
 public class Preference {
     private String investmentPurpose,riskTolerance,incomeCategory,lengthOfInvestment;

@@ -1,4 +1,6 @@
-package org.smallchange;
+package org.smallchange.model;
+
+import org.smallchange.model.Asset;
 
 public class Stocks extends Asset {
     private String exchange;
