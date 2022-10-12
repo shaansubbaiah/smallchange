@@ -45,4 +45,52 @@ export class CommonUtils {
     }
     return colour;
   }
+
+  public static colors = [
+    '#f2d5cf',
+    '#eebebe',
+    '#f4b8e4',
+    '#ca9ee6',
+    '#e78284',
+    '#ea999c',
+    '#ef9f76',
+    '#e5c890',
+    '#a6d189',
+    '#81c8be',
+    '#99d1db',
+    '#85c1dc',
+    '#8caaee',
+    '#babbf1',
+  ];
+
+  public static rng(seed = '') {
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    let w = 0;
+
+    function next() {
+      const t = x ^ (x << 11);
+      x = y;
+      y = z;
+      z = w;
+      w ^= ((w >>> 19) ^ t ^ (t >>> 8)) >>> 0;
+      return w / 0x100000000;
+    }
+
+    for (var k = 0; k < seed.length + 64; k++) {
+      x ^= seed.charCodeAt(k) | 0;
+      next();
+    }
+
+    return next;
+  }
+
+  public static getPseudoRandomColor(str: string) {
+    const getRandom = CommonUtils.rng(str);
+    let colorIndex = getRandom();
+    let max = CommonUtils.colors.length;
+    colorIndex = Math.abs(Math.floor(colorIndex * max));
+    return this.colors[colorIndex];
+  }
 }
