@@ -5,6 +5,7 @@ import { TradeStock } from './trade-stock';
 import { StockList } from './stock-list';
 import { BondList } from './bond-list';
 import { User } from './user';
+import { MfList } from './mf-list';
 
 export var market_stocks: StockList[] = [
   {
@@ -111,6 +112,39 @@ export var market_stocks: StockList[] = [
     buy_price: 175.5,
     LTP: 174.3,
     asset_class: 'international_market_stocks',
+  },
+];
+
+export var market_mfs: MfList[] = [
+  {
+    name: 'Vanguard 500',
+    code: 'VFIAX',
+    interest: 483,
+    asset_class: 'mutual_fund',
+  },
+  {
+    name: 'Finance 500 Index fund',
+    code: 'FXAIX',
+    interest: 1000,
+    asset_class: 'mutual_fund',
+  },
+  {
+    name: 'SPDR S&P 500 ETF',
+    code: 'SPY',
+    interest: 94,
+    asset_class: 'mutual_fund',
+  },
+  {
+    name: 'Finance Govt Cash Rsrvs',
+    code: 'FDRXX',
+    interest: 493,
+    asset_class: 'mutual_fund',
+  },
+  {
+    name: 'American Funds gro',
+    code: 'AGTHX',
+    interest: 50,
+    asset_class: 'mutual_fund',
   },
 ];
 
@@ -291,6 +325,7 @@ export var dummy_data_mfs: MfHolding[] = [
     quantity: 100,
     buy_price: 400.34,
     LTP: 419.68,
+    asset_class: 'mutual_fund',
   },
   {
     name: 'Finance 500 Index fund',
@@ -298,6 +333,7 @@ export var dummy_data_mfs: MfHolding[] = [
     quantity: 20,
     buy_price: 160.45,
     LTP: 157.76,
+    asset_class: 'mutual_fund',
   },
   {
     name: 'SPDR S&P 500 ETF',
@@ -305,6 +341,7 @@ export var dummy_data_mfs: MfHolding[] = [
     quantity: 12,
     buy_price: 439.45,
     LTP: 452.77,
+    asset_class: 'mutual_fund',
   },
   {
     name: 'Finance Govt Cash Rsrvs',
@@ -312,6 +349,7 @@ export var dummy_data_mfs: MfHolding[] = [
     quantity: 550,
     buy_price: 1.0,
     LTP: 1.0,
+    asset_class: 'mutual_fund',
   },
   {
     name: 'American Funds gro',
@@ -319,6 +357,7 @@ export var dummy_data_mfs: MfHolding[] = [
     quantity: 34,
     buy_price: 84.33,
     LTP: 79.11,
+    asset_class: 'mutual_fund',
   },
   {
     name: 'Finance Contrafund',
@@ -326,6 +365,7 @@ export var dummy_data_mfs: MfHolding[] = [
     quantity: 85,
     buy_price: 12.22,
     LTP: 20.11,
+    asset_class: 'mutual_fund',
   },
   {
     name: 'Morg Stan I Lq',
@@ -333,6 +373,7 @@ export var dummy_data_mfs: MfHolding[] = [
     quantity: 188,
     buy_price: 1.0,
     LTP: 1.0,
+    asset_class: 'mutual_fund',
   },
 ];
 
