@@ -5,6 +5,7 @@ import {
   dummy_data_order,
   dummy_data_stocks,
   market_bonds,
+  market_mfs,
   market_stocks,
 } from '../../core/models/mock-data';
 import { MarketAssets } from '../models/market-assets';
@@ -49,12 +50,20 @@ export class DataService {
     return market_stocks;
   }
 
+  getMarketMfs() {
+    return market_mfs;
+  }
+
   getMarketBonds() {
     return market_bonds;
   }
 
   getMarketAssets(): MarketAssets {
     // we don't have dummy data for market MFs yet
-    return new MarketAssets(this.getMarketStocks(), this.getMarketBonds(), []);
+    return new MarketAssets(
+      this.getMarketStocks(),
+      this.getMarketBonds(),
+      this.getMarketMfs()
+    );
   }
 }
