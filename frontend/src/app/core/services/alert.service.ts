@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 interface AlertData {
-  type: string;
+  type: 'success' | 'info' | 'warning' | 'error';
   message: string;
 }
 
