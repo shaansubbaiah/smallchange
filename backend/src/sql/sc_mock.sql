@@ -1,22 +1,22 @@
-DROP TABLE "SCOTT"."ACCOUNT";
+DROP TABLE "SCOTT"."SC_ACCOUNT";
 
-DROP TABLE "SCOTT"."PREFERENCES";
+DROP TABLE "SCOTT"."SC_PREFERENCES";
 
-DROP TABLE "SCOTT"."TRADE_HISTORY";
+DROP TABLE "SCOTT"."SC_TRADE_HISTORY";
 
-DROP TABLE "SCOTT"."STOCKS";
+DROP TABLE "SCOTT"."SC_STOCKS";
 
-DROP TABLE "SCOTT"."MUTUALFUNDS";
+DROP TABLE "SCOTT"."SC_MUTUALFUNDS";
 
-DROP TABLE "SCOTT"."BONDS";
+DROP TABLE "SCOTT"."SC_BONDS";
 
-DROP TABLE "SCOTT"."USER";
+DROP TABLE "SCOTT"."SC_USER";
 
 DROP SEQUENCE seq_trade_history;
 
 CREATE SEQUENCE seq_trade_history MINVALUE 1 MAXVALUE 999999999999999999999999999 START WITH 1 INCREMENT BY 1 CACHE 20;
 
-CREATE TABLE "SCOTT"."USER"(
+CREATE TABLE "SCOTT"."SC_USER"(
   user_id VARCHAR2(10) PRIMARY KEY,
   name VARCHAR2(50) NOT NULL,
   acct_no NUMBER UNIQUE NOT NULL,
@@ -24,16 +24,16 @@ CREATE TABLE "SCOTT"."USER"(
   password_hash VARCHAR2(64) NOT NULL
 );
 
-CREATE TABLE "SCOTT"."ACCOUNT" (
+CREATE TABLE "SCOTT"."SC_ACCOUNT" (
   user_id VARCHAR2(10) UNIQUE NOT NULL,
   acct_no int UNIQUE NOT NULL,
   bank_name VARCHAR2(50),
   acct_type VARCHAR2(20),
   acct_balance FLOAT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES "SCOTT"."USER"(user_id)
+  FOREIGN KEY (user_id) REFERENCES "SCOTT"."SC_USER"(user_id)
 );
 
-CREATE TABLE "SCOTT"."PREFERENCES" (
+CREATE TABLE "SCOTT"."SC_PREFERENCES" (
   user_id VARCHAR2(10) UNIQUE NOT NULL,
   investment_purpose VARCHAR2(100),
   risk_tolerance INTEGER CHECK(
@@ -42,10 +42,10 @@ CREATE TABLE "SCOTT"."PREFERENCES" (
   ),
   income_category VARCHAR2(10),
   investment_length VARCHAR2(50),
-  FOREIGN KEY (user_id) REFERENCES "SCOTT"."USER"(user_id)
+  FOREIGN KEY (user_id) REFERENCES "SCOTT"."SC_USER"(user_id)
 );
 
-CREATE TABLE "SCOTT"."TRADE_HISTORY" (
+CREATE TABLE "SCOTT"."SC_TRADE_HISTORY" (
   trade_id NUMBER DEFAULT seq_trade_history.NEXTVAL,
   user_id VARCHAR2(10) NOT NULL,
   asset_code VARCHAR2(10) NOT NULL,
@@ -53,10 +53,10 @@ CREATE TABLE "SCOTT"."TRADE_HISTORY" (
   trade_type VARCHAR2(10),
   trade_quantity INTEGER,
   trade_date TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES "SCOTT"."USER"(user_id)
+  FOREIGN KEY (user_id) REFERENCES "SCOTT"."SC_USER"(user_id)
 );
 
-CREATE TABLE "SCOTT"."STOCKS" (
+CREATE TABLE "SCOTT"."SC_STOCKS" (
   code VARCHAR2(10),
   name VARCHAR2(50),
   quantity INTEGER,
@@ -65,7 +65,7 @@ CREATE TABLE "SCOTT"."STOCKS" (
   exchange VARCHAR2(50)
 );
 
-CREATE TABLE "SCOTT"."MUTUALFUNDS" (
+CREATE TABLE "SCOTT"."SC_MUTUALFUNDS" (
   code VARCHAR2(10),
   name VARCHAR2(50),
   quantity INTEGER,
@@ -74,7 +74,7 @@ CREATE TABLE "SCOTT"."MUTUALFUNDS" (
   interest_rate FLOAT
 );
 
-CREATE TABLE "SCOTT"."BONDS" (
+CREATE TABLE "SCOTT"."SC_BONDS" (
   code VARCHAR2(10),
   name VARCHAR2(50),
   quantity INTEGER,
@@ -87,7 +87,7 @@ CREATE TABLE "SCOTT"."BONDS" (
 
 /*mock entries for stock*/
 INSERT INTO
-  STOCKS(
+  "SCOTT"."SC_STOCKS"(
     code,
     name,
     quantity,
@@ -96,7 +96,7 @@ INSERT INTO
     exchange
   )
 VALUES
-(
+  (
     'AAPL',
     'Apple Inc',
     100,
@@ -106,7 +106,7 @@ VALUES
   );
 
 INSERT INTO
-  STOCKS(
+  "SCOTT"."SC_STOCKS"(
     code,
     name,
     quantity,
@@ -115,7 +115,7 @@ INSERT INTO
     exchange
   )
 VALUES
-(
+  (
     'TSLA',
     'Tesla Inc',
     100,
@@ -125,7 +125,7 @@ VALUES
   );
 
 INSERT INTO
-  STOCKS(
+  "SCOTT"."SC_STOCKS"(
     code,
     name,
     quantity,
@@ -134,7 +134,7 @@ INSERT INTO
     exchange
   )
 VALUES
-(
+  (
     'AMZN',
     'Amazon.com Inc',
     100,
@@ -145,7 +145,7 @@ VALUES
 
 /*mock entries for mfs*/
 INSERT INTO
-  MUTUALFUNDS(
+  "SCOTT"."SC_MUTUALFUNDS"(
     code,
     name,
     quantity,
@@ -154,7 +154,7 @@ INSERT INTO
     interest_rate
   )
 VALUES
-(
+  (
     'VFIAX',
     'Vanguard 500',
     100,
@@ -164,7 +164,7 @@ VALUES
   );
 
 INSERT INTO
-  MUTUALFUNDS(
+  "SCOTT"."SC_MUTUALFUNDS"(
     code,
     name,
     quantity,
@@ -173,7 +173,7 @@ INSERT INTO
     interest_rate
   )
 VALUES
-(
+  (
     'AGTHX',
     'American Funds gro',
     34,
@@ -183,7 +183,7 @@ VALUES
   );
 
 INSERT INTO
-  MUTUALFUNDS(
+  "SCOTT"."SC_MUTUALFUNDS"(
     code,
     name,
     quantity,
@@ -192,7 +192,7 @@ INSERT INTO
     interest_rate
   )
 VALUES
-(
+  (
     'FDRXX',
     'Finance Govt Cash Rsrvs',
     550,
@@ -203,7 +203,7 @@ VALUES
 
 /*mock entries for bond*/
 INSERT INTO
-  BONDS (
+  "SCOTT"."SC_BONDS" (
     code,
     name,
     quantity,
@@ -226,7 +226,7 @@ VALUES
   );
 
 INSERT INTO
-  "SCOTT"."BONDS" (
+  "SCOTT"."SC_BONDS" (
     code,
     name,
     quantity,
@@ -249,7 +249,7 @@ VALUES
   );
 
 INSERT INTO
-  "SCOTT"."BONDS" (
+  "SCOTT"."SC_BONDS" (
     code,
     name,
     quantity,
@@ -273,7 +273,7 @@ VALUES
 
 /*mock user entries*/
 INSERT INTO
-  "SCOTT"."USER" (user_id, name, acct_no, email, password_hash)
+  "SCOTT"."SC_USER" (user_id, name, acct_no, email, password_hash)
 VALUES
   (
     1001,
@@ -284,7 +284,7 @@ VALUES
   );
 
 INSERT INTO
-  "SCOTT"."USER" (user_id, name, acct_no, email, password_hash)
+  "SCOTT"."SC_USER" (user_id, name, acct_no, email, password_hash)
 VALUES
   (
     1002,
@@ -296,18 +296,42 @@ VALUES
 
 /* mock entries for Account */
 INSERT INTO
-  ACCOUNT(user_id, acct_no, bank_name, acct_type, acct_balance)
+  "SCOTT"."SC_ACCOUNT"(
+    user_id,
+    acct_no,
+    bank_name,
+    acct_type,
+    acct_balance
+  )
 VALUES
-(1001, 234256786534, 'citi bank', 'savings', 12000.56);
+  (
+    1001,
+    234256786534,
+    'citi bank',
+    'savings',
+    12000.56
+  );
 
 INSERT INTO
-  ACCOUNT(user_id, acct_no, bank_name, acct_type, acct_balance)
+  "SCOTT"."SC_ACCOUNT"(
+    user_id,
+    acct_no,
+    bank_name,
+    acct_type,
+    acct_balance
+  )
 VALUES
-(1002, 982167897543, 'US bank', 'salary', 156000.76);
+  (
+    1002,
+    982167897543,
+    'US bank',
+    'salary',
+    156000.76
+  );
 
 /*mock trade_history entries*/
 INSERT INTO
-  TRADE_HISTORY (
+  "SCOTT"."SC_TRADE_HISTORY" (
     user_id,
     asset_code,
     trade_price,
@@ -329,7 +353,7 @@ VALUES
   );
 
 INSERT INTO
-  TRADE_HISTORY (
+  "SCOTT"."SC_TRADE_HISTORY" (
     user_id,
     asset_code,
     trade_price,
@@ -351,7 +375,7 @@ VALUES
   );
 
 INSERT INTO
-  TRADE_HISTORY (
+  "SCOTT"."SC_TRADE_HISTORY" (
     user_id,
     asset_code,
     trade_price,
@@ -373,7 +397,7 @@ VALUES
   );
 
 INSERT INTO
-  TRADE_HISTORY (
+  "SCOTT"."SC_TRADE_HISTORY" (
     user_id,
     asset_code,
     trade_price,
@@ -395,7 +419,7 @@ VALUES
   );
 
 INSERT INTO
-  TRADE_HISTORY (
+  "SCOTT"."SC_TRADE_HISTORY" (
     user_id,
     asset_code,
     trade_price,
