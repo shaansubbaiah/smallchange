@@ -1,0 +1,123 @@
+
+
+entity SCUser {
+	@Id userId String minlength(3) maxlength(10),
+    name String required,
+    email String required unique pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
+    passwordHash String required minlength(64) maxlength(64),
+    image ImageBlob
+}
+
+entity SCAccount {
+    @Id accNo Long,
+    userId String required,
+    bankName String required,
+    accType String required,
+    accBalance Float min(0)
+}
+
+entity TradeHistory {
+    @Id tradeId Long,
+    userId String required,
+    assetCode String required,
+    assetType AssetType required,
+    tradePrice Float required,
+    tradeType String required,
+    tradeQuantity Integer required,
+    tradeDate LocalDate required
+}
+
+entity Positions {
+	@Id positionId Long,
+    userId String required,
+	assetCode String required,
+    assetType AssetType required,
+    buyPrice Float required min(0),
+    quantity Integer required min(0),
+}
+
+entity Preferences {
+	@Id userId String,
+    investmentPurpose String,
+    riskTolerance RiskTolerance,
+    incomeCategory IncomeCategory,
+    investmentLength InvestmentLength
+}
+
+enum IncomeCategory {
+	LOW,
+    LOWER_MIDDLE,
+    UPPER_MIDDLE,
+    HIGH
+}
+
+enum InvestmentLength {
+	SHORT,
+    MEDIUM,
+    LONG
+}
+
+enum RiskTolerance {
+	CONSERVATIVE,
+    BELOW_AVERAGE,
+    AVERAGE,
+    ABOVE_AVERAGE,
+    AGGRESSIVE
+}
+
+enum AssetType {
+	STOCK,
+    MUTUALFUND,
+    BOND
+}
+
+entity Stocks {
+	@Id code String minlength(1),
+    name String required,
+    quantity Integer required min(0),
+    currentPrice Float required min(0),
+    stockType String,
+    exchange String
+}
+
+entity MutualFunds {
+	@Id code String minlength(1),
+    name String required,
+    quantity Integer required min(0),
+    currentPrice Float required min(0),
+    interestRate Float min(0),
+    mfType String
+}
+
+entity Bonds {
+	@Id code String minlength(1),
+    name String required,
+    quantity Integer required min(0),
+    currentPrice Float required min(0),
+    interestRate Float required min(0),
+    durationMonths Integer required min(0),
+    bondType String,
+    exchange String
+}
+
+relationship OneToOne {
+  	SCUser to Preferences
+}
+
+relationship OneToMany {
+	SCUser to Positions,
+    SCUser to SCAccount,
+    SCUser to TradeHistory
+}
+
+filter Stocks, MutualFunds, Bonds
+
+
+
+
+
+
+
+
+
+
