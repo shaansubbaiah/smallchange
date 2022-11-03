@@ -31,13 +31,11 @@ spring:
     serialization:
       indent-output: true
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: system
-    password: oracle
-    hikari:
-      poolName: Hikari
-      auto-commit: false
+    driverClassName: oracle.jdbc.OracleDriver
+    dataSourceClassName: oracle.jdbc.pool.OracleDataSource
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    username: scott
+    password: TIGER
   jpa:
   liquibase:
     contexts: dev
