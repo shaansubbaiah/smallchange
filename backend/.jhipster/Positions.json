@@ -1,0 +1,58 @@
+{
+  "applications": "*",
+  "changelogDate": "20221104054558",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "sc_positions",
+  "fields": [
+    {
+      "fieldName": "positionId",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "scUserId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "assetCode",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "assetType",
+      "fieldType": "AssetType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "STOCK,MUTUALFUND,BOND"
+    },
+    {
+      "fieldName": "buyPrice",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Positions",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "sCUser",
+      "otherEntityRelationshipName": "positions",
+      "relationshipName": "sCUser",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,66 @@
+{
+  "applications": "*",
+  "changelogDate": "20221104054557",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "sc_trade_history",
+  "fields": [
+    {
+      "fieldName": "tradeId",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "scUserId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "assetCode",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "assetType",
+      "fieldType": "AssetType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "STOCK,MUTUALFUND,BOND"
+    },
+    {
+      "fieldName": "tradePrice",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tradeType",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tradeQuantity",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tradeDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "TradeHistory",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "sCUser",
+      "otherEntityRelationshipName": "tradeHistory",
+      "relationshipName": "sCUser",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

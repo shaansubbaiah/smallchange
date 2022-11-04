@@ -1,0 +1,50 @@
+{
+  "applications": "*",
+  "changelogDate": "20221104054559",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "sc_preferences",
+  "fields": [
+    {
+      "fieldName": "scUserId",
+      "fieldType": "String",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "investmentPurpose",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "riskTolerance",
+      "fieldType": "RiskTolerance",
+      "fieldValues": "CONSERVATIVE,BELOW_AVERAGE,AVERAGE,ABOVE_AVERAGE,AGGRESSIVE"
+    },
+    {
+      "fieldName": "incomeCategory",
+      "fieldType": "IncomeCategory",
+      "fieldValues": "LOW,LOWER_MIDDLE,UPPER_MIDDLE,HIGH"
+    },
+    {
+      "fieldName": "investmentLength",
+      "fieldType": "InvestmentLength",
+      "fieldValues": "SHORT,MEDIUM,LONG"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Preferences",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "sCUser",
+      "otherEntityRelationshipName": "preferences",
+      "ownerSide": false,
+      "relationshipName": "sCUser",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

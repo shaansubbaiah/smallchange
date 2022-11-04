@@ -1,0 +1,75 @@
+{
+  "applications": "*",
+  "changelogDate": "20221104054555",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "sc_user",
+  "fields": [
+    {
+      "fieldName": "scUserId",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "10",
+      "fieldValidateRulesMinlength": "3",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "pattern"],
+      "fieldValidateRulesPattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+    },
+    {
+      "fieldName": "passwordHash",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "64",
+      "fieldValidateRulesMinlength": "64"
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SCUser",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "preferences",
+      "otherEntityRelationshipName": "sCUser",
+      "ownerSide": true,
+      "relationshipName": "preferences",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "positions",
+      "otherEntityRelationshipName": "sCUser",
+      "relationshipName": "positions",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "sCAccount",
+      "otherEntityRelationshipName": "sCUser",
+      "relationshipName": "sCAccount",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "tradeHistory",
+      "otherEntityRelationshipName": "sCUser",
+      "relationshipName": "tradeHistory",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}
