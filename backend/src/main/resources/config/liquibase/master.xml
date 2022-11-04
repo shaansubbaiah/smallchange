@@ -11,7 +11,19 @@
     <property name="datetimeType" value="datetime" dbms="oracle"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054555_added_entity_SCUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054556_added_entity_SCAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054557_added_entity_TradeHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054558_added_entity_Positions.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054559_added_entity_Preferences.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054600_added_entity_Stocks.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054601_added_entity_MutualFunds.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054602_added_entity_Bonds.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20221104054555_added_entity_constraints_SCUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054556_added_entity_constraints_SCAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054557_added_entity_constraints_TradeHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221104054558_added_entity_constraints_Positions.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>
