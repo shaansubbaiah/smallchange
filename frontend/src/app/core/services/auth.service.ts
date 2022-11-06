@@ -15,17 +15,19 @@ export class AuthService {
 
   constructor(private httpClient : HttpClient) {}
 
-  public authenticate(username: string, password: string): Observable<boolean> {
-    this.httpClient.post(Constants.AUTH_ENDPOINT, {
+  public authenticate(username: string, password: string): Observable<any> {
+    return this.httpClient.post(Constants.AUTH_ENDPOINT, {
       username: username,
       password: password,
       rememberMe: true
-    }).subscribe((result : any) => {
-          const jwt = result.jwt;
-          console.log('login success');
-          let user = new User(username, result.firstName, result.lastName, result.email, result.lastLoginTimestamp, jwt);
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          return of(true);
+    });
+  }
+
+  public logout() : void {
+    this.httpClient.post(Constants.LOGOUT_ENDPOINT, null)
+    .subscribe((result : any) => {
+      console.log('logged out!');
+      console.log(result);
     });
   }
 
@@ -69,10 +71,8 @@ export class AuthService {
         currentUser.firstName,
         currentUser.lastName,
         currentUser.email,
-        currentUser.passwordHash,
         currentUser.lastLogin,
-        currentUser.bankAccounts,
-        currentUser.token
+        currentUser.jwt
       );
     } catch (err) {
       console.log(err);

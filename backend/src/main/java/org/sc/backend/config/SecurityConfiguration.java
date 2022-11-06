@@ -83,7 +83,8 @@ public class SecurityConfiguration {
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/test/**").permitAll()
-            .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/user/authenticate").permitAll()
+            .antMatchers("/api/user/register").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
@@ -94,7 +95,13 @@ public class SecurityConfiguration {
         .and()
             .httpBasic()
         .and()
-            .apply(securityConfigurerAdapter());
+            .apply(securityConfigurerAdapter())
+            .and()
+            .logout(logout -> logout
+                .logoutUrl("/api/user/logout")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+            );
         return http.build();
         // @formatter:on
     }

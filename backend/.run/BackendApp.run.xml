@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BackendApp" type="springBootConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <envs>
+      <env name="spring_profiles_active" value="default" />
+      <env name="spring_output_ansi_enabled" value="always" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="org.sc.backend.BackendApp" />
+    <module name="backend" />
+    <option name="PROGRAM_PARAMETERS" value="spring-boot:run -Dspring-boot.run.fork=false" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
