@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20221104054602",
+  "changelogDate": "20221106154804",
   "dto": "no",
   "embedded": false,
   "entityTableName": "sc_bonds",

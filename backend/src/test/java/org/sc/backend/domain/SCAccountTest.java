@@ -5,19 +5,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.sc.backend.web.rest.TestUtil;
 
-class SCAccountTest {
+class ScAccountTest {
 
     @Test
     void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(SCAccount.class);
-        SCAccount sCAccount1 = new SCAccount();
-        sCAccount1.setAccNo(1L);
-        SCAccount sCAccount2 = new SCAccount();
-        sCAccount2.setAccNo(sCAccount1.getAccNo());
-        assertThat(sCAccount1).isEqualTo(sCAccount2);
-        sCAccount2.setAccNo(2L);
-        assertThat(sCAccount1).isNotEqualTo(sCAccount2);
-        sCAccount1.setAccNo(null);
-        assertThat(sCAccount1).isNotEqualTo(sCAccount2);
+        TestUtil.equalsVerifier(ScAccount.class);
+        ScAccount scAccount1 = new ScAccount();
+        scAccount1.setAccNo(1L);
+        ScAccount scAccount2 = new ScAccount();
+        scAccount2.setAccNo(scAccount1.getAccNo());
+        assertThat(scAccount1).isEqualTo(scAccount2);
+        scAccount2.setAccNo(2L);
+        assertThat(scAccount1).isNotEqualTo(scAccount2);
+        scAccount1.setAccNo(null);
+        assertThat(scAccount1).isNotEqualTo(scAccount2);
     }
 }

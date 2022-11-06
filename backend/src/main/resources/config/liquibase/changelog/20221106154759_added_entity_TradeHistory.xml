@@ -7,11 +7,11 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Positions.
+        Added the entity TradeHistory.
     -->
-    <changeSet id="20221104054558-1" author="jhipster">
-        <createTable tableName="sc_positions">
-            <column name="position_id" type="bigint">
+    <changeSet id="20221106154759-1" author="jhipster">
+        <createTable tableName="sc_trade_history">
+            <column name="trade_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="sc_user_id" type="varchar(255)">
@@ -23,13 +23,19 @@
             <column name="asset_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="buy_price" type="${floatType}">
+            <column name="trade_price" type="${floatType}">
                 <constraints nullable="false" />
             </column>
-            <column name="quantity" type="integer">
+            <column name="trade_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="scuser_sc_user_id" type="varchar(10)">
+            <column name="trade_quantity" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="trade_date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="sc_user_sc_user_id" type="varchar(10)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20221104054601",
+  "changelogDate": "20221106154803",
   "dto": "no",
   "embedded": false,
   "entityTableName": "sc_mutual_funds",

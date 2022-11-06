@@ -2,53 +2,53 @@ package org.sc.backend.service;
 
 import java.util.List;
 import java.util.Optional;
-import org.sc.backend.domain.SCUser;
+import org.sc.backend.domain.ScUser;
 
 /**
- * Service Interface for managing {@link SCUser}.
+ * Service Interface for managing {@link ScUser}.
  */
-public interface SCUserService {
+public interface ScUserService {
     /**
-     * Save a sCUser.
+     * Save a scUser.
      *
-     * @param sCUser the entity to save.
+     * @param scUser the entity to save.
      * @return the persisted entity.
      */
-    SCUser save(SCUser sCUser);
+    ScUser save(ScUser scUser);
 
     /**
-     * Updates a sCUser.
+     * Updates a scUser.
      *
-     * @param sCUser the entity to update.
+     * @param scUser the entity to update.
      * @return the persisted entity.
      */
-    SCUser update(SCUser sCUser);
+    ScUser update(ScUser scUser);
 
     /**
-     * Partially updates a sCUser.
+     * Partially updates a scUser.
      *
-     * @param sCUser the entity to update partially.
+     * @param scUser the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<SCUser> partialUpdate(SCUser sCUser);
+    Optional<ScUser> partialUpdate(ScUser scUser);
 
     /**
-     * Get all the sCUsers.
+     * Get all the scUsers.
      *
      * @return the list of entities.
      */
-    List<SCUser> findAll();
+    List<ScUser> findAll();
 
     /**
-     * Get the "id" sCUser.
+     * Get the "id" scUser.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<SCUser> findOne(String id);
+    Optional<ScUser> findOne(String id);
 
     /**
-     * Delete the "id" sCUser.
+     * Delete the "id" scUser.
      *
      * @param id the id of the entity.
      */

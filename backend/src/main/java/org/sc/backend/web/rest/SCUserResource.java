@@ -7,9 +7,9 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.sc.backend.domain.SCUser;
-import org.sc.backend.repository.SCUserRepository;
-import org.sc.backend.service.SCUserService;
+import org.sc.backend.domain.ScUser;
+import org.sc.backend.repository.ScUserRepository;
+import org.sc.backend.service.ScUserService;
 import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,42 +20,42 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.SCUser}.
+ * REST controller for managing {@link org.sc.backend.domain.ScUser}.
  */
 @RestController
 @RequestMapping("/api")
-public class SCUserResource {
+public class ScUserResource {
 
-    private final Logger log = LoggerFactory.getLogger(SCUserResource.class);
+    private final Logger log = LoggerFactory.getLogger(ScUserResource.class);
 
-    private static final String ENTITY_NAME = "sCUser";
+    private static final String ENTITY_NAME = "scUser";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final SCUserService sCUserService;
+    private final ScUserService scUserService;
 
-    private final SCUserRepository sCUserRepository;
+    private final ScUserRepository scUserRepository;
 
-    public SCUserResource(SCUserService sCUserService, SCUserRepository sCUserRepository) {
-        this.sCUserService = sCUserService;
-        this.sCUserRepository = sCUserRepository;
+    public ScUserResource(ScUserService scUserService, ScUserRepository scUserRepository) {
+        this.scUserService = scUserService;
+        this.scUserRepository = scUserRepository;
     }
 
     /**
-     * {@code POST  /sc-users} : Create a new sCUser.
+     * {@code POST  /sc-users} : Create a new scUser.
      *
-     * @param sCUser the sCUser to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new sCUser, or with status {@code 400 (Bad Request)} if the sCUser has already an ID.
+     * @param scUser the scUser to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new scUser, or with status {@code 400 (Bad Request)} if the scUser has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/sc-users")
-    public ResponseEntity<SCUser> createSCUser(@Valid @RequestBody SCUser sCUser) throws URISyntaxException {
-        log.debug("REST request to save SCUser : {}", sCUser);
-        if (sCUser.getScUserId() != null) {
-            throw new BadRequestAlertException("A new sCUser cannot already have an ID", ENTITY_NAME, "idexists");
+    public ResponseEntity<ScUser> createScUser(@Valid @RequestBody ScUser scUser) throws URISyntaxException {
+        log.debug("REST request to save ScUser : {}", scUser);
+        if (scUser.getScUserId() != null) {
+            throw new BadRequestAlertException("A new scUser cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SCUser result = sCUserService.save(sCUser);
+        ScUser result = scUserService.save(scUser);
         return ResponseEntity
             .created(new URI("/api/sc-users/" + result.getScUserId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getScUserId()))
@@ -63,109 +63,109 @@ public class SCUserResource {
     }
 
     /**
-     * {@code PUT  /sc-users/:scUserId} : Updates an existing sCUser.
+     * {@code PUT  /sc-users/:scUserId} : Updates an existing scUser.
      *
-     * @param scUserId the id of the sCUser to save.
-     * @param sCUser the sCUser to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated sCUser,
-     * or with status {@code 400 (Bad Request)} if the sCUser is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the sCUser couldn't be updated.
+     * @param scUserId the id of the scUser to save.
+     * @param scUser the scUser to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated scUser,
+     * or with status {@code 400 (Bad Request)} if the scUser is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the scUser couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/sc-users/{scUserId}")
-    public ResponseEntity<SCUser> updateSCUser(
+    public ResponseEntity<ScUser> updateScUser(
         @PathVariable(value = "scUserId", required = false) final String scUserId,
-        @Valid @RequestBody SCUser sCUser
+        @Valid @RequestBody ScUser scUser
     ) throws URISyntaxException {
-        log.debug("REST request to update SCUser : {}, {}", scUserId, sCUser);
-        if (sCUser.getScUserId() == null) {
+        log.debug("REST request to update ScUser : {}, {}", scUserId, scUser);
+        if (scUser.getScUserId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(scUserId, sCUser.getScUserId())) {
+        if (!Objects.equals(scUserId, scUser.getScUserId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!sCUserRepository.existsById(scUserId)) {
+        if (!scUserRepository.existsById(scUserId)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        SCUser result = sCUserService.update(sCUser);
+        ScUser result = scUserService.update(scUser);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, sCUser.getScUserId()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, scUser.getScUserId()))
             .body(result);
     }
 
     /**
-     * {@code PATCH  /sc-users/:scUserId} : Partial updates given fields of an existing sCUser, field will ignore if it is null
+     * {@code PATCH  /sc-users/:scUserId} : Partial updates given fields of an existing scUser, field will ignore if it is null
      *
-     * @param scUserId the id of the sCUser to save.
-     * @param sCUser the sCUser to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated sCUser,
-     * or with status {@code 400 (Bad Request)} if the sCUser is not valid,
-     * or with status {@code 404 (Not Found)} if the sCUser is not found,
-     * or with status {@code 500 (Internal Server Error)} if the sCUser couldn't be updated.
+     * @param scUserId the id of the scUser to save.
+     * @param scUser the scUser to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated scUser,
+     * or with status {@code 400 (Bad Request)} if the scUser is not valid,
+     * or with status {@code 404 (Not Found)} if the scUser is not found,
+     * or with status {@code 500 (Internal Server Error)} if the scUser couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/sc-users/{scUserId}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<SCUser> partialUpdateSCUser(
+    public ResponseEntity<ScUser> partialUpdateScUser(
         @PathVariable(value = "scUserId", required = false) final String scUserId,
-        @NotNull @RequestBody SCUser sCUser
+        @NotNull @RequestBody ScUser scUser
     ) throws URISyntaxException {
-        log.debug("REST request to partial update SCUser partially : {}, {}", scUserId, sCUser);
-        if (sCUser.getScUserId() == null) {
+        log.debug("REST request to partial update ScUser partially : {}, {}", scUserId, scUser);
+        if (scUser.getScUserId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(scUserId, sCUser.getScUserId())) {
+        if (!Objects.equals(scUserId, scUser.getScUserId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!sCUserRepository.existsById(scUserId)) {
+        if (!scUserRepository.existsById(scUserId)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<SCUser> result = sCUserService.partialUpdate(sCUser);
+        Optional<ScUser> result = scUserService.partialUpdate(scUser);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, sCUser.getScUserId())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, scUser.getScUserId())
         );
     }
 
     /**
-     * {@code GET  /sc-users} : get all the sCUsers.
+     * {@code GET  /sc-users} : get all the scUsers.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of sCUsers in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of scUsers in body.
      */
     @GetMapping("/sc-users")
-    public List<SCUser> getAllSCUsers() {
-        log.debug("REST request to get all SCUsers");
-        return sCUserService.findAll();
+    public List<ScUser> getAllScUsers() {
+        log.debug("REST request to get all ScUsers");
+        return scUserService.findAll();
     }
 
     /**
-     * {@code GET  /sc-users/:id} : get the "id" sCUser.
+     * {@code GET  /sc-users/:id} : get the "id" scUser.
      *
-     * @param id the id of the sCUser to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the sCUser, or with status {@code 404 (Not Found)}.
+     * @param id the id of the scUser to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the scUser, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/sc-users/{id}")
-    public ResponseEntity<SCUser> getSCUser(@PathVariable String id) {
-        log.debug("REST request to get SCUser : {}", id);
-        Optional<SCUser> sCUser = sCUserService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(sCUser);
+    public ResponseEntity<ScUser> getScUser(@PathVariable String id) {
+        log.debug("REST request to get ScUser : {}", id);
+        Optional<ScUser> scUser = scUserService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(scUser);
     }
 
     /**
-     * {@code DELETE  /sc-users/:id} : delete the "id" sCUser.
+     * {@code DELETE  /sc-users/:id} : delete the "id" scUser.
      *
-     * @param id the id of the sCUser to delete.
+     * @param id the id of the scUser to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/sc-users/{id}")
-    public ResponseEntity<Void> deleteSCUser(@PathVariable String id) {
-        log.debug("REST request to delete SCUser : {}", id);
-        sCUserService.delete(id);
+    public ResponseEntity<Void> deleteScUser(@PathVariable String id) {
+        log.debug("REST request to delete ScUser : {}", id);
+        scUserService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id)).build();
     }
 }

@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20221104054558",
+  "changelogDate": "20221106154800",
   "dto": "no",
   "embedded": false,
   "entityTableName": "sc_positions",
@@ -48,9 +48,9 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "sCUser",
+      "otherEntityName": "scUser",
       "otherEntityRelationshipName": "positions",
-      "relationshipName": "sCUser",
+      "relationshipName": "scUser",
       "relationshipType": "many-to-one"
     }
   ],

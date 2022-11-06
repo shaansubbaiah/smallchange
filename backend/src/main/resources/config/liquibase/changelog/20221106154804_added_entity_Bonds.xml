@@ -7,23 +7,32 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Preferences.
+        Added the entity Bonds.
     -->
-    <changeSet id="20221104054559-1" author="jhipster">
-        <createTable tableName="sc_preferences">
-            <column name="sc_user_id" type="varchar(255)">
+    <changeSet id="20221106154804-1" author="jhipster">
+        <createTable tableName="sc_bonds">
+            <column name="code" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="investment_purpose" type="varchar(255)">
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="quantity" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="current_price" type="${floatType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="interest_rate" type="${floatType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="duration_months" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="bond_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="risk_tolerance" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="income_category" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="investment_length" type="varchar(255)">
+            <column name="exchange_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

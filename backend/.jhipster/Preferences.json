@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20221104054559",
+  "changelogDate": "20221106154801",
   "dto": "no",
   "embedded": false,
   "entityTableName": "sc_preferences",
@@ -39,10 +39,10 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "sCUser",
+      "otherEntityName": "scUser",
       "otherEntityRelationshipName": "preferences",
       "ownerSide": false,
-      "relationshipName": "sCUser",
+      "relationshipName": "scUser",
       "relationshipType": "one-to-one"
     }
   ],

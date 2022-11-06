@@ -39,11 +39,11 @@ public interface PreferencesService {
      */
     List<Preferences> findAll();
     /**
-     * Get all the Preferences where SCUser is {@code null}.
+     * Get all the Preferences where ScUser is {@code null}.
      *
      * @return the {@link List} of entities.
      */
-    List<Preferences> findAllWhereSCUserIsNull();
+    List<Preferences> findAllWhereScUserIsNull();
 
     /**
      * Get the "id" preferences.

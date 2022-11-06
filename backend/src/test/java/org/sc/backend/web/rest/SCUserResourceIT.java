@@ -11,8 +11,9 @@ import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.sc.backend.IntegrationTest;
-import org.sc.backend.domain.SCUser;
-import org.sc.backend.repository.SCUserRepository;
+import org.sc.backend.domain.ScUser;
+import org.sc.backend.domain.enumeration.UserRoles;
+import org.sc.backend.repository.ScUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
@@ -22,18 +23,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
 /**
- * Integration tests for the {@link SCUserResource} REST controller.
+ * Integration tests for the {@link ScUserResource} REST controller.
  */
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class SCUserResourceIT {
+class ScUserResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_EMAIL = "0VT.@1plXNI.NX8.gY0C.yD.n4hR_.bc";
-    private static final String UPDATED_EMAIL = "wn0m.0@eUz8.SuPL.zgS0r.QSm.58ef";
+    private static final String DEFAULT_EMAIL = "o@Ul.2RAzZ.rYF.Na6";
+    private static final String UPDATED_EMAIL = "ecwU@_KbiT.xy6u4.V.9RL";
 
     private static final String DEFAULT_PASSWORD_HASH = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     private static final String UPDATED_PASSWORD_HASH = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
@@ -43,19 +44,25 @@ class SCUserResourceIT {
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
+    private static final UserRoles DEFAULT_SC_USER_ROLE = UserRoles.USER;
+    private static final UserRoles UPDATED_SC_USER_ROLE = UserRoles.ADMIN;
+
+    private static final Boolean DEFAULT_SC_USER_ENABLED = false;
+    private static final Boolean UPDATED_SC_USER_ENABLED = true;
+
     private static final String ENTITY_API_URL = "/api/sc-users";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{scUserId}";
 
     @Autowired
-    private SCUserRepository sCUserRepository;
+    private ScUserRepository scUserRepository;
 
     @Autowired
     private EntityManager em;
 
     @Autowired
-    private MockMvc restSCUserMockMvc;
+    private MockMvc restScUserMockMvc;
 
-    private SCUser sCUser;
+    private ScUser scUser;
 
     /**
      * Create an entity for this test.
@@ -63,14 +70,16 @@ class SCUserResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static SCUser createEntity(EntityManager em) {
-        SCUser sCUser = new SCUser()
+    public static ScUser createEntity(EntityManager em) {
+        ScUser scUser = new ScUser()
             .name(DEFAULT_NAME)
             .email(DEFAULT_EMAIL)
             .passwordHash(DEFAULT_PASSWORD_HASH)
             .image(DEFAULT_IMAGE)
-            .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE);
-        return sCUser;
+            .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
+            .scUserRole(DEFAULT_SC_USER_ROLE)
+            .scUserEnabled(DEFAULT_SC_USER_ENABLED);
+        return scUser;
     }
 
     /**
@@ -79,397 +88,454 @@ class SCUserResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static SCUser createUpdatedEntity(EntityManager em) {
-        SCUser sCUser = new SCUser()
+    public static ScUser createUpdatedEntity(EntityManager em) {
+        ScUser scUser = new ScUser()
             .name(UPDATED_NAME)
             .email(UPDATED_EMAIL)
             .passwordHash(UPDATED_PASSWORD_HASH)
             .image(UPDATED_IMAGE)
-            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
-        return sCUser;
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
+            .scUserRole(UPDATED_SC_USER_ROLE)
+            .scUserEnabled(UPDATED_SC_USER_ENABLED);
+        return scUser;
     }
 
     @BeforeEach
     public void initTest() {
-        sCUser = createEntity(em);
+        scUser = createEntity(em);
     }
 
     @Test
     @Transactional
-    void createSCUser() throws Exception {
-        int databaseSizeBeforeCreate = sCUserRepository.findAll().size();
-        // Create the SCUser
-        restSCUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sCUser)))
+    void createScUser() throws Exception {
+        int databaseSizeBeforeCreate = scUserRepository.findAll().size();
+        // Create the ScUser
+        restScUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
             .andExpect(status().isCreated());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeCreate + 1);
-        SCUser testSCUser = sCUserList.get(sCUserList.size() - 1);
-        assertThat(testSCUser.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testSCUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testSCUser.getPasswordHash()).isEqualTo(DEFAULT_PASSWORD_HASH);
-        assertThat(testSCUser.getImage()).isEqualTo(DEFAULT_IMAGE);
-        assertThat(testSCUser.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeCreate + 1);
+        ScUser testScUser = scUserList.get(scUserList.size() - 1);
+        assertThat(testScUser.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testScUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testScUser.getPasswordHash()).isEqualTo(DEFAULT_PASSWORD_HASH);
+        assertThat(testScUser.getImage()).isEqualTo(DEFAULT_IMAGE);
+        assertThat(testScUser.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
+        assertThat(testScUser.getScUserRole()).isEqualTo(DEFAULT_SC_USER_ROLE);
+        assertThat(testScUser.getScUserEnabled()).isEqualTo(DEFAULT_SC_USER_ENABLED);
     }
 
     @Test
     @Transactional
-    void createSCUserWithExistingId() throws Exception {
-        // Create the SCUser with an existing ID
-        sCUser.setScUserId("existing_id");
+    void createScUserWithExistingId() throws Exception {
+        // Create the ScUser with an existing ID
+        scUser.setScUserId("existing_id");
 
-        int databaseSizeBeforeCreate = sCUserRepository.findAll().size();
+        int databaseSizeBeforeCreate = scUserRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restSCUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sCUser)))
+        restScUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
             .andExpect(status().isBadRequest());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeCreate);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
     @Transactional
     void checkNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = sCUserRepository.findAll().size();
+        int databaseSizeBeforeTest = scUserRepository.findAll().size();
         // set the field null
-        sCUser.setName(null);
+        scUser.setName(null);
 
-        // Create the SCUser, which fails.
+        // Create the ScUser, which fails.
 
-        restSCUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sCUser)))
+        restScUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
             .andExpect(status().isBadRequest());
 
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeTest);
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     @Transactional
     void checkEmailIsRequired() throws Exception {
-        int databaseSizeBeforeTest = sCUserRepository.findAll().size();
+        int databaseSizeBeforeTest = scUserRepository.findAll().size();
         // set the field null
-        sCUser.setEmail(null);
+        scUser.setEmail(null);
 
-        // Create the SCUser, which fails.
+        // Create the ScUser, which fails.
 
-        restSCUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sCUser)))
+        restScUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
             .andExpect(status().isBadRequest());
 
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeTest);
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     @Transactional
     void checkPasswordHashIsRequired() throws Exception {
-        int databaseSizeBeforeTest = sCUserRepository.findAll().size();
+        int databaseSizeBeforeTest = scUserRepository.findAll().size();
         // set the field null
-        sCUser.setPasswordHash(null);
+        scUser.setPasswordHash(null);
 
-        // Create the SCUser, which fails.
+        // Create the ScUser, which fails.
 
-        restSCUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sCUser)))
+        restScUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
             .andExpect(status().isBadRequest());
 
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeTest);
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     @Transactional
-    void getAllSCUsers() throws Exception {
-        // Initialize the database
-        sCUser.setScUserId(UUID.randomUUID().toString());
-        sCUserRepository.saveAndFlush(sCUser);
+    void checkScUserRoleIsRequired() throws Exception {
+        int databaseSizeBeforeTest = scUserRepository.findAll().size();
+        // set the field null
+        scUser.setScUserRole(null);
 
-        // Get all the sCUserList
-        restSCUserMockMvc
+        // Create the ScUser, which fails.
+
+        restScUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
+            .andExpect(status().isBadRequest());
+
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkScUserEnabledIsRequired() throws Exception {
+        int databaseSizeBeforeTest = scUserRepository.findAll().size();
+        // set the field null
+        scUser.setScUserEnabled(null);
+
+        // Create the ScUser, which fails.
+
+        restScUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
+            .andExpect(status().isBadRequest());
+
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void getAllScUsers() throws Exception {
+        // Initialize the database
+        scUser.setScUserId(UUID.randomUUID().toString());
+        scUserRepository.saveAndFlush(scUser);
+
+        // Get all the scUserList
+        restScUserMockMvc
             .perform(get(ENTITY_API_URL + "?sort=scUserId,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].scUserId").value(hasItem(sCUser.getScUserId())))
+            .andExpect(jsonPath("$.[*].scUserId").value(hasItem(scUser.getScUserId())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].passwordHash").value(hasItem(DEFAULT_PASSWORD_HASH)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].scUserRole").value(hasItem(DEFAULT_SC_USER_ROLE.toString())))
+            .andExpect(jsonPath("$.[*].scUserEnabled").value(hasItem(DEFAULT_SC_USER_ENABLED.booleanValue())));
     }
 
     @Test
     @Transactional
-    void getSCUser() throws Exception {
+    void getScUser() throws Exception {
         // Initialize the database
-        sCUser.setScUserId(UUID.randomUUID().toString());
-        sCUserRepository.saveAndFlush(sCUser);
+        scUser.setScUserId(UUID.randomUUID().toString());
+        scUserRepository.saveAndFlush(scUser);
 
-        // Get the sCUser
-        restSCUserMockMvc
-            .perform(get(ENTITY_API_URL_ID, sCUser.getScUserId()))
+        // Get the scUser
+        restScUserMockMvc
+            .perform(get(ENTITY_API_URL_ID, scUser.getScUserId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.scUserId").value(sCUser.getScUserId()))
+            .andExpect(jsonPath("$.scUserId").value(scUser.getScUserId()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.passwordHash").value(DEFAULT_PASSWORD_HASH))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
+            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
+            .andExpect(jsonPath("$.scUserRole").value(DEFAULT_SC_USER_ROLE.toString()))
+            .andExpect(jsonPath("$.scUserEnabled").value(DEFAULT_SC_USER_ENABLED.booleanValue()));
     }
 
     @Test
     @Transactional
-    void getNonExistingSCUser() throws Exception {
-        // Get the sCUser
-        restSCUserMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    void getNonExistingScUser() throws Exception {
+        // Get the scUser
+        restScUserMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
-    void putExistingSCUser() throws Exception {
+    void putExistingScUser() throws Exception {
         // Initialize the database
-        sCUser.setScUserId(UUID.randomUUID().toString());
-        sCUserRepository.saveAndFlush(sCUser);
+        scUser.setScUserId(UUID.randomUUID().toString());
+        scUserRepository.saveAndFlush(scUser);
 
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
 
-        // Update the sCUser
-        SCUser updatedSCUser = sCUserRepository.findById(sCUser.getScUserId()).get();
-        // Disconnect from session so that the updates on updatedSCUser are not directly saved in db
-        em.detach(updatedSCUser);
-        updatedSCUser
+        // Update the scUser
+        ScUser updatedScUser = scUserRepository.findById(scUser.getScUserId()).get();
+        // Disconnect from session so that the updates on updatedScUser are not directly saved in db
+        em.detach(updatedScUser);
+        updatedScUser
             .name(UPDATED_NAME)
             .email(UPDATED_EMAIL)
             .passwordHash(UPDATED_PASSWORD_HASH)
             .image(UPDATED_IMAGE)
-            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
+            .scUserRole(UPDATED_SC_USER_ROLE)
+            .scUserEnabled(UPDATED_SC_USER_ENABLED);
 
-        restSCUserMockMvc
+        restScUserMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedSCUser.getScUserId())
+                put(ENTITY_API_URL_ID, updatedScUser.getScUserId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedSCUser))
+                    .content(TestUtil.convertObjectToJsonBytes(updatedScUser))
             )
             .andExpect(status().isOk());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
-        SCUser testSCUser = sCUserList.get(sCUserList.size() - 1);
-        assertThat(testSCUser.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testSCUser.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testSCUser.getPasswordHash()).isEqualTo(UPDATED_PASSWORD_HASH);
-        assertThat(testSCUser.getImage()).isEqualTo(UPDATED_IMAGE);
-        assertThat(testSCUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
+        ScUser testScUser = scUserList.get(scUserList.size() - 1);
+        assertThat(testScUser.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testScUser.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testScUser.getPasswordHash()).isEqualTo(UPDATED_PASSWORD_HASH);
+        assertThat(testScUser.getImage()).isEqualTo(UPDATED_IMAGE);
+        assertThat(testScUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        assertThat(testScUser.getScUserRole()).isEqualTo(UPDATED_SC_USER_ROLE);
+        assertThat(testScUser.getScUserEnabled()).isEqualTo(UPDATED_SC_USER_ENABLED);
     }
 
     @Test
     @Transactional
-    void putNonExistingSCUser() throws Exception {
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
-        sCUser.setScUserId(UUID.randomUUID().toString());
+    void putNonExistingScUser() throws Exception {
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
+        scUser.setScUserId(UUID.randomUUID().toString());
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restSCUserMockMvc
+        restScUserMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, sCUser.getScUserId())
+                put(ENTITY_API_URL_ID, scUser.getScUserId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(sCUser))
+                    .content(TestUtil.convertObjectToJsonBytes(scUser))
             )
             .andExpect(status().isBadRequest());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
     @Transactional
-    void putWithIdMismatchSCUser() throws Exception {
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
-        sCUser.setScUserId(UUID.randomUUID().toString());
+    void putWithIdMismatchScUser() throws Exception {
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
+        scUser.setScUserId(UUID.randomUUID().toString());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restSCUserMockMvc
+        restScUserMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(sCUser))
+                    .content(TestUtil.convertObjectToJsonBytes(scUser))
             )
             .andExpect(status().isBadRequest());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
     @Transactional
-    void putWithMissingIdPathParamSCUser() throws Exception {
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
-        sCUser.setScUserId(UUID.randomUUID().toString());
+    void putWithMissingIdPathParamScUser() throws Exception {
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
+        scUser.setScUserId(UUID.randomUUID().toString());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restSCUserMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sCUser)))
+        restScUserMockMvc
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(scUser)))
             .andExpect(status().isMethodNotAllowed());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
     @Transactional
-    void partialUpdateSCUserWithPatch() throws Exception {
+    void partialUpdateScUserWithPatch() throws Exception {
         // Initialize the database
-        sCUser.setScUserId(UUID.randomUUID().toString());
-        sCUserRepository.saveAndFlush(sCUser);
+        scUser.setScUserId(UUID.randomUUID().toString());
+        scUserRepository.saveAndFlush(scUser);
 
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
 
-        // Update the sCUser using partial update
-        SCUser partialUpdatedSCUser = new SCUser();
-        partialUpdatedSCUser.setScUserId(sCUser.getScUserId());
+        // Update the scUser using partial update
+        ScUser partialUpdatedScUser = new ScUser();
+        partialUpdatedScUser.setScUserId(scUser.getScUserId());
 
-        partialUpdatedSCUser.passwordHash(UPDATED_PASSWORD_HASH).image(UPDATED_IMAGE).imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
+        partialUpdatedScUser
+            .name(UPDATED_NAME)
+            .passwordHash(UPDATED_PASSWORD_HASH)
+            .image(UPDATED_IMAGE)
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
+            .scUserRole(UPDATED_SC_USER_ROLE);
 
-        restSCUserMockMvc
+        restScUserMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedSCUser.getScUserId())
+                patch(ENTITY_API_URL_ID, partialUpdatedScUser.getScUserId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedSCUser))
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedScUser))
             )
             .andExpect(status().isOk());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
-        SCUser testSCUser = sCUserList.get(sCUserList.size() - 1);
-        assertThat(testSCUser.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testSCUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testSCUser.getPasswordHash()).isEqualTo(UPDATED_PASSWORD_HASH);
-        assertThat(testSCUser.getImage()).isEqualTo(UPDATED_IMAGE);
-        assertThat(testSCUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
+        ScUser testScUser = scUserList.get(scUserList.size() - 1);
+        assertThat(testScUser.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testScUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testScUser.getPasswordHash()).isEqualTo(UPDATED_PASSWORD_HASH);
+        assertThat(testScUser.getImage()).isEqualTo(UPDATED_IMAGE);
+        assertThat(testScUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        assertThat(testScUser.getScUserRole()).isEqualTo(UPDATED_SC_USER_ROLE);
+        assertThat(testScUser.getScUserEnabled()).isEqualTo(DEFAULT_SC_USER_ENABLED);
     }
 
     @Test
     @Transactional
-    void fullUpdateSCUserWithPatch() throws Exception {
+    void fullUpdateScUserWithPatch() throws Exception {
         // Initialize the database
-        sCUser.setScUserId(UUID.randomUUID().toString());
-        sCUserRepository.saveAndFlush(sCUser);
+        scUser.setScUserId(UUID.randomUUID().toString());
+        scUserRepository.saveAndFlush(scUser);
 
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
 
-        // Update the sCUser using partial update
-        SCUser partialUpdatedSCUser = new SCUser();
-        partialUpdatedSCUser.setScUserId(sCUser.getScUserId());
+        // Update the scUser using partial update
+        ScUser partialUpdatedScUser = new ScUser();
+        partialUpdatedScUser.setScUserId(scUser.getScUserId());
 
-        partialUpdatedSCUser
+        partialUpdatedScUser
             .name(UPDATED_NAME)
             .email(UPDATED_EMAIL)
             .passwordHash(UPDATED_PASSWORD_HASH)
             .image(UPDATED_IMAGE)
-            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
+            .scUserRole(UPDATED_SC_USER_ROLE)
+            .scUserEnabled(UPDATED_SC_USER_ENABLED);
 
-        restSCUserMockMvc
+        restScUserMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedSCUser.getScUserId())
+                patch(ENTITY_API_URL_ID, partialUpdatedScUser.getScUserId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedSCUser))
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedScUser))
             )
             .andExpect(status().isOk());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
-        SCUser testSCUser = sCUserList.get(sCUserList.size() - 1);
-        assertThat(testSCUser.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testSCUser.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testSCUser.getPasswordHash()).isEqualTo(UPDATED_PASSWORD_HASH);
-        assertThat(testSCUser.getImage()).isEqualTo(UPDATED_IMAGE);
-        assertThat(testSCUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
+        ScUser testScUser = scUserList.get(scUserList.size() - 1);
+        assertThat(testScUser.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testScUser.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testScUser.getPasswordHash()).isEqualTo(UPDATED_PASSWORD_HASH);
+        assertThat(testScUser.getImage()).isEqualTo(UPDATED_IMAGE);
+        assertThat(testScUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        assertThat(testScUser.getScUserRole()).isEqualTo(UPDATED_SC_USER_ROLE);
+        assertThat(testScUser.getScUserEnabled()).isEqualTo(UPDATED_SC_USER_ENABLED);
     }
 
     @Test
     @Transactional
-    void patchNonExistingSCUser() throws Exception {
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
-        sCUser.setScUserId(UUID.randomUUID().toString());
+    void patchNonExistingScUser() throws Exception {
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
+        scUser.setScUserId(UUID.randomUUID().toString());
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restSCUserMockMvc
+        restScUserMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, sCUser.getScUserId())
+                patch(ENTITY_API_URL_ID, scUser.getScUserId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(sCUser))
+                    .content(TestUtil.convertObjectToJsonBytes(scUser))
             )
             .andExpect(status().isBadRequest());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
     @Transactional
-    void patchWithIdMismatchSCUser() throws Exception {
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
-        sCUser.setScUserId(UUID.randomUUID().toString());
+    void patchWithIdMismatchScUser() throws Exception {
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
+        scUser.setScUserId(UUID.randomUUID().toString());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restSCUserMockMvc
+        restScUserMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, UUID.randomUUID().toString())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(sCUser))
+                    .content(TestUtil.convertObjectToJsonBytes(scUser))
             )
             .andExpect(status().isBadRequest());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
     @Transactional
-    void patchWithMissingIdPathParamSCUser() throws Exception {
-        int databaseSizeBeforeUpdate = sCUserRepository.findAll().size();
-        sCUser.setScUserId(UUID.randomUUID().toString());
+    void patchWithMissingIdPathParamScUser() throws Exception {
+        int databaseSizeBeforeUpdate = scUserRepository.findAll().size();
+        scUser.setScUserId(UUID.randomUUID().toString());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restSCUserMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(sCUser)))
+        restScUserMockMvc
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(scUser)))
             .andExpect(status().isMethodNotAllowed());
 
-        // Validate the SCUser in the database
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeUpdate);
+        // Validate the ScUser in the database
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
     @Transactional
-    void deleteSCUser() throws Exception {
+    void deleteScUser() throws Exception {
         // Initialize the database
-        sCUser.setScUserId(UUID.randomUUID().toString());
-        sCUserRepository.saveAndFlush(sCUser);
+        scUser.setScUserId(UUID.randomUUID().toString());
+        scUserRepository.saveAndFlush(scUser);
 
-        int databaseSizeBeforeDelete = sCUserRepository.findAll().size();
+        int databaseSizeBeforeDelete = scUserRepository.findAll().size();
 
-        // Delete the sCUser
-        restSCUserMockMvc
-            .perform(delete(ENTITY_API_URL_ID, sCUser.getScUserId()).accept(MediaType.APPLICATION_JSON))
+        // Delete the scUser
+        restScUserMockMvc
+            .perform(delete(ENTITY_API_URL_ID, scUser.getScUserId()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
-        List<SCUser> sCUserList = sCUserRepository.findAll();
-        assertThat(sCUserList).hasSize(databaseSizeBeforeDelete - 1);
+        List<ScUser> scUserList = scUserRepository.findAll();
+        assertThat(scUserList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import { users } from '../models/mock-data';
 import { User } from '../models/user';
-import * as CryptoJS from "crypto-js";
 import { CommonUtils } from 'src/app/utils';
+import { HttpClient } from '@angular/common/http';
+import { Constants } from 'src/app/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -12,23 +13,20 @@ export class AuthService {
 
   public isLoggedIn = new BehaviorSubject<any>(false);
 
-  constructor() {}
+  constructor(private httpClient : HttpClient) {}
 
   public authenticate(username: string, password: string): Observable<boolean> {
-    let passwordHash = CryptoJS.SHA256(password).toString();
-    for (let user of users) {
-      if (username === user.userName)
-        if (passwordHash === user.passwordHash) {
+    this.httpClient.post(Constants.AUTH_ENDPOINT, {
+      username: username,
+      password: password,
+      rememberMe: true
+    }).subscribe((result : any) => {
+          const jwt = result.jwt;
           console.log('login success');
-          user.lastLogin = Date.now();
-
-          //NOTE:
-            //FRONTEND METHODS, ONLY FOR TESTING! SHOULD BE REMOVED AFTER IMPLEMENTING BACKEND
+          let user = new User(username, result.firstName, result.lastName, result.email, result.lastLoginTimestamp, jwt);
           localStorage.setItem('currentUser', JSON.stringify(user));
           return of(true);
-        }
-    }
-    return of(false);
+    });
   }
 
   public register(username: string, email: string, password: string): boolean {

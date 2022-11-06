@@ -46,8 +46,8 @@ public class Positions implements Serializable {
     private Integer quantity;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "preferences", "positions", "sCAccounts", "tradeHistories" }, allowSetters = true)
-    private SCUser sCUser;
+    @JsonIgnoreProperties(value = { "preferences", "positions", "scAccounts", "tradeHistories" }, allowSetters = true)
+    private ScUser scUser;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -129,16 +129,16 @@ public class Positions implements Serializable {
         this.quantity = quantity;
     }
 
-    public SCUser getSCUser() {
-        return this.sCUser;
+    public ScUser getScUser() {
+        return this.scUser;
     }
 
-    public void setSCUser(SCUser sCUser) {
-        this.sCUser = sCUser;
+    public void setScUser(ScUser scUser) {
+        this.scUser = scUser;
     }
 
-    public Positions sCUser(SCUser sCUser) {
-        this.setSCUser(sCUser);
+    public Positions scUser(ScUser scUser) {
+        this.setScUser(scUser);
         return this;
     }
 

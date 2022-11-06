@@ -1,12 +1,14 @@
-entity SCUser(SC_USER) {
+entity ScUser(SC_USER) {
 	@Id scUserId String minlength(3) maxlength(10),
     name String required,
     email String required unique pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
     passwordHash String required minlength(64) maxlength(64),
     image ImageBlob
+	scUserRole UserRoles required
+	scUserEnabled Boolean required
 }
 
-entity SCAccount(SC_ACCOUNT) {
+entity ScAccount(SC_ACCOUNT) {
     @Id accNo Long,
     scUserId String required,
     bankName String required,
@@ -69,6 +71,11 @@ enum AssetType {
     BOND
 }
 
+enum UserRoles {
+	USER (ROLE_USER),
+	ADMIN (ROLE_ADMIN)
+}
+
 entity Stocks(SC_STOCKS) {
 	@Id code String minlength(1),
     name String required,
@@ -99,13 +106,13 @@ entity Bonds(SC_BONDS) {
 }
 
 relationship OneToOne {
-  	SCUser to Preferences
+  	ScUser to Preferences
 }
 
 relationship OneToMany {
-	SCUser to Positions,
-    SCUser to SCAccount,
-    SCUser to TradeHistory
+	ScUser to Positions,
+    ScUser to ScAccount,
+    ScUser to TradeHistory
 }
 
 filter Stocks, MutualFunds, Bonds

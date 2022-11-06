@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20221104054557",
+  "changelogDate": "20221106154759",
   "dto": "no",
   "embedded": false,
   "entityTableName": "sc_trade_history",
@@ -56,9 +56,9 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "sCUser",
+      "otherEntityName": "scUser",
       "otherEntityRelationshipName": "tradeHistory",
-      "relationshipName": "sCUser",
+      "relationshipName": "scUser",
       "relationshipType": "many-to-one"
     }
   ],

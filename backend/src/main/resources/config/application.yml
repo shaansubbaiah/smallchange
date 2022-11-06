@@ -141,8 +141,8 @@ spring:
       matching-strategy: ant_path_matcher
   security:
     user:
-      name: admin
-      password: admin
+      name: admin1
+      password: admin1
       roles:
         - ADMIN
         - USER

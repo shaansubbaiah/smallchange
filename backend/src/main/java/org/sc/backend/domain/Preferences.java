@@ -41,9 +41,9 @@ public class Preferences implements Serializable, Persistable<String> {
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "preferences", "positions", "sCAccounts", "tradeHistories" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "preferences", "positions", "scAccounts", "tradeHistories" }, allowSetters = true)
     @OneToOne(mappedBy = "preferences")
-    private SCUser sCUser;
+    private ScUser scUser;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -134,22 +134,22 @@ public class Preferences implements Serializable, Persistable<String> {
         this.setIsPersisted();
     }
 
-    public SCUser getSCUser() {
-        return this.sCUser;
+    public ScUser getScUser() {
+        return this.scUser;
     }
 
-    public void setSCUser(SCUser sCUser) {
-        if (this.sCUser != null) {
-            this.sCUser.setPreferences(null);
+    public void setScUser(ScUser scUser) {
+        if (this.scUser != null) {
+            this.scUser.setPreferences(null);
         }
-        if (sCUser != null) {
-            sCUser.setPreferences(this);
+        if (scUser != null) {
+            scUser.setPreferences(this);
         }
-        this.sCUser = sCUser;
+        this.scUser = scUser;
     }
 
-    public Preferences sCUser(SCUser sCUser) {
-        this.setSCUser(sCUser);
+    public Preferences scUser(ScUser scUser) {
+        this.setScUser(scUser);
         return this;
     }
 

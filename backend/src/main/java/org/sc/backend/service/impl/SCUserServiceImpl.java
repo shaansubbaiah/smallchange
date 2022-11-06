@@ -2,87 +2,93 @@ package org.sc.backend.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import org.sc.backend.domain.SCUser;
-import org.sc.backend.repository.SCUserRepository;
-import org.sc.backend.service.SCUserService;
+import org.sc.backend.domain.ScUser;
+import org.sc.backend.repository.ScUserRepository;
+import org.sc.backend.service.ScUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service Implementation for managing {@link SCUser}.
+ * Service Implementation for managing {@link ScUser}.
  */
 @Service
 @Transactional
-public class SCUserServiceImpl implements SCUserService {
+public class ScUserServiceImpl implements ScUserService {
 
-    private final Logger log = LoggerFactory.getLogger(SCUserServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ScUserServiceImpl.class);
 
-    private final SCUserRepository sCUserRepository;
+    private final ScUserRepository scUserRepository;
 
-    public SCUserServiceImpl(SCUserRepository sCUserRepository) {
-        this.sCUserRepository = sCUserRepository;
+    public ScUserServiceImpl(ScUserRepository scUserRepository) {
+        this.scUserRepository = scUserRepository;
     }
 
     @Override
-    public SCUser save(SCUser sCUser) {
-        log.debug("Request to save SCUser : {}", sCUser);
-        return sCUserRepository.save(sCUser);
+    public ScUser save(ScUser scUser) {
+        log.debug("Request to save ScUser : {}", scUser);
+        return scUserRepository.save(scUser);
     }
 
     @Override
-    public SCUser update(SCUser sCUser) {
-        log.debug("Request to update SCUser : {}", sCUser);
-        sCUser.setIsPersisted();
-        return sCUserRepository.save(sCUser);
+    public ScUser update(ScUser scUser) {
+        log.debug("Request to update ScUser : {}", scUser);
+        scUser.setIsPersisted();
+        return scUserRepository.save(scUser);
     }
 
     @Override
-    public Optional<SCUser> partialUpdate(SCUser sCUser) {
-        log.debug("Request to partially update SCUser : {}", sCUser);
+    public Optional<ScUser> partialUpdate(ScUser scUser) {
+        log.debug("Request to partially update ScUser : {}", scUser);
 
-        return sCUserRepository
-            .findById(sCUser.getScUserId())
-            .map(existingSCUser -> {
-                if (sCUser.getName() != null) {
-                    existingSCUser.setName(sCUser.getName());
+        return scUserRepository
+            .findById(scUser.getScUserId())
+            .map(existingScUser -> {
+                if (scUser.getName() != null) {
+                    existingScUser.setName(scUser.getName());
                 }
-                if (sCUser.getEmail() != null) {
-                    existingSCUser.setEmail(sCUser.getEmail());
+                if (scUser.getEmail() != null) {
+                    existingScUser.setEmail(scUser.getEmail());
                 }
-                if (sCUser.getPasswordHash() != null) {
-                    existingSCUser.setPasswordHash(sCUser.getPasswordHash());
+                if (scUser.getPasswordHash() != null) {
+                    existingScUser.setPasswordHash(scUser.getPasswordHash());
                 }
-                if (sCUser.getImage() != null) {
-                    existingSCUser.setImage(sCUser.getImage());
+                if (scUser.getImage() != null) {
+                    existingScUser.setImage(scUser.getImage());
                 }
-                if (sCUser.getImageContentType() != null) {
-                    existingSCUser.setImageContentType(sCUser.getImageContentType());
+                if (scUser.getImageContentType() != null) {
+                    existingScUser.setImageContentType(scUser.getImageContentType());
+                }
+                if (scUser.getScUserRole() != null) {
+                    existingScUser.setScUserRole(scUser.getScUserRole());
+                }
+                if (scUser.getScUserEnabled() != null) {
+                    existingScUser.setScUserEnabled(scUser.getScUserEnabled());
                 }
 
-                return existingSCUser;
+                return existingScUser;
             })
-            .map(sCUserRepository::save);
+            .map(scUserRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<SCUser> findAll() {
-        log.debug("Request to get all SCUsers");
-        return sCUserRepository.findAll();
+    public List<ScUser> findAll() {
+        log.debug("Request to get all ScUsers");
+        return scUserRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<SCUser> findOne(String id) {
-        log.debug("Request to get SCUser : {}", id);
-        return sCUserRepository.findById(id);
+    public Optional<ScUser> findOne(String id) {
+        log.debug("Request to get ScUser : {}", id);
+        return scUserRepository.findById(id);
     }
 
     @Override
     public void delete(String id) {
-        log.debug("Request to delete SCUser : {}", id);
-        sCUserRepository.deleteById(id);
+        log.debug("Request to delete ScUser : {}", id);
+        scUserRepository.deleteById(id);
     }
 }

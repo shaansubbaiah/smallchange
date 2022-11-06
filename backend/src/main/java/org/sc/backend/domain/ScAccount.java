@@ -6,12 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 /**
- * A SCAccount.
+ * A ScAccount.
  */
 @Entity
 @Table(name = "sc_account")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class SCAccount implements Serializable {
+public class ScAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,8 +38,8 @@ public class SCAccount implements Serializable {
     private Float accBalance;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "preferences", "positions", "sCAccounts", "tradeHistories" }, allowSetters = true)
-    private SCUser sCUser;
+    @JsonIgnoreProperties(value = { "preferences", "positions", "scAccounts", "tradeHistories" }, allowSetters = true)
+    private ScUser scUser;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -47,7 +47,7 @@ public class SCAccount implements Serializable {
         return this.accNo;
     }
 
-    public SCAccount accNo(Long accNo) {
+    public ScAccount accNo(Long accNo) {
         this.setAccNo(accNo);
         return this;
     }
@@ -60,7 +60,7 @@ public class SCAccount implements Serializable {
         return this.scUserId;
     }
 
-    public SCAccount scUserId(String scUserId) {
+    public ScAccount scUserId(String scUserId) {
         this.setScUserId(scUserId);
         return this;
     }
@@ -73,7 +73,7 @@ public class SCAccount implements Serializable {
         return this.bankName;
     }
 
-    public SCAccount bankName(String bankName) {
+    public ScAccount bankName(String bankName) {
         this.setBankName(bankName);
         return this;
     }
@@ -86,7 +86,7 @@ public class SCAccount implements Serializable {
         return this.accType;
     }
 
-    public SCAccount accType(String accType) {
+    public ScAccount accType(String accType) {
         this.setAccType(accType);
         return this;
     }
@@ -99,7 +99,7 @@ public class SCAccount implements Serializable {
         return this.accBalance;
     }
 
-    public SCAccount accBalance(Float accBalance) {
+    public ScAccount accBalance(Float accBalance) {
         this.setAccBalance(accBalance);
         return this;
     }
@@ -108,16 +108,16 @@ public class SCAccount implements Serializable {
         this.accBalance = accBalance;
     }
 
-    public SCUser getSCUser() {
-        return this.sCUser;
+    public ScUser getScUser() {
+        return this.scUser;
     }
 
-    public void setSCUser(SCUser sCUser) {
-        this.sCUser = sCUser;
+    public void setScUser(ScUser scUser) {
+        this.scUser = scUser;
     }
 
-    public SCAccount sCUser(SCUser sCUser) {
-        this.setSCUser(sCUser);
+    public ScAccount scUser(ScUser scUser) {
+        this.setScUser(scUser);
         return this;
     }
 
@@ -128,10 +128,10 @@ public class SCAccount implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SCAccount)) {
+        if (!(o instanceof ScAccount)) {
             return false;
         }
-        return accNo != null && accNo.equals(((SCAccount) o).accNo);
+        return accNo != null && accNo.equals(((ScAccount) o).accNo);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class SCAccount implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "SCAccount{" +
+        return "ScAccount{" +
             "accNo=" + getAccNo() +
             ", scUserId='" + getScUserId() + "'" +
             ", bankName='" + getBankName() + "'" +

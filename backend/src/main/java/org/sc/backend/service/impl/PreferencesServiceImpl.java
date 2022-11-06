@@ -73,15 +73,15 @@ public class PreferencesServiceImpl implements PreferencesService {
     }
 
     /**
-     *  Get all the preferences where SCUser is {@code null}.
+     *  Get all the preferences where ScUser is {@code null}.
      *  @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<Preferences> findAllWhereSCUserIsNull() {
-        log.debug("Request to get all preferences where SCUser is null");
+    public List<Preferences> findAllWhereScUserIsNull() {
+        log.debug("Request to get all preferences where ScUser is null");
         return StreamSupport
             .stream(preferencesRepository.findAll().spliterator(), false)
-            .filter(preferences -> preferences.getSCUser() == null)
+            .filter(preferences -> preferences.getScUser() == null)
             .collect(Collectors.toList());
     }
 

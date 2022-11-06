@@ -7,10 +7,10 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity MutualFunds.
+        Added the entity Stocks.
     -->
-    <changeSet id="20221104054601-1" author="jhipster">
-        <createTable tableName="sc_mutual_funds">
+    <changeSet id="20221106154802-1" author="jhipster">
+        <createTable tableName="sc_stocks">
             <column name="code" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -23,10 +23,10 @@
             <column name="current_price" type="${floatType}">
                 <constraints nullable="false" />
             </column>
-            <column name="interest_rate" type="${floatType}">
+            <column name="stock_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="mf_type" type="varchar(255)">
+            <column name="exchange_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

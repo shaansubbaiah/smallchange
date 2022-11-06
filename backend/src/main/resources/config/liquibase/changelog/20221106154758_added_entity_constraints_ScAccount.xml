@@ -4,13 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <!--
-        Added the constraints for entity SCAccount.
+        Added the constraints for entity ScAccount.
     -->
-    <changeSet id="20221104054556-2" author="jhipster">
+    <changeSet id="20221106154758-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="scuser_sc_user_id"
+        <addForeignKeyConstraint baseColumnNames="sc_user_sc_user_id"
                                  baseTableName="sc_account"
-                                 constraintName="fk_sc_account__scuser_id"
+                                 constraintName="fk_sc_account__sc_user_id"
                                  referencedColumnNames="sc_user_id"
                                  referencedTableName="sc_user"/>
     </changeSet>

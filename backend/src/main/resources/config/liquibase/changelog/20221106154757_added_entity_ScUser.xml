@@ -7,27 +7,36 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Stocks.
+        Added the entity ScUser.
     -->
-    <changeSet id="20221104054600-1" author="jhipster">
-        <createTable tableName="sc_stocks">
-            <column name="code" type="varchar(255)">
+    <changeSet id="20221106154757-1" author="jhipster">
+        <createTable tableName="sc_user">
+            <column name="sc_user_id" type="varchar(10)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="quantity" type="integer">
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_sc_user__email" />
+            </column>
+            <column name="password_hash" type="varchar(64)">
                 <constraints nullable="false" />
             </column>
-            <column name="current_price" type="${floatType}">
+            <column name="image" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="image_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="sc_user_role" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="stock_type" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="sc_user_enabled" type="boolean">
+                <constraints nullable="false" />
             </column>
-            <column name="exchange_name" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="preferences_sc_user_id" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_sc_user__preferences_sc_user_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

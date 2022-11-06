@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20221104054556",
+  "changelogDate": "20221106154758",
   "dto": "no",
   "embedded": false,
   "entityTableName": "sc_account",
@@ -36,14 +36,14 @@
   ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
-  "name": "SCAccount",
+  "name": "ScAccount",
   "pagination": "no",
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "sCUser",
-      "otherEntityRelationshipName": "sCAccount",
-      "relationshipName": "sCUser",
+      "otherEntityName": "scUser",
+      "otherEntityRelationshipName": "scAccount",
+      "relationshipName": "scUser",
       "relationshipType": "many-to-one"
     }
   ],

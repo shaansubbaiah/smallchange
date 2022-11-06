@@ -1,6 +1,6 @@
 {
   "applications": "*",
-  "changelogDate": "20221104054555",
+  "changelogDate": "20221106154757",
   "dto": "no",
   "embedded": false,
   "entityTableName": "sc_user",
@@ -37,36 +37,47 @@
       "fieldName": "image",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "scUserRole",
+      "fieldType": "UserRoles",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "USER (ROLE_USER),ADMIN (ROLE_ADMIN)"
+    },
+    {
+      "fieldName": "scUserEnabled",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
-  "name": "SCUser",
+  "name": "ScUser",
   "pagination": "no",
   "readOnly": false,
   "relationships": [
     {
       "otherEntityName": "preferences",
-      "otherEntityRelationshipName": "sCUser",
+      "otherEntityRelationshipName": "scUser",
       "ownerSide": true,
       "relationshipName": "preferences",
       "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "positions",
-      "otherEntityRelationshipName": "sCUser",
+      "otherEntityRelationshipName": "scUser",
       "relationshipName": "positions",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "sCAccount",
-      "otherEntityRelationshipName": "sCUser",
-      "relationshipName": "sCAccount",
+      "otherEntityName": "scAccount",
+      "otherEntityRelationshipName": "scUser",
+      "relationshipName": "scAccount",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "tradeHistory",
-      "otherEntityRelationshipName": "sCUser",
+      "otherEntityRelationshipName": "scUser",
       "relationshipName": "tradeHistory",
       "relationshipType": "one-to-many"
     }

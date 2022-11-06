@@ -2,83 +2,83 @@ package org.sc.backend.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import org.sc.backend.domain.SCAccount;
-import org.sc.backend.repository.SCAccountRepository;
-import org.sc.backend.service.SCAccountService;
+import org.sc.backend.domain.ScAccount;
+import org.sc.backend.repository.ScAccountRepository;
+import org.sc.backend.service.ScAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service Implementation for managing {@link SCAccount}.
+ * Service Implementation for managing {@link ScAccount}.
  */
 @Service
 @Transactional
-public class SCAccountServiceImpl implements SCAccountService {
+public class ScAccountServiceImpl implements ScAccountService {
 
-    private final Logger log = LoggerFactory.getLogger(SCAccountServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ScAccountServiceImpl.class);
 
-    private final SCAccountRepository sCAccountRepository;
+    private final ScAccountRepository scAccountRepository;
 
-    public SCAccountServiceImpl(SCAccountRepository sCAccountRepository) {
-        this.sCAccountRepository = sCAccountRepository;
+    public ScAccountServiceImpl(ScAccountRepository scAccountRepository) {
+        this.scAccountRepository = scAccountRepository;
     }
 
     @Override
-    public SCAccount save(SCAccount sCAccount) {
-        log.debug("Request to save SCAccount : {}", sCAccount);
-        return sCAccountRepository.save(sCAccount);
+    public ScAccount save(ScAccount scAccount) {
+        log.debug("Request to save ScAccount : {}", scAccount);
+        return scAccountRepository.save(scAccount);
     }
 
     @Override
-    public SCAccount update(SCAccount sCAccount) {
-        log.debug("Request to update SCAccount : {}", sCAccount);
-        return sCAccountRepository.save(sCAccount);
+    public ScAccount update(ScAccount scAccount) {
+        log.debug("Request to update ScAccount : {}", scAccount);
+        return scAccountRepository.save(scAccount);
     }
 
     @Override
-    public Optional<SCAccount> partialUpdate(SCAccount sCAccount) {
-        log.debug("Request to partially update SCAccount : {}", sCAccount);
+    public Optional<ScAccount> partialUpdate(ScAccount scAccount) {
+        log.debug("Request to partially update ScAccount : {}", scAccount);
 
-        return sCAccountRepository
-            .findById(sCAccount.getAccNo())
-            .map(existingSCAccount -> {
-                if (sCAccount.getScUserId() != null) {
-                    existingSCAccount.setScUserId(sCAccount.getScUserId());
+        return scAccountRepository
+            .findById(scAccount.getAccNo())
+            .map(existingScAccount -> {
+                if (scAccount.getScUserId() != null) {
+                    existingScAccount.setScUserId(scAccount.getScUserId());
                 }
-                if (sCAccount.getBankName() != null) {
-                    existingSCAccount.setBankName(sCAccount.getBankName());
+                if (scAccount.getBankName() != null) {
+                    existingScAccount.setBankName(scAccount.getBankName());
                 }
-                if (sCAccount.getAccType() != null) {
-                    existingSCAccount.setAccType(sCAccount.getAccType());
+                if (scAccount.getAccType() != null) {
+                    existingScAccount.setAccType(scAccount.getAccType());
                 }
-                if (sCAccount.getAccBalance() != null) {
-                    existingSCAccount.setAccBalance(sCAccount.getAccBalance());
+                if (scAccount.getAccBalance() != null) {
+                    existingScAccount.setAccBalance(scAccount.getAccBalance());
                 }
 
-                return existingSCAccount;
+                return existingScAccount;
             })
-            .map(sCAccountRepository::save);
+            .map(scAccountRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<SCAccount> findAll() {
-        log.debug("Request to get all SCAccounts");
-        return sCAccountRepository.findAll();
+    public List<ScAccount> findAll() {
+        log.debug("Request to get all ScAccounts");
+        return scAccountRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<SCAccount> findOne(Long id) {
-        log.debug("Request to get SCAccount : {}", id);
-        return sCAccountRepository.findById(id);
+    public Optional<ScAccount> findOne(Long id) {
+        log.debug("Request to get ScAccount : {}", id);
+        return scAccountRepository.findById(id);
     }
 
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete SCAccount : {}", id);
-        sCAccountRepository.deleteById(id);
+        log.debug("Request to delete ScAccount : {}", id);
+        scAccountRepository.deleteById(id);
     }
 }

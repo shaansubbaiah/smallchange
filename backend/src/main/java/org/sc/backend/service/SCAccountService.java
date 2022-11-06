@@ -2,53 +2,53 @@ package org.sc.backend.service;
 
 import java.util.List;
 import java.util.Optional;
-import org.sc.backend.domain.SCAccount;
+import org.sc.backend.domain.ScAccount;
 
 /**
- * Service Interface for managing {@link SCAccount}.
+ * Service Interface for managing {@link ScAccount}.
  */
-public interface SCAccountService {
+public interface ScAccountService {
     /**
-     * Save a sCAccount.
+     * Save a scAccount.
      *
-     * @param sCAccount the entity to save.
+     * @param scAccount the entity to save.
      * @return the persisted entity.
      */
-    SCAccount save(SCAccount sCAccount);
+    ScAccount save(ScAccount scAccount);
 
     /**
-     * Updates a sCAccount.
+     * Updates a scAccount.
      *
-     * @param sCAccount the entity to update.
+     * @param scAccount the entity to update.
      * @return the persisted entity.
      */
-    SCAccount update(SCAccount sCAccount);
+    ScAccount update(ScAccount scAccount);
 
     /**
-     * Partially updates a sCAccount.
+     * Partially updates a scAccount.
      *
-     * @param sCAccount the entity to update partially.
+     * @param scAccount the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<SCAccount> partialUpdate(SCAccount sCAccount);
+    Optional<ScAccount> partialUpdate(ScAccount scAccount);
 
     /**
-     * Get all the sCAccounts.
+     * Get all the scAccounts.
      *
      * @return the list of entities.
      */
-    List<SCAccount> findAll();
+    List<ScAccount> findAll();
 
     /**
-     * Get the "id" sCAccount.
+     * Get the "id" scAccount.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<SCAccount> findOne(Long id);
+    Optional<ScAccount> findOne(Long id);
 
     /**
-     * Delete the "id" sCAccount.
+     * Delete the "id" scAccount.
      *
      * @param id the id of the entity.
      */

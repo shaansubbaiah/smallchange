@@ -6,16 +6,17 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.sc.backend.domain.enumeration.UserRoles;
 import org.springframework.data.domain.Persistable;
 
 /**
- * A SCUser.
+ * A ScUser.
  */
 @JsonIgnoreProperties(value = { "new" })
 @Entity
 @Table(name = "sc_user")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class SCUser implements Serializable, Persistable<String> {
+public class ScUser implements Serializable, Persistable<String> {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,24 +46,33 @@ public class SCUser implements Serializable, Persistable<String> {
     @Column(name = "image_content_type")
     private String imageContentType;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sc_user_role", nullable = false)
+    private UserRoles scUserRole;
+
+    @NotNull
+    @Column(name = "sc_user_enabled", nullable = false)
+    private Boolean scUserEnabled;
+
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "sCUser" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "scUser" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Preferences preferences;
 
-    @OneToMany(mappedBy = "sCUser")
-    @JsonIgnoreProperties(value = { "sCUser" }, allowSetters = true)
+    @OneToMany(mappedBy = "scUser")
+    @JsonIgnoreProperties(value = { "scUser" }, allowSetters = true)
     private Set<Positions> positions = new HashSet<>();
 
-    @OneToMany(mappedBy = "sCUser")
-    @JsonIgnoreProperties(value = { "sCUser" }, allowSetters = true)
-    private Set<SCAccount> sCAccounts = new HashSet<>();
+    @OneToMany(mappedBy = "scUser")
+    @JsonIgnoreProperties(value = { "scUser" }, allowSetters = true)
+    private Set<ScAccount> scAccounts = new HashSet<>();
 
-    @OneToMany(mappedBy = "sCUser")
-    @JsonIgnoreProperties(value = { "sCUser" }, allowSetters = true)
+    @OneToMany(mappedBy = "scUser")
+    @JsonIgnoreProperties(value = { "scUser" }, allowSetters = true)
     private Set<TradeHistory> tradeHistories = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -71,7 +81,7 @@ public class SCUser implements Serializable, Persistable<String> {
         return this.scUserId;
     }
 
-    public SCUser scUserId(String scUserId) {
+    public ScUser scUserId(String scUserId) {
         this.setScUserId(scUserId);
         return this;
     }
@@ -84,7 +94,7 @@ public class SCUser implements Serializable, Persistable<String> {
         return this.name;
     }
 
-    public SCUser name(String name) {
+    public ScUser name(String name) {
         this.setName(name);
         return this;
     }
@@ -97,7 +107,7 @@ public class SCUser implements Serializable, Persistable<String> {
         return this.email;
     }
 
-    public SCUser email(String email) {
+    public ScUser email(String email) {
         this.setEmail(email);
         return this;
     }
@@ -110,7 +120,7 @@ public class SCUser implements Serializable, Persistable<String> {
         return this.passwordHash;
     }
 
-    public SCUser passwordHash(String passwordHash) {
+    public ScUser passwordHash(String passwordHash) {
         this.setPasswordHash(passwordHash);
         return this;
     }
@@ -123,7 +133,7 @@ public class SCUser implements Serializable, Persistable<String> {
         return this.image;
     }
 
-    public SCUser image(byte[] image) {
+    public ScUser image(byte[] image) {
         this.setImage(image);
         return this;
     }
@@ -136,13 +146,39 @@ public class SCUser implements Serializable, Persistable<String> {
         return this.imageContentType;
     }
 
-    public SCUser imageContentType(String imageContentType) {
+    public ScUser imageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
         return this;
     }
 
     public void setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+    }
+
+    public UserRoles getScUserRole() {
+        return this.scUserRole;
+    }
+
+    public ScUser scUserRole(UserRoles scUserRole) {
+        this.setScUserRole(scUserRole);
+        return this;
+    }
+
+    public void setScUserRole(UserRoles scUserRole) {
+        this.scUserRole = scUserRole;
+    }
+
+    public Boolean getScUserEnabled() {
+        return this.scUserEnabled;
+    }
+
+    public ScUser scUserEnabled(Boolean scUserEnabled) {
+        this.setScUserEnabled(scUserEnabled);
+        return this;
+    }
+
+    public void setScUserEnabled(Boolean scUserEnabled) {
+        this.scUserEnabled = scUserEnabled;
     }
 
     @Override
@@ -156,7 +192,7 @@ public class SCUser implements Serializable, Persistable<String> {
         return !this.isPersisted;
     }
 
-    public SCUser setIsPersisted() {
+    public ScUser setIsPersisted() {
         this.isPersisted = true;
         return this;
     }
@@ -175,7 +211,7 @@ public class SCUser implements Serializable, Persistable<String> {
         this.preferences = preferences;
     }
 
-    public SCUser preferences(Preferences preferences) {
+    public ScUser preferences(Preferences preferences) {
         this.setPreferences(preferences);
         return this;
     }
@@ -186,59 +222,59 @@ public class SCUser implements Serializable, Persistable<String> {
 
     public void setPositions(Set<Positions> positions) {
         if (this.positions != null) {
-            this.positions.forEach(i -> i.setSCUser(null));
+            this.positions.forEach(i -> i.setScUser(null));
         }
         if (positions != null) {
-            positions.forEach(i -> i.setSCUser(this));
+            positions.forEach(i -> i.setScUser(this));
         }
         this.positions = positions;
     }
 
-    public SCUser positions(Set<Positions> positions) {
+    public ScUser positions(Set<Positions> positions) {
         this.setPositions(positions);
         return this;
     }
 
-    public SCUser addPositions(Positions positions) {
+    public ScUser addPositions(Positions positions) {
         this.positions.add(positions);
-        positions.setSCUser(this);
+        positions.setScUser(this);
         return this;
     }
 
-    public SCUser removePositions(Positions positions) {
+    public ScUser removePositions(Positions positions) {
         this.positions.remove(positions);
-        positions.setSCUser(null);
+        positions.setScUser(null);
         return this;
     }
 
-    public Set<SCAccount> getSCAccounts() {
-        return this.sCAccounts;
+    public Set<ScAccount> getScAccounts() {
+        return this.scAccounts;
     }
 
-    public void setSCAccounts(Set<SCAccount> sCAccounts) {
-        if (this.sCAccounts != null) {
-            this.sCAccounts.forEach(i -> i.setSCUser(null));
+    public void setScAccounts(Set<ScAccount> scAccounts) {
+        if (this.scAccounts != null) {
+            this.scAccounts.forEach(i -> i.setScUser(null));
         }
-        if (sCAccounts != null) {
-            sCAccounts.forEach(i -> i.setSCUser(this));
+        if (scAccounts != null) {
+            scAccounts.forEach(i -> i.setScUser(this));
         }
-        this.sCAccounts = sCAccounts;
+        this.scAccounts = scAccounts;
     }
 
-    public SCUser sCAccounts(Set<SCAccount> sCAccounts) {
-        this.setSCAccounts(sCAccounts);
+    public ScUser scAccounts(Set<ScAccount> scAccounts) {
+        this.setScAccounts(scAccounts);
         return this;
     }
 
-    public SCUser addSCAccount(SCAccount sCAccount) {
-        this.sCAccounts.add(sCAccount);
-        sCAccount.setSCUser(this);
+    public ScUser addScAccount(ScAccount scAccount) {
+        this.scAccounts.add(scAccount);
+        scAccount.setScUser(this);
         return this;
     }
 
-    public SCUser removeSCAccount(SCAccount sCAccount) {
-        this.sCAccounts.remove(sCAccount);
-        sCAccount.setSCUser(null);
+    public ScUser removeScAccount(ScAccount scAccount) {
+        this.scAccounts.remove(scAccount);
+        scAccount.setScUser(null);
         return this;
     }
 
@@ -248,28 +284,28 @@ public class SCUser implements Serializable, Persistable<String> {
 
     public void setTradeHistories(Set<TradeHistory> tradeHistories) {
         if (this.tradeHistories != null) {
-            this.tradeHistories.forEach(i -> i.setSCUser(null));
+            this.tradeHistories.forEach(i -> i.setScUser(null));
         }
         if (tradeHistories != null) {
-            tradeHistories.forEach(i -> i.setSCUser(this));
+            tradeHistories.forEach(i -> i.setScUser(this));
         }
         this.tradeHistories = tradeHistories;
     }
 
-    public SCUser tradeHistories(Set<TradeHistory> tradeHistories) {
+    public ScUser tradeHistories(Set<TradeHistory> tradeHistories) {
         this.setTradeHistories(tradeHistories);
         return this;
     }
 
-    public SCUser addTradeHistory(TradeHistory tradeHistory) {
+    public ScUser addTradeHistory(TradeHistory tradeHistory) {
         this.tradeHistories.add(tradeHistory);
-        tradeHistory.setSCUser(this);
+        tradeHistory.setScUser(this);
         return this;
     }
 
-    public SCUser removeTradeHistory(TradeHistory tradeHistory) {
+    public ScUser removeTradeHistory(TradeHistory tradeHistory) {
         this.tradeHistories.remove(tradeHistory);
-        tradeHistory.setSCUser(null);
+        tradeHistory.setScUser(null);
         return this;
     }
 
@@ -280,10 +316,10 @@ public class SCUser implements Serializable, Persistable<String> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SCUser)) {
+        if (!(o instanceof ScUser)) {
             return false;
         }
-        return scUserId != null && scUserId.equals(((SCUser) o).scUserId);
+        return scUserId != null && scUserId.equals(((ScUser) o).scUserId);
     }
 
     @Override
@@ -295,13 +331,15 @@ public class SCUser implements Serializable, Persistable<String> {
     // prettier-ignore
     @Override
     public String toString() {
-        return "SCUser{" +
+        return "ScUser{" +
             "scUserId=" + getScUserId() +
             ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +
             ", passwordHash='" + getPasswordHash() + "'" +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
+            ", scUserRole='" + getScUserRole() + "'" +
+            ", scUserEnabled='" + getScUserEnabled() + "'" +
             "}";
     }
 }

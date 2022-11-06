@@ -4,14 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <!--
-        Added the constraints for entity Positions.
+        Added the constraints for entity ScUser.
     -->
-    <changeSet id="20221104054558-2" author="jhipster">
+    <changeSet id="20221106154757-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="scuser_sc_user_id"
-                                 baseTableName="sc_positions"
-                                 constraintName="fk_sc_positions__scuser_id"
+        <addForeignKeyConstraint baseColumnNames="preferences_sc_user_id"
+                                 baseTableName="sc_user"
+                                 constraintName="fk_sc_user__preferences_id"
                                  referencedColumnNames="sc_user_id"
-                                 referencedTableName="sc_user"/>
+                                 referencedTableName="sc_preferences"/>
     </changeSet>
 </databaseChangeLog>

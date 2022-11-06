@@ -140,8 +140,8 @@ public class PreferencesResource {
     @GetMapping("/preferences")
     public List<Preferences> getAllPreferences(@RequestParam(required = false) String filter) {
         if ("scuser-is-null".equals(filter)) {
-            log.debug("REST request to get all Preferencess where sCUser is null");
-            return preferencesService.findAllWhereSCUserIsNull();
+            log.debug("REST request to get all Preferencess where scUser is null");
+            return preferencesService.findAllWhereScUserIsNull();
         }
         log.debug("REST request to get all Preferences");
         return preferencesService.findAll();
