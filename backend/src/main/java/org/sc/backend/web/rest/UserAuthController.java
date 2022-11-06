@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/user")
-public class UserJWTController {
+public class UserAuthController {
 
     private final TokenProvider tokenProvider;
 
@@ -31,7 +32,7 @@ public class UserJWTController {
 
     private final ScUserServiceImpl scUserService;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService) {
+    public UserAuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.scUserService = scUserService;
@@ -62,27 +63,13 @@ public class UserJWTController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserAuthResponse> register(@Valid @RequestBody LoginVM loginVM) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-            loginVM.getUsername(),
-            loginVM.getPassword()
-        );
+    public ResponseEntity<ScUser> register(@Valid @RequestBody ScUser scUser) {
+        //hash passwords
+        scUser.setPasswordHash(new BCryptPasswordEncoder(14).encode(scUser.getPasswordHash()));
 
-        //authenticate user
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //TODO: Implement checks before insertion
 
-        //auth success, generate jwt
-        String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
-
-        //get user details
-        ScUser user = scUserService.findOne(loginVM.getUsername()).isPresent() ? scUserService.findOne(loginVM.getUsername()).get() : null;
-        if (user == null) throw new UsernameNotFoundException("Username not found in database!");
-
-        //set HTTP headers and return
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new UserAuthResponse(user.getScUserId(), user.getName(), user.getEmail(), user.getScUserRole().toString(), System.currentTimeMillis(), jwt, user.getImage()), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(scUserService.save(scUser), HttpStatus.CREATED);
     }
 
     /**
