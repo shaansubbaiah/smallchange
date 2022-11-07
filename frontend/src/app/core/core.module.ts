@@ -10,6 +10,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 @NgModule({
   declarations: [NavbarComponent, FooterComponent],
   imports: [
@@ -20,6 +24,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCardModule,
     MatDividerModule,
     MatMenuModule,
+    HttpClientModule
   ],
   exports: [NavbarComponent, FooterComponent],
 })

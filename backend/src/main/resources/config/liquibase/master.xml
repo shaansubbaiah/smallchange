@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="sysdate" dbms="oracle"/>
+    <property name="floatType" value="float" dbms="oracle"/>
+    <property name="clobType" value="clob" dbms="oracle"/>
+    <property name="blobType" value="blob" dbms="oracle"/>
+    <property name="uuidType" value="uuid" dbms="oracle"/>
+    <property name="datetimeType" value="datetime" dbms="oracle"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154757_added_entity_ScUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154758_added_entity_ScAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154759_added_entity_TradeHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154800_added_entity_Positions.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154801_added_entity_Preferences.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154802_added_entity_Stocks.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154803_added_entity_MutualFunds.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154804_added_entity_Bonds.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20221106154757_added_entity_constraints_ScUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154758_added_entity_constraints_ScAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154759_added_entity_constraints_TradeHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106154800_added_entity_constraints_Positions.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>

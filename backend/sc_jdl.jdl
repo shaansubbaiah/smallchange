@@ -1,0 +1,119 @@
+entity ScUser(SC_USER) {
+	@Id scUserId String minlength(3) maxlength(10),
+    name String required,
+    email String required unique pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
+    passwordHash String required minlength(64) maxlength(64),
+    image ImageBlob
+	scUserRole UserRoles required
+	scUserEnabled Boolean required
+}
+
+entity ScAccount(SC_ACCOUNT) {
+    @Id accNo Long,
+    scUserId String required,
+    bankName String required,
+    accType String required,
+    accBalance Float min(0)
+}
+
+entity TradeHistory(SC_TRADE_HISTORY) {
+    @Id tradeId Long,
+    scUserId String required,
+    assetCode String required,
+    assetType AssetType required,
+    tradePrice Float required,
+    tradeType String required,
+    tradeQuantity Integer required,
+    tradeDate LocalDate required
+}
+
+entity Positions(SC_POSITIONS) {
+	@Id positionId Long,
+    scUserId String required,
+	assetCode String required,
+    assetType AssetType required,
+    buyPrice Float required min(0),
+    quantity Integer required min(0),
+}
+
+entity Preferences(SC_PREFERENCES) {
+	@Id scUserId String,
+    investmentPurpose String,
+    riskTolerance RiskTolerance,
+    incomeCategory IncomeCategory,
+    investmentLength InvestmentLength
+}
+
+enum IncomeCategory {
+	LOW,
+    LOWER_MIDDLE,
+    UPPER_MIDDLE,
+    HIGH
+}
+
+enum InvestmentLength {
+	SHORT,
+    MEDIUM,
+    LONG
+}
+
+enum RiskTolerance {
+	CONSERVATIVE,
+    BELOW_AVERAGE,
+    AVERAGE,
+    ABOVE_AVERAGE,
+    AGGRESSIVE
+}
+
+enum AssetType {
+	STOCK,
+    MUTUALFUND,
+    BOND
+}
+
+enum UserRoles {
+	USER (ROLE_USER),
+	ADMIN (ROLE_ADMIN)
+}
+
+entity Stocks(SC_STOCKS) {
+	@Id code String minlength(1),
+    name String required,
+    quantity Integer required min(0),
+    currentPrice Float required min(0),
+    stockType String,
+    exchangeName String
+}
+
+entity MutualFunds(SC_MUTUAL_FUNDS) {
+	@Id code String minlength(1),
+    name String required,
+    quantity Integer required min(0),
+    currentPrice Float required min(0),
+    interestRate Float min(0),
+    mfType String
+}
+
+entity Bonds(SC_BONDS) {
+	@Id code String minlength(1),
+    name String required,
+    quantity Integer required min(0),
+    currentPrice Float required min(0),
+    interestRate Float required min(0),
+    durationMonths Integer required min(0),
+    bondType String,
+    exchangeName String
+}
+
+relationship OneToOne {
+  	ScUser to Preferences
+}
+
+relationship OneToMany {
+	ScUser to Positions,
+    ScUser to ScAccount,
+    ScUser to TradeHistory
+}
+
+filter Stocks, MutualFunds, Bonds
+service all with serviceImpl

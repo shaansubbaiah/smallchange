@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -10,6 +11,7 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -58,15 +60,30 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
 
   onSubmit() {
     console.log(this.loginDetails.value);
+    let username = this.loginDetails.get('username')?.value;
 
     this.authService.authenticate(
       this.loginDetails.get('username')?.value,
       this.loginDetails.get('password')?.value
-    ).subscribe((isLoginSuccessful : boolean) => {
-      this.authService.setLoggedIn(isLoginSuccessful);
-      this.loginValid = isLoginSuccessful;
-      if (isLoginSuccessful)
-        this.router.navigateByUrl('/home');
+    ).subscribe((result : any) => {
+      const jwt = result.jwt;
+      console.log('login success');
+      let user = new User(username, result.firstName, result.lastName, result.email, result.lastLoginTimestamp, jwt);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+
+      this.authService.setLoggedIn(true);
+      this.loginValid = true;
+      this.router.navigateByUrl('/home');
+    }, (e: HttpErrorResponse) => {
+      switch(e.status) {
+        case 401:
+        case 403:
+          this.loginValid = false;
+          this.authService.setLoggedIn(false);
+          break;
+        case 500:
+          console.log('Internal server error!');
+      }
     });
   }
 

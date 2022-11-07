@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
-import { users } from '../models/mock-data';
 import { User } from '../models/user';
-import * as CryptoJS from "crypto-js";
 import { CommonUtils } from 'src/app/utils';
+import { HttpClient } from '@angular/common/http';
+import { Constants } from 'src/app/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -12,23 +12,22 @@ export class AuthService {
 
   public isLoggedIn = new BehaviorSubject<any>(false);
 
-  constructor() {}
+  constructor(private httpClient : HttpClient) {}
 
-  public authenticate(username: string, password: string): Observable<boolean> {
-    let passwordHash = CryptoJS.SHA256(password).toString();
-    for (let user of users) {
-      if (username === user.userName)
-        if (passwordHash === user.passwordHash) {
-          console.log('login success');
-          user.lastLogin = Date.now();
+  public authenticate(username: string, password: string): Observable<any> {
+    return this.httpClient.post(Constants.AUTH_ENDPOINT, {
+      username: username,
+      password: password,
+      rememberMe: true
+    });
+  }
 
-          //NOTE:
-            //FRONTEND METHODS, ONLY FOR TESTING! SHOULD BE REMOVED AFTER IMPLEMENTING BACKEND
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          return of(true);
-        }
-    }
-    return of(false);
+  public logout() : void {
+    this.httpClient.post(Constants.LOGOUT_ENDPOINT, null)
+    .subscribe((result : any) => {
+      console.log('logged out!');
+      console.log(result);
+    });
   }
 
   public register(username: string, email: string, password: string): boolean {
@@ -71,10 +70,8 @@ export class AuthService {
         currentUser.firstName,
         currentUser.lastName,
         currentUser.email,
-        currentUser.passwordHash,
         currentUser.lastLogin,
-        currentUser.bankAccounts,
-        currentUser.token
+        currentUser.jwt
       );
     } catch (err) {
       console.log(err);
