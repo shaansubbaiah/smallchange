@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
 
   getUserInitials() {
     let initials = '';
-    if (this.currentUser === null) {
+    if (this.currentUser == null) {
       this.userInitials = '';
       return;
     }
@@ -55,10 +55,10 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserBgColor(): string {
-    if (typeof this.currentUser !== 'undefined')
-    return CommonUtils.getPseudoRandomColor(
-      this.currentUser.firstName + this.currentUser.lastName
-    );
+    if (this.currentUser != null)
+      return CommonUtils.getPseudoRandomColor(
+        this.currentUser.firstName + this.currentUser.lastName
+      );
     else return '';
   }
 

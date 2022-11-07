@@ -25,8 +25,12 @@
     <div class="user-image" [ngStyle]="{ backgroundColor: getUserBgColor() }">
       {{ userInitials }}
     </div>
-    <p class="user-name" *ngIf="currentUser !== null">
-      {{ currentUser !== null ? currentUser.firstName + " " + currentUser.lastName : '' }}
+    <p class="user-name" *ngIf="currentUser != null">
+      {{
+        currentUser != null
+          ? currentUser.firstName + " " + currentUser.lastName
+          : ""
+      }}
     </p>
   </div>
   <mat-divider></mat-divider>
