@@ -18,11 +18,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Integration tests for the {@link UserAuthController} REST controller.
+ * Integration tests for the {@link UserController} REST controller.
  */
 @AutoConfigureMockMvc
 @IntegrationTest
-class UserAuthControllerIT {
+class UserControllerIT {
 
     @Autowired
     private MockMvc mockMvc;

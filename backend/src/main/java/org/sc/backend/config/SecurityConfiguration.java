@@ -83,10 +83,21 @@ public class SecurityConfiguration {
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/test/**").permitAll()
+
+            //user APIs
             .antMatchers("/api/user/authenticate").permitAll()
             .antMatchers("/api/user/register").permitAll()
+            .antMatchers("/api/user/**").authenticated()
+
+            //Marketplace APIs
+            .antMatchers("/api/marketplace/**").authenticated()
+
+            //Admin APIs
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
+
             .antMatchers("/api/**").authenticated()
+
+            //management APIs
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()
