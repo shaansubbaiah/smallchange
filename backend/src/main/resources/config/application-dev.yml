@@ -36,9 +36,9 @@ spring:
     url: jdbc:oracle:thin:@localhost:1521/XEPDB1
     username: scott
     password: TIGER
-    hikari:
-      poolName: Hikari
-      auto-commit: false
+#    hikari:
+#      poolName: Hikari
+#      auto-commit: false
   jpa:
   liquibase:
     contexts: dev
