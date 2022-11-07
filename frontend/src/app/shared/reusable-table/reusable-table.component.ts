@@ -6,6 +6,8 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +19,14 @@ import { CommonUtils } from 'src/app/utils';
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.scss'],
 })
-export class ReusableTableComponent implements OnInit, AfterViewInit {
+export class ReusableTableComponent implements OnInit, AfterViewInit, OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tableRows']) {
+      this.dataSource = new MatTableDataSource<any>(changes['tableRows'].currentValue);
+      this.dataSource.paginator = this.paginator;
+      this.setFilterColumns();
+    }
+  }
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   displayedColumns: string[] = [];
   noResultsFound: boolean = false;

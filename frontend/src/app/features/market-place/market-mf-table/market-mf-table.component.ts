@@ -11,10 +11,11 @@ export class MarketMfTableComponent implements OnInit {
   @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
-    { name: 'name', displayName: 'Name', type: 'text' },
     { name: 'code', displayName: 'Code', type: 'text' },
-    { name: 'interest', displayName: 'Interest', type: 'percentile' },
-    { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
+    { name: 'name', displayName: 'Name', type: 'text' },
+    { name: 'currentPrice', displayName: 'LTP', type: 'currency' },
+    { name: 'interestRate', displayName: 'Interest Rate', type: 'percentile' },
+    { name: 'mfType', displayName: 'Type', type: 'snakecase' },
   ];
 
   ngOnInit(): void {}

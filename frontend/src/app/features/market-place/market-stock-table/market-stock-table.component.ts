@@ -14,7 +14,7 @@ export class MarketStockTableComponent implements OnInit {
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
     { name: 'code', displayName: 'Code', type: 'text' },
-    { name: 'quantity', displayName: 'Qty', type: 'number' },
+    { name: 'quantity', displayName: 'Qty', type: 'text' },
     //{ name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
     { name: 'currentPrice', displayName: 'Current Price', type: 'currency' },
     { name: 'stockType', displayName: 'Stock Type', type: 'snakecase' },
