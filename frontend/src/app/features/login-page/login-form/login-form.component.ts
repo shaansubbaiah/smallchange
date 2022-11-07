@@ -22,6 +22,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginFormComponent implements OnInit, ErrorStateMatcher {
   loginValid: boolean = true;
   hidePassword: boolean = true;
+  isLoading : boolean = false;
 
   loginDetails: FormGroup;
 
@@ -59,6 +60,7 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
   }
 
   onSubmit() {
+    this.isLoading = true;
     console.log(this.loginDetails.value);
     let username = this.loginDetails.get('username')?.value;
 
@@ -74,6 +76,8 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
       this.authService.setLoggedIn(true);
       this.loginValid = true;
       this.router.navigateByUrl('/home');
+      this.isLoading = false;
+
     }, (e: HttpErrorResponse) => {
       switch(e.status) {
         case 401:
@@ -84,6 +88,7 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
         case 500:
           console.log('Internal server error!');
       }
+      this.isLoading = false;
     });
   }
 

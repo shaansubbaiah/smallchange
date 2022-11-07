@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -75,6 +77,7 @@ import { PreferencesComponent } from './preferences/preferences.component';
     MatDialogModule,
     Ng2SearchPipeModule,
     FormsModule,
+    MatProgressSpinnerModule
   ],
   exports: [LoginPageComponent, HomePageComponent],
 })

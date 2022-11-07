@@ -54,7 +54,6 @@ export class AuthService {
 
   setLoggedIn(val: boolean) {
     this.isLoggedIn.next(val);
-
     if (!val) {
       this.clearLocalStorage();
     }
