@@ -1,4 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Constants } from 'src/app/constants';
+import * as internal from 'stream';
 import {
   dummy_data_bonds,
   dummy_data_mfs,
@@ -17,7 +21,7 @@ import { UserPortfolio } from '../models/user-portfolio';
 export class DataService {
   private userId: string;
 
-  constructor() {
+  constructor(private httpClient : HttpClient) {
     console.info('Data access service created!');
     this.userId = '';
   }
@@ -46,24 +50,25 @@ export class DataService {
     );
   }
 
-  getMarketStocks() {
-    return market_stocks;
+  public getMarketStocks(): Observable<any> {
+
+    return this.httpClient.get(Constants.STOCK_MP_ENDPOINT, {     
+    });
+    
+  }
+  public getMarketMfs(): Observable<any>{
+    return this.httpClient.get(Constants.MF_MP_ENDPOINT, {     
+    });
   }
 
-  getMarketMfs() {
-    return market_mfs;
+  public getMarketBonds(): Observable<any> {
+    return this.httpClient.get(Constants.BOND_MP_ENDPOINT, {     
+    });
   }
 
-  getMarketBonds() {
-    return market_bonds;
-  }
-
-  getMarketAssets(): MarketAssets {
+  getMarketAssets():Observable<any>[] {
     // we don't have dummy data for market MFs yet
-    return new MarketAssets(
-      this.getMarketStocks(),
-      this.getMarketBonds(),
-      this.getMarketMfs()
-    );
+
+    return [this.getMarketStocks(),this.getMarketBonds(),this.getMarketMfs()];
   }
 }

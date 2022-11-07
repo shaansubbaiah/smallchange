@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StockList } from 'src/app/core/models/stock-list';
+import { AuthService } from 'src/app/core/services/auth.service';
+
 @Component({
   selector: 'app-market-stock-table',
   templateUrl: './market-stock-table.component.html',
