@@ -10,7 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './guards/auth-interceptor';
 
 
 
@@ -25,6 +26,13 @@ import { HttpClientModule } from '@angular/common/http';
     MatDividerModule,
     MatMenuModule,
     HttpClientModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   exports: [NavbarComponent, FooterComponent],
 })

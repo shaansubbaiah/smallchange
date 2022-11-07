@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return CommonUtils.getUserDetail('token');
+    return CommonUtils.getUserDetail('jwt');
   }
 
   saveToLocalStorage(data: any) {

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constants } from 'src/app/constants';
-import * as internal from 'stream';
 import {
   dummy_data_bonds,
   dummy_data_mfs,
@@ -52,17 +51,17 @@ export class DataService {
 
   public getMarketStocks(): Observable<any> {
 
-    return this.httpClient.get(Constants.STOCK_MP_ENDPOINT, {     
+    return this.httpClient.get(Constants.STOCK_MP_ENDPOINT, {
     });
-    
+
   }
   public getMarketMfs(): Observable<any>{
-    return this.httpClient.get(Constants.MF_MP_ENDPOINT, {     
+    return this.httpClient.get(Constants.MF_MP_ENDPOINT, {
     });
   }
 
   public getMarketBonds(): Observable<any> {
-    return this.httpClient.get(Constants.BOND_MP_ENDPOINT, {     
+    return this.httpClient.get(Constants.BOND_MP_ENDPOINT, {
     });
   }
 
