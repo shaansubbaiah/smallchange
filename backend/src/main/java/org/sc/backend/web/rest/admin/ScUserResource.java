@@ -1,4 +1,4 @@
-package org.sc.backend.web.rest;
+package org.sc.backend.web.rest.admin;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,7 +23,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link org.sc.backend.domain.ScUser}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class ScUserResource {
 
     private final Logger log = LoggerFactory.getLogger(ScUserResource.class);

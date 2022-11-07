@@ -14,6 +14,7 @@ import org.sc.backend.IntegrationTest;
 import org.sc.backend.domain.ScUser;
 import org.sc.backend.domain.enumeration.UserRoles;
 import org.sc.backend.repository.ScUserRepository;
+import org.sc.backend.web.rest.admin.ScUserResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;

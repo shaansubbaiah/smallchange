@@ -16,6 +16,7 @@ import org.sc.backend.domain.enumeration.IncomeCategory;
 import org.sc.backend.domain.enumeration.InvestmentLength;
 import org.sc.backend.domain.enumeration.RiskTolerance;
 import org.sc.backend.repository.PreferencesRepository;
+import org.sc.backend.web.rest.admin.PreferencesResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;

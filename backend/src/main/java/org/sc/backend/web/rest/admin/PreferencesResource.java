@@ -1,11 +1,11 @@
-package org.sc.backend.web.rest;
+package org.sc.backend.web.rest.admin;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
+
 import org.sc.backend.domain.Preferences;
 import org.sc.backend.repository.PreferencesRepository;
 import org.sc.backend.service.PreferencesService;
@@ -22,7 +22,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link org.sc.backend.domain.Preferences}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class PreferencesResource {
 
     private final Logger log = LoggerFactory.getLogger(PreferencesResource.class);

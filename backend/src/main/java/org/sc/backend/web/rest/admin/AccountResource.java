@@ -1,4 +1,4 @@
-package org.sc.backend.web.rest;
+package org.sc.backend.web.rest.admin;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Set;

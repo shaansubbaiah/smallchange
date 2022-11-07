@@ -17,6 +17,7 @@ import org.sc.backend.IntegrationTest;
 import org.sc.backend.domain.TradeHistory;
 import org.sc.backend.domain.enumeration.AssetType;
 import org.sc.backend.repository.TradeHistoryRepository;
+import org.sc.backend.web.rest.admin.TradeHistoryResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;

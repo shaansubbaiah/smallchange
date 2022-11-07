@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.sc.backend.IntegrationTest;
 import org.sc.backend.domain.Bonds;
 import org.sc.backend.repository.BondsRepository;
-import org.sc.backend.service.criteria.BondsCriteria;
+import org.sc.backend.web.rest.admin.BondsResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;

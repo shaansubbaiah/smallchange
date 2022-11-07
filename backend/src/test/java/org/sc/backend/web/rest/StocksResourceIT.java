@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.sc.backend.IntegrationTest;
 import org.sc.backend.domain.Stocks;
 import org.sc.backend.repository.StocksRepository;
-import org.sc.backend.service.criteria.StocksCriteria;
+import org.sc.backend.web.rest.admin.StocksResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;

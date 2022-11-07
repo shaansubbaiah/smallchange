@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.sc.backend.IntegrationTest;
 import org.sc.backend.domain.ScAccount;
 import org.sc.backend.repository.ScAccountRepository;
+import org.sc.backend.web.rest.admin.ScAccountResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;

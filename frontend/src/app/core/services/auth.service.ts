@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, Observable, of } from 'rxjs';
-import { users } from '../models/mock-data';
 import { User } from '../models/user';
 import { CommonUtils } from 'src/app/utils';
 import { HttpClient } from '@angular/common/http';

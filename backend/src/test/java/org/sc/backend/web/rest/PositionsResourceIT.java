@@ -15,6 +15,7 @@ import org.sc.backend.IntegrationTest;
 import org.sc.backend.domain.Positions;
 import org.sc.backend.domain.enumeration.AssetType;
 import org.sc.backend.repository.PositionsRepository;
+import org.sc.backend.web.rest.admin.PositionsResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
