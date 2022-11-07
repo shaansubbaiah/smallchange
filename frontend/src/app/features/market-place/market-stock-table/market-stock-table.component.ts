@@ -14,9 +14,11 @@ export class MarketStockTableComponent implements OnInit {
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
     { name: 'code', displayName: 'Code', type: 'text' },
-    { name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
-    { name: 'LTP', displayName: 'LTP', type: 'currency' },
-    { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
+    { name: 'quantity', displayName: 'Qty', type: 'number' },
+    //{ name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
+    { name: 'currentPrice', displayName: 'Current Price', type: 'currency' },
+    { name: 'stockType', displayName: 'Stock Type', type: 'snakecase' },
+    { name: 'exchangeName', displayName: 'Exchange Name', type: 'text' },
   ];
 
   ngOnInit(): void {}

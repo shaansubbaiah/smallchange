@@ -22,15 +22,7 @@ export class AuthService {
     });
   }
 
-  public logout() : void {
-    this.httpClient.post(Constants.LOGOUT_ENDPOINT, null)
-    .subscribe((result : any) => {
-      console.log('logged out!');
-      console.log(result);
-    });
-  }
-
-  public register(username: string, email: string, password: string): boolean {
+  public register(userId: string, email: string, password: string): boolean {
     return true;
   }
 

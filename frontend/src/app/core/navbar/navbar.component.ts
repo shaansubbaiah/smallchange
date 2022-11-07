@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserBgColor(): string {
-    if (this.currentUser !== null)
+    if (typeof this.currentUser !== 'undefined')
     return CommonUtils.getPseudoRandomColor(
       this.currentUser.firstName + this.currentUser.lastName
     );
@@ -63,7 +63,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
     this.authService.setLoggedIn(false);
     this.router.navigateByUrl('/login');
   }

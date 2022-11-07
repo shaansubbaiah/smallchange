@@ -10,17 +10,25 @@ import { Observable } from 'rxjs';
   styleUrls: ['./market-place.component.scss'],
 })
 export class MarketPlaceComponent implements OnInit {
-  public marketAssets!: MarketAssets;
+  public marketAssets: MarketAssets = new MarketAssets([], [], []);
 
   constructor(private dataService: DataService, public dialog: MatDialog) {}
 
-  
+
   ngOnInit(): void {
-    let asset : Observable<any>[] =  this.dataService.getMarketAssets();
-    asset[0].subscribe(result=>this.marketAssets.marketStocks=result);
-    asset[1].subscribe(result=>this.marketAssets.marketBonds=result);
-    asset[2].subscribe(result=>this.marketAssets.marketMfs=result);
-    
+    let asset : Observable<any>[] = this.dataService.getMarketAssets();
+    asset[0].subscribe(result => {
+      this.marketAssets = new MarketAssets(result, this.marketAssets.marketBonds, this.marketAssets.marketMfs);
+      console.log(result);
+    });
+    asset[1].subscribe(result => {
+      this.marketAssets = new MarketAssets(this.marketAssets.marketStocks, result, this.marketAssets.marketMfs);
+      console.log(result);
+    });
+    asset[2].subscribe(result => {
+      this.marketAssets = new MarketAssets(this.marketAssets.marketStocks, this.marketAssets.marketBonds, result);
+      console.log(result);
+    });
   }
 
   openDialog(data: any) {
