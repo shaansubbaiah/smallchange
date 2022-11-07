@@ -5,31 +5,44 @@
       "(" + indexData.code + ")" || "(CODE)" | uppercase
     }}</span>
   </div>
-  <p *ngIf="indexData.asset_class" class="index-assetclass">
-    {{ indexData.asset_class | snakeToTitle }}
-  </p>
+  <span class="index-assetclass">
+    {{
+      data.index_type == "stock"
+        ? indexData.stockType
+        : data.index_type == "mf"
+        ? indexData.mfType
+        : data.index_type == "bond"
+        ? indexData.bondType
+        : ("" | snakeToTitle)
+    }}
+  </span>
+  <span *ngIf="indexData.exchangeName" class="index-assetclass">
+    {{ "- " + indexData.exchangeName | uppercase }}
+  </span>
 </div>
 
 <mat-divider></mat-divider>
 
 <div class="index-description">
-  <div *ngIf="indexData.LTP" class="index-desc-row">
-    <span class="index-desc-label">Last Traded Price:</span>
-    <span class="index-desc-value">{{ indexData.LTP | currency: "USD" }}</span>
-  </div>
-  <div *ngIf="indexData.buy_price" class="index-desc-row">
-    <span class="index-desc-label">Buy Price:</span>
+  <div *ngIf="indexData.currentPrice" class="index-desc-row">
+    <span class="index-desc-label">Current Price:</span>
     <span class="index-desc-value">{{
-      indexData.buy_price | currency: "USD"
+      indexData.currentPrice | currency: "USD"
     }}</span>
   </div>
-  <div *ngIf="indexData.interest" class="index-desc-row">
+  <div *ngIf="indexData.interestRate" class="index-desc-row">
     <span class="index-desc-label">Interest:</span>
-    <span class="index-desc-value">{{ indexData.interest }}%</span>
+    <span class="index-desc-value">{{ indexData.interestRate }}%</span>
   </div>
   <div *ngIf="indexData.quantity" class="index-desc-row">
     <span class="index-desc-label">Owned Units:</span>
     <span class="index-desc-value">{{ indexData.quantity }} units</span>
+  </div>
+  <div *ngIf="indexData.durationInMonths" class="index-desc-row">
+    <span class="index-desc-label">Duration:</span>
+    <span class="index-desc-value"
+      >{{ indexData.durationInMonths }} months</span
+    >
   </div>
 </div>
 
@@ -52,16 +65,18 @@
       </mat-form-field>
 
       <div
-        *ngIf="orderQuantity > 0 && indexData.buy_price"
+        *ngIf="orderQuantity > 0 && indexData.currentPrice"
         class="index-desc-row"
       >
         <span class="index-desc-label"
           >{{
-            (indexData.buy_price | currency: "USD") + "/unit × " + orderQuantity
+            (indexData.currentPrice | currency: "USD") +
+              "/unit × " +
+              orderQuantity
           }}
         </span>
         <span class="index-desc-value">
-          {{ orderQuantity * indexData.buy_price | currency: "USD" }}
+          {{ orderQuantity * indexData.currentPrice | currency: "USD" }}
         </span>
       </div>
 
@@ -95,16 +110,18 @@
       </mat-form-field>
 
       <div
-        *ngIf="orderQuantity > 0 && indexData.buy_price"
+        *ngIf="orderQuantity > 0 && indexData.currentPrice"
         class="index-desc-row"
       >
         <span class="index-desc-label"
           >{{
-            (indexData.buy_price | currency: "USD") + "/unit × " + orderQuantity
+            (indexData.currentPrice | currency: "USD") +
+              "/unit × " +
+              orderQuantity
           }}
         </span>
         <span class="index-desc-value">
-          {{ orderQuantity * indexData.buy_price | currency: "USD" }}
+          {{ orderQuantity * indexData.currentPrice | currency: "USD" }}
         </span>
       </div>
 
