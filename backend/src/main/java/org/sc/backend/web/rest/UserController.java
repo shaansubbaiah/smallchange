@@ -59,6 +59,7 @@ public class UserController {
         //set HTTP headers and return
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
         return new ResponseEntity<>(new UserAuthResponse(user.getScUserId(), user.getName(), user.getEmail(), user.getScUserRole().toString(), System.currentTimeMillis(), jwt, user.getImage()), httpHeaders, HttpStatus.OK);
     }
 
@@ -85,7 +86,7 @@ public class UserController {
             this.userId = userId;
             int beginIndex = name.indexOf(' ') > 0 ? name.indexOf(' ') : name.length();
             this.firstName = name.substring(0, beginIndex);
-            this.lastName = name.substring(beginIndex + 1);
+            this.lastName = beginIndex < name.length() ? name.substring(beginIndex + 1) : "";
             this.email = email;
             this.role = role;
             this.lastLoginTimestamp = lastLoginTimestamp;
