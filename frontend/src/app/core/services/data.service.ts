@@ -25,8 +25,9 @@ export class DataService {
     this.userId = '';
   }
 
-  getTradeHistory() {
-    return dummy_data_order;
+  public getTradeHistory(): Observable<any>{
+    return this.httpClient.get(Constants.TRADE_HISTORY_ENDPOINT, {
+    });
   }
 
   getStockHolding() {

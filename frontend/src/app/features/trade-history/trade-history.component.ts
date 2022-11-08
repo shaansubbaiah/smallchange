@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { TradeStock } from '../../core/models/trade-stock';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-trade-history',
@@ -26,6 +27,11 @@ export class TradeHistoryComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    this.tradeHistory = this.dataService.getTradeHistory();
+     this.dataService.getTradeHistory().subscribe(result =>{
+        this.tradeHistory= result;
+     });
+    }
+
+    
   }
-}
+
