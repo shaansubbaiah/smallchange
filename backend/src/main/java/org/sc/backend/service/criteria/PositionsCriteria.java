@@ -174,8 +174,7 @@ public class PositionsCriteria implements Serializable, Criteria {
             Objects.equals(assetCode, that.assetCode) &&
             Objects.equals(assetType, that.assetType) &&
             Objects.equals(buyPrice, that.buyPrice) &&
-            Objects.equals(quantity, that.quantity) &&
-            Objects.equals(scUserId, that.scUserId)
+            Objects.equals(quantity, that.quantity)
         );
     }
 
@@ -194,7 +193,6 @@ public class PositionsCriteria implements Serializable, Criteria {
             (assetType != null ? "assetType=" + assetType + ", " : "") +
             (buyPrice != null ? "buyPrice=" + buyPrice + ", " : "") +
             (quantity != null ? "quantity=" + quantity + ", " : "") +
-            (scUserId != null ? "scUserId=" + scUserId + ", " : "") +
             "}";
     }
 }
