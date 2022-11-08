@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { StockHolding } from 'src/app/core/models/stock-holding';
+import { AssetHolding } from 'src/app/core/models/asset-holding';
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
@@ -9,7 +9,7 @@ export class StockTableComponent implements OnInit {
   invested_amount: number = 0;
   current_amount: number = 0;
 
-  @Input() holdings!: StockHolding[];
+  @Input() holdings!: AssetHolding[];
   @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
@@ -27,7 +27,7 @@ export class StockTableComponent implements OnInit {
     if (this.holdings != null) {
       for (var i = 0; i < this.holdings.length; i++) {
         this.invested_amount +=
-          this.holdings[i].buy_price * this.holdings[i].quantity;
+          this.holdings[i].buyPrice * this.holdings[i].quantity;
         this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
       }
     }

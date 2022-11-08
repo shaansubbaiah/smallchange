@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.sc.backend.domain.Positions;
 import org.sc.backend.domain.ScUser;
+import org.sc.backend.domain.enumeration.AssetType;
 import org.sc.backend.repository.PositionsRepository;
 import org.sc.backend.security.jwt.JWTFilter;
 import org.sc.backend.security.jwt.TokenProvider;
@@ -15,6 +16,8 @@ import org.sc.backend.service.criteria.PositionsCriteria;
 import org.sc.backend.service.impl.PositionsServiceImpl;
 import org.sc.backend.service.impl.ScUserServiceImpl;
 import org.sc.backend.web.rest.admin.PositionsResource;
+import org.sc.backend.web.rest.dto.UserAuthResponse;
+import org.sc.backend.web.rest.dto.UserPortfolio;
 import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.sc.backend.web.rest.vm.LoginVM;
 import org.slf4j.Logger;
@@ -30,7 +33,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller to authenticate users.
@@ -97,104 +103,27 @@ public class UserController {
     }
 
     @GetMapping("/portfolio")
-    public ResponseEntity<List<Positions>> getPortfolio(PositionsCriteria criteria) {
+    public ResponseEntity<UserPortfolio> getPortfolio(PositionsCriteria criteria) {
         if (criteria.getScUserId() == null || (
             criteria.getPositionId() != null || criteria.getAssetCode() != null || criteria.getAssetType() != null || criteria.getBuyPrice() != null || criteria.getQuantity() != null))
             throw new BadRequestAlertException("Invalid parameters", "Positions", "invalidparams");
 
         log.debug("REST request to get Positions by criteria: {}", criteria);
-        List<Positions> entityList = positionsQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
-    }
+        List<Positions> positions = positionsQueryService.findByCriteria(criteria);
 
-    /**
-     * Object to return as body in JWT Authentication.
-     */
-    static class UserAuthResponse {
-        private String userId, firstName, lastName, email, role, jwt;
-        private Long lastLoginTimestamp;
+        UserPortfolio response = new UserPortfolio();
 
-        private byte[] profileImg;
-
-        public UserAuthResponse(String userId, String name, String email, String role, Long lastLoginTimestamp, String jwt, byte[] profileImg) {
-            this.userId = userId;
-            int beginIndex = name.indexOf(' ') > 0 ? name.indexOf(' ') : name.length();
-            this.firstName = name.substring(0, beginIndex);
-            this.lastName = beginIndex < name.length() ? name.substring(beginIndex + 1) : "";
-            this.email = email;
-            this.role = role;
-            this.lastLoginTimestamp = lastLoginTimestamp;
-            this.jwt = jwt;
-            this.profileImg = profileImg;
+        for (Positions p : positions) {
+            if (p.getAssetType() == AssetType.STOCK) {
+                //fetch stock details through asset code and append to List<UserPosititions> in response.
+            }
+            else if (p.getAssetType() == AssetType.BOND) {
+                //fetch bond details through asset code and append to List<UserPosititions> in response.
+            }
+            else {
+                //fetch mf details through asset code and append to List<UserPosititions> in response.
+            }
         }
-
-        UserAuthResponse(String idToken) {
-            this.jwt = idToken;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
-        @JsonProperty("jwt")
-        String getJwt() {
-            return jwt;
-        }
-
-        void setJwt(String jwt) {
-            this.jwt = jwt;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getRole() {
-            return role;
-        }
-
-        public void setRole(String role) {
-            this.role = role;
-        }
-
-        public Long getLastLoginTimestamp() {
-            return lastLoginTimestamp;
-        }
-
-        public void setLastLoginTimestamp(Long lastLoginTimestamp) {
-            this.lastLoginTimestamp = lastLoginTimestamp;
-        }
-
-        public byte[] getProfileImg() {
-            return profileImg;
-        }
-
-        public void setProfileImg(byte[] profileImg) {
-            this.profileImg = profileImg;
-        }
+        return ResponseEntity.ok().body(response);
     }
 }

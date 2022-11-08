@@ -3,6 +3,7 @@ import { UserPortfolio } from 'src/app/core/models/user-portfolio';
 import { DataService } from 'src/app/core/services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoDialogComponent } from 'src/app/shared/info-dialog/info-dialog.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
@@ -15,11 +16,11 @@ export class PortfolioComponent implements OnInit {
   constructor(private dataService: DataService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.userPortfolio = this.getUserPortfolio();
-  }
+    let portfolio : Observable<any> = this.dataService.getPortfolio();
+    portfolio.subscribe(result => {
 
-  public getUserPortfolio(): UserPortfolio {
-    return this.dataService.getPortfolio();
+      console.log(result);
+    });
   }
 
   openDialog(data: any) {

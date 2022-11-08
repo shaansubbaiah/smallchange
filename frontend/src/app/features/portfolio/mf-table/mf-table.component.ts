@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { MfHolding } from '../../../core/models/mf-holding';
+import { AssetHolding } from 'src/app/core/models/asset-holding';
 
 @Component({
   selector: 'app-mf-table',
@@ -10,7 +10,7 @@ export class MfTableComponent implements OnInit {
   invested_amount: number = 0;
   current_amount: number = 0;
 
-  @Input() holdings: MfHolding[] = [];
+  @Input() holdings: AssetHolding[] = [];
   @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
@@ -27,7 +27,7 @@ export class MfTableComponent implements OnInit {
     this.current_amount = 0;
     for (var i = 0; i < this.holdings.length; i++) {
       this.invested_amount +=
-        this.holdings[i].buy_price * this.holdings[i].quantity;
+        this.holdings[i].buyPrice * this.holdings[i].quantity;
       this.current_amount += this.holdings[i].LTP * this.holdings[i].quantity;
     }
   }
