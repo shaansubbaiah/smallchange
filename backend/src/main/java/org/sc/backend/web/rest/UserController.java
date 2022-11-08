@@ -7,6 +7,7 @@ import org.sc.backend.domain.ScUser;
 import org.sc.backend.security.jwt.JWTFilter;
 import org.sc.backend.security.jwt.TokenProvider;
 import org.sc.backend.service.impl.ScUserServiceImpl;
+import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.sc.backend.web.rest.vm.LoginVM;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -65,12 +66,20 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ScUser> register(@Valid @RequestBody ScUser scUser) {
-        //hash passwords
         scUser.setPasswordHash(new BCryptPasswordEncoder(14).encode(scUser.getPasswordHash()));
 
-        //TODO: Implement checks before insertion
+        if (scUserService.findOne(scUser.getScUserId()).isPresent()) {
+            throw new BadRequestAlertException("User with id already exists.", "userId", "id exists");
+        }
 
-        return new ResponseEntity<>(scUserService.save(scUser), HttpStatus.CREATED);
+        ScUser newUser;
+        try {
+            newUser = scUserService.save(scUser);
+        } catch (Exception e) {
+            throw new BadRequestAlertException("Invalid parameters.", "userId", "id exists");
+        }
+
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     /**

@@ -80,7 +80,7 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
         },
         error: (e) => {
           // console.log(e);
-          this.alertService.open({ type: 'error', message: e.statusText });
+          this.alertService.open({ type: 'error', message: e.error.title });
           this.isLoading = false;
         },
       });
