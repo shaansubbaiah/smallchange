@@ -11,7 +11,7 @@ import { TransactionResult } from '../models/transaction-result';
 export class BuySellService {
   constructor(private httpClient: HttpClient) {}
 
-  transact(data: AssetTransactionModel): Observable<TransactionResult> {
+  public transact(data: AssetTransactionModel): Observable<TransactionResult> {
     console.log('data:');
     console.log(data);
 
@@ -20,17 +20,7 @@ export class BuySellService {
         ? Constants.BUY_ENDPOINT
         : Constants.SELL_ENDPOINT;
 
-    this.httpClient.post(requestEndpoint, data).subscribe((result) => {
-      console.log('result');
-      console.log(result);
-    });
-
-    return of({
-      result: 'SUCCESS',
-      errorCode: `${null}`,
-      description: 'Transaction successful!',
-      payload: data,
-    });
+    return this.httpClient.post<TransactionResult>(requestEndpoint, data);
   }
 
   // attemptBuy(buyData: AssetTransactionModel): Observable<TransactionResult> {

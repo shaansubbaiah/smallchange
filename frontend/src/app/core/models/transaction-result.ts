@@ -1,6 +1,7 @@
 export interface TransactionResult {
   result: string;
-  errorCode: string;
-  description: string;
-  payload: any;
+  error: string;
+  data: string;
+  startTimestamp: number;
+  completeTimestamp: number;
 }

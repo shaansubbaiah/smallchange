@@ -35,13 +35,23 @@ export class InfoDialogComponent implements OnInit {
     //   }\nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     // );
 
-    this.buySellService.transact({
-      index_code: this.infoDialogData.data.code,
-      index_type: this.infoDialogData.index_type,
-      quantity: quantity,
-      transaction_type: 'sell',
-      user_id: CommonUtils.getUserDetail('userName') || '',
-    });
+    this.buySellService
+      .transact({
+        index_code: this.infoDialogData.data.code,
+        index_type: this.infoDialogData.index_type,
+        quantity: quantity,
+        transaction_type: 'sell',
+        user_id: CommonUtils.getUserDetail('userName') || '',
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('result sell:');
+          console.log(res);
+        },
+        error: (e) => {
+          console.log(e);
+        },
+      });
 
     // this.buySellService
     //   .attemptSell({
@@ -72,13 +82,23 @@ export class InfoDialogComponent implements OnInit {
     //   } \nQuantity: ${quantity} \nIndex info: ${JSON.stringify(this.indexData)}`
     // );
 
-    this.buySellService.transact({
-      index_code: this.infoDialogData.data.code,
-      index_type: this.infoDialogData.index_type,
-      quantity: quantity,
-      transaction_type: 'buy',
-      user_id: CommonUtils.getUserDetail('userName') || '',
-    });
+    this.buySellService
+      .transact({
+        index_code: this.infoDialogData.data.code,
+        index_type: this.infoDialogData.index_type,
+        quantity: quantity,
+        transaction_type: 'buy',
+        user_id: CommonUtils.getUserDetail('userName') || '',
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('result buy:');
+          console.log(res);
+        },
+        error: (e) => {
+          console.log(e);
+        },
+      });
 
     // this.buySellService
     //   .attemptBuy({

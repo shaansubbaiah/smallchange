@@ -29,7 +29,13 @@ public class TransactionController {
     @PostMapping("/sell")
     public ResponseEntity<TransactionResponse> sellPosition (@Valid @RequestBody TransactionRequest transactionRequest) {
         long startTS = System.currentTimeMillis();
+
+        log.debug("lmao ded");
         log.debug(transactionRequest.toString());
+//        1. check if funds are present
+//        2. remove 
+//        3. remove
+
         long completeTS = System.currentTimeMillis();
         return new ResponseEntity<>(new TransactionResponse("result", null, "some data", startTS, completeTS), HttpStatus.OK);
     }
