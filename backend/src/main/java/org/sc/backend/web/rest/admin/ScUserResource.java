@@ -9,7 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.sc.backend.domain.ScUser;
 import org.sc.backend.repository.ScUserRepository;
+import org.sc.backend.service.ScUserQueryService;
 import org.sc.backend.service.ScUserService;
+import org.sc.backend.service.criteria.ScUserCriteria;
 import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.ScUser}.
+ * REST controller for managing {@link ScUser}.
  */
 @RestController
 @RequestMapping("/api/admin")
@@ -37,9 +39,12 @@ public class ScUserResource {
 
     private final ScUserRepository scUserRepository;
 
-    public ScUserResource(ScUserService scUserService, ScUserRepository scUserRepository) {
+    private final ScUserQueryService scUserQueryService;
+
+    public ScUserResource(ScUserService scUserService, ScUserRepository scUserRepository, ScUserQueryService scUserQueryService) {
         this.scUserService = scUserService;
         this.scUserRepository = scUserRepository;
+        this.scUserQueryService = scUserQueryService;
     }
 
     /**
@@ -135,12 +140,26 @@ public class ScUserResource {
     /**
      * {@code GET  /sc-users} : get all the scUsers.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of scUsers in body.
      */
     @GetMapping("/sc-users")
-    public List<ScUser> getAllScUsers() {
-        log.debug("REST request to get all ScUsers");
-        return scUserService.findAll();
+    public ResponseEntity<List<ScUser>> getAllScUsers(ScUserCriteria criteria) {
+        log.debug("REST request to get ScUsers by criteria: {}", criteria);
+        List<ScUser> entityList = scUserQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /sc-users/count} : count all the scUsers.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/sc-users/count")
+    public ResponseEntity<Long> countScUsers(ScUserCriteria criteria) {
+        log.debug("REST request to count ScUsers by criteria: {}", criteria);
+        return ResponseEntity.ok().body(scUserQueryService.countByCriteria(criteria));
     }
 
     /**

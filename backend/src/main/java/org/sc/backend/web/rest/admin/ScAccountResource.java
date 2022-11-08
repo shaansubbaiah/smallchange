@@ -9,7 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.sc.backend.domain.ScAccount;
 import org.sc.backend.repository.ScAccountRepository;
+import org.sc.backend.service.ScAccountQueryService;
 import org.sc.backend.service.ScAccountService;
+import org.sc.backend.service.criteria.ScAccountCriteria;
 import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.ScAccount}.
+ * REST controller for managing {@link ScAccount}.
  */
 @RestController
 @RequestMapping("/api/admin")
@@ -37,9 +39,16 @@ public class ScAccountResource {
 
     private final ScAccountRepository scAccountRepository;
 
-    public ScAccountResource(ScAccountService scAccountService, ScAccountRepository scAccountRepository) {
+    private final ScAccountQueryService scAccountQueryService;
+
+    public ScAccountResource(
+        ScAccountService scAccountService,
+        ScAccountRepository scAccountRepository,
+        ScAccountQueryService scAccountQueryService
+    ) {
         this.scAccountService = scAccountService;
         this.scAccountRepository = scAccountRepository;
+        this.scAccountQueryService = scAccountQueryService;
     }
 
     /**
@@ -135,12 +144,26 @@ public class ScAccountResource {
     /**
      * {@code GET  /sc-accounts} : get all the scAccounts.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of scAccounts in body.
      */
     @GetMapping("/sc-accounts")
-    public List<ScAccount> getAllScAccounts() {
-        log.debug("REST request to get all ScAccounts");
-        return scAccountService.findAll();
+    public ResponseEntity<List<ScAccount>> getAllScAccounts(ScAccountCriteria criteria) {
+        log.debug("REST request to get ScAccounts by criteria: {}", criteria);
+        List<ScAccount> entityList = scAccountQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /sc-accounts/count} : count all the scAccounts.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/sc-accounts/count")
+    public ResponseEntity<Long> countScAccounts(ScAccountCriteria criteria) {
+        log.debug("REST request to count ScAccounts by criteria: {}", criteria);
+        return ResponseEntity.ok().body(scAccountQueryService.countByCriteria(criteria));
     }
 
     /**

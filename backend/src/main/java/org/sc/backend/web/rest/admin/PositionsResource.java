@@ -9,7 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.sc.backend.domain.Positions;
 import org.sc.backend.repository.PositionsRepository;
+import org.sc.backend.service.PositionsQueryService;
 import org.sc.backend.service.PositionsService;
+import org.sc.backend.service.criteria.PositionsCriteria;
 import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.Positions}.
+ * REST controller for managing {@link Positions}.
  */
 @RestController
 @RequestMapping("/api/admin")
@@ -37,9 +39,16 @@ public class PositionsResource {
 
     private final PositionsRepository positionsRepository;
 
-    public PositionsResource(PositionsService positionsService, PositionsRepository positionsRepository) {
+    private final PositionsQueryService positionsQueryService;
+
+    public PositionsResource(
+        PositionsService positionsService,
+        PositionsRepository positionsRepository,
+        PositionsQueryService positionsQueryService
+    ) {
         this.positionsService = positionsService;
         this.positionsRepository = positionsRepository;
+        this.positionsQueryService = positionsQueryService;
     }
 
     /**
@@ -135,12 +144,26 @@ public class PositionsResource {
     /**
      * {@code GET  /positions} : get all the positions.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of positions in body.
      */
     @GetMapping("/positions")
-    public List<Positions> getAllPositions() {
-        log.debug("REST request to get all Positions");
-        return positionsService.findAll();
+    public ResponseEntity<List<Positions>> getAllPositions(PositionsCriteria criteria) {
+        log.debug("REST request to get Positions by criteria: {}", criteria);
+        List<Positions> entityList = positionsQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /positions/count} : count all the positions.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/positions/count")
+    public ResponseEntity<Long> countPositions(PositionsCriteria criteria) {
+        log.debug("REST request to count Positions by criteria: {}", criteria);
+        return ResponseEntity.ok().body(positionsQueryService.countByCriteria(criteria));
     }
 
     /**

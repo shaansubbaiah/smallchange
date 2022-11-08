@@ -22,7 +22,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.Bonds}.
+ * REST controller for managing {@link Bonds}.
  */
 @RestController
 @RequestMapping("/api/admin")

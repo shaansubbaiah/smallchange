@@ -3,11 +3,22 @@ package org.sc.backend.web.rest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.Valid;
 
+import org.sc.backend.domain.Positions;
 import org.sc.backend.domain.ScUser;
+import org.sc.backend.repository.PositionsRepository;
 import org.sc.backend.security.jwt.JWTFilter;
 import org.sc.backend.security.jwt.TokenProvider;
+import org.sc.backend.service.PositionsQueryService;
+import org.sc.backend.service.PositionsService;
+import org.sc.backend.service.ScUserService;
+import org.sc.backend.service.criteria.PositionsCriteria;
+import org.sc.backend.service.impl.PositionsServiceImpl;
 import org.sc.backend.service.impl.ScUserServiceImpl;
+import org.sc.backend.web.rest.admin.PositionsResource;
+import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.sc.backend.web.rest.vm.LoginVM;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +30,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Controller to authenticate users.
  */
@@ -26,16 +39,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
 
+    private final Logger log = LoggerFactory.getLogger(PositionsResource.class);
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private final ScUserServiceImpl scUserService;
+    private final ScUserService scUserService;
 
-    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService) {
+    private final PositionsService positionsService;
+
+    private final PositionsRepository positionsRepository;
+
+    private final PositionsQueryService positionsQueryService;
+
+    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, PositionsQueryService positionsQueryService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.scUserService = scUserService;
+        this.positionsService = positionsService;
+        this.positionsRepository = positionsRepository;
+        this.positionsQueryService = positionsQueryService;
     }
 
     @PostMapping("/authenticate")
@@ -71,6 +94,17 @@ public class UserController {
         //TODO: Implement checks before insertion
 
         return new ResponseEntity<>(scUserService.save(scUser), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/portfolio")
+    public ResponseEntity<List<Positions>> getPortfolio(PositionsCriteria criteria) {
+        if (criteria.getScUserId() == null || (
+            criteria.getPositionId() != null || criteria.getAssetCode() != null || criteria.getAssetType() != null || criteria.getBuyPrice() != null || criteria.getQuantity() != null))
+            throw new BadRequestAlertException("Invalid parameters", "Positions", "invalidparams");
+
+        log.debug("REST request to get Positions by criteria: {}", criteria);
+        List<Positions> entityList = positionsQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
     }
 
     /**

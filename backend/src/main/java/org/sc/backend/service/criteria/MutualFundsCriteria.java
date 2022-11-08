@@ -2,15 +2,13 @@ package org.sc.backend.service.criteria;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import org.sc.backend.web.rest.admin.MutualFundsResource;
 import org.springdoc.api.annotations.ParameterObject;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
 /**
  * Criteria class for the {@link org.sc.backend.domain.MutualFunds} entity. This class is used
- * in {@link MutualFundsResource} to receive all the possible filtering options from
+ * in {@link org.sc.backend.web.rest.admin.MutualFundsResource} to receive all the possible filtering options from
  * the Http GET request parameters.
  * For example the following could be a valid request:
  * {@code /mutual-funds?id.greaterThan=5&attr1.contains=something&attr2.specified=false}
