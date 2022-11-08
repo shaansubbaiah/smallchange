@@ -12,7 +12,7 @@ export class Constants {
   public static readonly STOCK_MP_ENDPOINT = this.BACKEND_URL + '/marketplace/stocks';
   public static readonly MF_MP_ENDPOINT = this.BACKEND_URL + '/marketplace/mutual-funds';
   public static readonly BOND_MP_ENDPOINT = this.BACKEND_URL + '/marketplace/bonds';
-  public static readonly BUY_ENDPOINT = this.BACKEND_URL + '/transactions/buy';
-  public static readonly SELL_ENDPOINT = this.BACKEND_URL + '/transactions/sell';
+  public static readonly BUY_ENDPOINT = this.BACKEND_URL + '/transact/buy';
+  public static readonly SELL_ENDPOINT = this.BACKEND_URL + '/transact/sell';
 
 }
