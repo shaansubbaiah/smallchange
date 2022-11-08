@@ -115,5 +115,5 @@ relationship OneToMany {
     ScUser to TradeHistory
 }
 
-filter Stocks, MutualFunds, Bonds
+filter Stocks, MutualFunds, Bonds,Positions, Preferences, ScUser, ScAccount
 service all with serviceImpl

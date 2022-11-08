@@ -20,7 +20,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.TradeHistory}.
+ * REST controller for managing {@link TradeHistory}.
  */
 @RestController
 @RequestMapping("/api/admin")

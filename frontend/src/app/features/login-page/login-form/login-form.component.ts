@@ -61,7 +61,6 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
 
   onSubmit() {
     this.isLoading = true;
-    console.log(this.loginDetails.value);
     let username = this.loginDetails.get('username')?.value;
 
     this.authService.authenticate(
@@ -72,7 +71,6 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
       console.log('login success');
       let user = new User(username, result.firstName, result.lastName, result.email, result.lastLoginTimestamp, jwt);
       localStorage.setItem('currentUser', JSON.stringify(user));
-      localStorage.setItem('token', jwt);
       this.authService.setLoggedIn(true);
       this.loginValid = true;
       this.router.navigateByUrl('/home');

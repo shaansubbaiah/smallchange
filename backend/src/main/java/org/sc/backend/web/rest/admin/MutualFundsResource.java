@@ -22,7 +22,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.MutualFunds}.
+ * REST controller for managing {@link MutualFunds}.
  */
 @RestController
 @RequestMapping("/api/admin")

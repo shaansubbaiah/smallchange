@@ -2,17 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constants } from 'src/app/constants';
-import {
-  dummy_data_bonds,
-  dummy_data_mfs,
-  dummy_data_order,
-  dummy_data_stocks,
-  market_bonds,
-  market_mfs,
-  market_stocks,
-} from '../../core/models/mock-data';
-import { MarketAssets } from '../models/market-assets';
-import { UserPortfolio } from '../models/user-portfolio';
+import { CommonUtils } from 'src/app/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -26,31 +16,29 @@ export class DataService {
   }
 
   getTradeHistory() {
-    return dummy_data_order;
+    return [];
+    //return dummy_data_order;
   }
 
-  getStockHolding() {
-    return dummy_data_stocks;
-  }
+  getStockHolding(userId : string) { }
 
-  getMFHolding() {
-    return dummy_data_mfs;
-  }
+  getMFHolding(userId : string) { }
 
-  getBondHolding() {
-    return dummy_data_bonds;
-  }
+  getBondHolding(userId : string) { }
 
-  getPortfolio(): UserPortfolio {
-    return new UserPortfolio(
-      this.getStockHolding(),
-      this.getBondHolding(),
-      this.getMFHolding()
-    );
+  getPortfolio(): Observable<any> {
+    let userId = CommonUtils.getUserDetail('userName');
+    if (userId == null)
+      throw new Error('User ID to fetch portfolio is null!');
+
+      return this.httpClient.get(Constants.PORTFOLIO_ENDPOINT, {
+        params: {
+          scUserId: userId
+        }
+      });
   }
 
   public getMarketStocks(): Observable<any> {
-
     return this.httpClient.get(Constants.STOCK_MP_ENDPOINT, {
     });
 

@@ -3,11 +3,25 @@ package org.sc.backend.web.rest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.Valid;
 
+import org.sc.backend.domain.Positions;
 import org.sc.backend.domain.ScUser;
+import org.sc.backend.domain.enumeration.AssetType;
+import org.sc.backend.repository.PositionsRepository;
 import org.sc.backend.security.jwt.JWTFilter;
 import org.sc.backend.security.jwt.TokenProvider;
+import org.sc.backend.service.PositionsQueryService;
+import org.sc.backend.service.PositionsService;
+import org.sc.backend.service.ScUserService;
+import org.sc.backend.service.criteria.PositionsCriteria;
+import org.sc.backend.service.impl.PositionsServiceImpl;
 import org.sc.backend.service.impl.ScUserServiceImpl;
+import org.sc.backend.web.rest.admin.PositionsResource;
+import org.sc.backend.web.rest.dto.UserAuthResponse;
+import org.sc.backend.web.rest.dto.UserPortfolio;
+import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.sc.backend.web.rest.vm.LoginVM;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +33,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Controller to authenticate users.
  */
@@ -26,16 +45,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
 
+    private final Logger log = LoggerFactory.getLogger(PositionsResource.class);
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private final ScUserServiceImpl scUserService;
+    private final ScUserService scUserService;
 
-    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService) {
+    private final PositionsService positionsService;
+
+    private final PositionsRepository positionsRepository;
+
+    private final PositionsQueryService positionsQueryService;
+
+    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, PositionsQueryService positionsQueryService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.scUserService = scUserService;
+        this.positionsService = positionsService;
+        this.positionsRepository = positionsRepository;
+        this.positionsQueryService = positionsQueryService;
     }
 
     @PostMapping("/authenticate")
@@ -73,94 +102,28 @@ public class UserController {
         return new ResponseEntity<>(scUserService.save(scUser), HttpStatus.CREATED);
     }
 
-    /**
-     * Object to return as body in JWT Authentication.
-     */
-    static class UserAuthResponse {
-        private String userId, firstName, lastName, email, role, jwt;
-        private Long lastLoginTimestamp;
+    @GetMapping("/portfolio")
+    public ResponseEntity<UserPortfolio> getPortfolio(PositionsCriteria criteria) {
+        if (criteria.getScUserId() == null || (
+            criteria.getPositionId() != null || criteria.getAssetCode() != null || criteria.getAssetType() != null || criteria.getBuyPrice() != null || criteria.getQuantity() != null))
+            throw new BadRequestAlertException("Invalid parameters", "Positions", "invalidparams");
 
-        private byte[] profileImg;
+        log.debug("REST request to get Positions by criteria: {}", criteria);
+        List<Positions> positions = positionsQueryService.findByCriteria(criteria);
 
-        public UserAuthResponse(String userId, String name, String email, String role, Long lastLoginTimestamp, String jwt, byte[] profileImg) {
-            this.userId = userId;
-            int beginIndex = name.indexOf(' ') > 0 ? name.indexOf(' ') : name.length();
-            this.firstName = name.substring(0, beginIndex);
-            this.lastName = beginIndex < name.length() ? name.substring(beginIndex + 1) : "";
-            this.email = email;
-            this.role = role;
-            this.lastLoginTimestamp = lastLoginTimestamp;
-            this.jwt = jwt;
-            this.profileImg = profileImg;
+        UserPortfolio response = new UserPortfolio();
+
+        for (Positions p : positions) {
+            if (p.getAssetType() == AssetType.STOCK) {
+                //fetch stock details through asset code and append to List<UserPosititions> in response.
+            }
+            else if (p.getAssetType() == AssetType.BOND) {
+                //fetch bond details through asset code and append to List<UserPosititions> in response.
+            }
+            else {
+                //fetch mf details through asset code and append to List<UserPosititions> in response.
+            }
         }
-
-        UserAuthResponse(String idToken) {
-            this.jwt = idToken;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
-        @JsonProperty("jwt")
-        String getJwt() {
-            return jwt;
-        }
-
-        void setJwt(String jwt) {
-            this.jwt = jwt;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getRole() {
-            return role;
-        }
-
-        public void setRole(String role) {
-            this.role = role;
-        }
-
-        public Long getLastLoginTimestamp() {
-            return lastLoginTimestamp;
-        }
-
-        public void setLastLoginTimestamp(Long lastLoginTimestamp) {
-            this.lastLoginTimestamp = lastLoginTimestamp;
-        }
-
-        public byte[] getProfileImg() {
-            return profileImg;
-        }
-
-        public void setProfileImg(byte[] profileImg) {
-            this.profileImg = profileImg;
-        }
+        return ResponseEntity.ok().body(response);
     }
 }
