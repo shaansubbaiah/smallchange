@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   FormGroupDirective,
   NgForm,
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-register-form',
@@ -17,16 +18,30 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
   hidePassword: boolean = true;
+  isLoading: boolean = false;
   registerDetails: FormGroup;
 
-  constructor(fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    fb: FormBuilder,
+    private authService: AuthService,
+    private alertService: AlertService,
+    private router: Router
+  ) {
     this.registerDetails = fb.group({
-      username: [
+      userId: [
         '',
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(10),
+        ],
+      ],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"),
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
@@ -44,12 +59,31 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
   }
 
   onSubmit() {
+    this.isLoading = true;
     console.log(this.registerDetails.value);
-    this.authService.register(
-      this.registerDetails.get('username')?.value,
-      this.registerDetails.get('email')?.value,
-      this.registerDetails.get('password')?.value
-    );
+    this.authService
+      .register(
+        this.registerDetails.get('userId')?.value,
+        this.registerDetails.get('name')?.value,
+        this.registerDetails.get('email')?.value,
+        this.registerDetails.get('password')?.value
+      )
+      .subscribe({
+        next: (result) => {
+          // console.log(result);
+          this.alertService.open({
+            type: 'success',
+            message: 'Registration successfull!',
+          });
+          this.isLoading = false;
+          this.router.navigateByUrl('/login');
+        },
+        error: (e) => {
+          // console.log(e);
+          this.alertService.open({ type: 'error', message: e.statusText });
+          this.isLoading = false;
+        },
+      });
   }
 
   isErrorState(
