@@ -1,39 +1,38 @@
-import { BondHolding } from './bond-holding';
-import { MfHolding } from './mf-holding';
-import { StockHolding } from './stock-holding';
+import { AssetHolding } from "./asset-holding";
+
 
 export class UserPortfolio {
-  private _stockHoldings!: StockHolding[];
-  private _bondHoldings!: BondHolding[];
-  private _mfHoldings!: MfHolding[];
+  private _stockHoldings!: AssetHolding[];
+  private _bondHoldings!: AssetHolding[];
+  private _mfHoldings!: AssetHolding[];
 
-  constructor(stocks: StockHolding[], bonds: BondHolding[], mfs: MfHolding[]) {
+  constructor(stocks: AssetHolding[], bonds: AssetHolding[], mfs: AssetHolding[]) {
     this.mfHoldings = mfs;
     this.bondHoldings = bonds;
     this.stockHoldings = stocks;
   }
 
-  public get stockHoldings(): StockHolding[] {
+  public get stockHoldings(): AssetHolding[] {
     return this._stockHoldings;
   }
 
-  public set stockHoldings(value: StockHolding[]) {
+  public set stockHoldings(value: AssetHolding[]) {
     this._stockHoldings = value;
   }
 
-  public get bondHoldings(): BondHolding[] {
+  public get bondHoldings(): AssetHolding[] {
     return this._bondHoldings;
   }
 
-  public set bondHoldings(value: BondHolding[]) {
+  public set bondHoldings(value: AssetHolding[]) {
     this._bondHoldings = value;
   }
 
-  public get mfHoldings(): MfHolding[] {
+  public get mfHoldings(): AssetHolding[] {
     return this._mfHoldings;
   }
 
-  public set mfHoldings(value: MfHolding[]) {
+  public set mfHoldings(value: AssetHolding[]) {
     this._mfHoldings = value;
   }
 }

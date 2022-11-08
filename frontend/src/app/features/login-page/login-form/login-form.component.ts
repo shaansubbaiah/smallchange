@@ -61,7 +61,6 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
 
   onSubmit() {
     this.isLoading = true;
-    console.log(this.loginDetails.value);
     let username = this.loginDetails.get('username')?.value;
 
     this.authService

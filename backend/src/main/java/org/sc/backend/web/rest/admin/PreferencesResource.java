@@ -5,10 +5,12 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
+import java.util.stream.StreamSupport;
 import org.sc.backend.domain.Preferences;
 import org.sc.backend.repository.PreferencesRepository;
+import org.sc.backend.service.PreferencesQueryService;
 import org.sc.backend.service.PreferencesService;
+import org.sc.backend.service.criteria.PreferencesCriteria;
 import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link org.sc.backend.domain.Preferences}.
+ * REST controller for managing {@link Preferences}.
  */
 @RestController
 @RequestMapping("/api/admin")
@@ -36,9 +38,16 @@ public class PreferencesResource {
 
     private final PreferencesRepository preferencesRepository;
 
-    public PreferencesResource(PreferencesService preferencesService, PreferencesRepository preferencesRepository) {
+    private final PreferencesQueryService preferencesQueryService;
+
+    public PreferencesResource(
+        PreferencesService preferencesService,
+        PreferencesRepository preferencesRepository,
+        PreferencesQueryService preferencesQueryService
+    ) {
         this.preferencesService = preferencesService;
         this.preferencesRepository = preferencesRepository;
+        this.preferencesQueryService = preferencesQueryService;
     }
 
     /**
@@ -134,17 +143,26 @@ public class PreferencesResource {
     /**
      * {@code GET  /preferences} : get all the preferences.
      *
-     * @param filter the filter of the request.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of preferences in body.
      */
     @GetMapping("/preferences")
-    public List<Preferences> getAllPreferences(@RequestParam(required = false) String filter) {
-        if ("scuser-is-null".equals(filter)) {
-            log.debug("REST request to get all Preferencess where scUser is null");
-            return preferencesService.findAllWhereScUserIsNull();
-        }
-        log.debug("REST request to get all Preferences");
-        return preferencesService.findAll();
+    public ResponseEntity<List<Preferences>> getAllPreferences(PreferencesCriteria criteria) {
+        log.debug("REST request to get Preferences by criteria: {}", criteria);
+        List<Preferences> entityList = preferencesQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /preferences/count} : count all the preferences.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/preferences/count")
+    public ResponseEntity<Long> countPreferences(PreferencesCriteria criteria) {
+        log.debug("REST request to count Preferences by criteria: {}", criteria);
+        return ResponseEntity.ok().body(preferencesQueryService.countByCriteria(criteria));
     }
 
     /**

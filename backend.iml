@@ -14,6 +14,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.springdoc:springdoc-openapi-ui:1.6.12" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:swagger-ui:4.14.3" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:webjars-locator-core:0.50" level="project" />
+    <orderEntry type="library" name="Maven: io.github.classgraph:classgraph:4.8.149" level="project" />
     <orderEntry type="library" name="Maven: tech.jhipster:jhipster-framework:7.9.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.22" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.22" level="project" />
