@@ -22,12 +22,12 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
   registerDetails: FormGroup;
 
   constructor(
-    fb: FormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
     private alertService: AlertService,
     private router: Router
   ) {
-    this.registerDetails = fb.group({
+    this.registerDetails = this.fb.group({
       userId: [
         '',
         [

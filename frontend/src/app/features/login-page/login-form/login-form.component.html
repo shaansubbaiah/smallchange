@@ -55,19 +55,15 @@
           Password should be 3 - 10 characters long
         </mat-error>
       </mat-form-field>
-      <mat-progress-spinner style="margin-left: auto; margin-right: auto;" mode="indeterminate" *ngIf="isLoading" [diameter]="25">
-      </mat-progress-spinner>
-      <span>
-        <mat-error *ngIf="!loginValid"
-          >User details are invalid! Please try again!</mat-error
-        >
-      </span>
-      <br>
+      <mat-error *ngIf="!loginValid" class="form-error-text">
+        User details are invalid! Please try again!
+      </mat-error>
       <button
         type="submit"
         mat-raised-button
         color="primary"
         [disabled]="loginDetails.invalid || isLoading"
+        [class.spinner]="isLoading"
       >
         LOGIN
       </button>
