@@ -31,7 +31,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,12 +99,20 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ScUser> register(@Valid @RequestBody ScUser scUser) {
-        //hash passwords
         scUser.setPasswordHash(new BCryptPasswordEncoder(14).encode(scUser.getPasswordHash()));
 
-        //TODO: Implement checks before insertion
+        if (scUserService.findOne(scUser.getScUserId()).isPresent()) {
+            throw new BadRequestAlertException("User with id already exists.", "userId", "id exists");
+        }
 
-        return new ResponseEntity<>(scUserService.save(scUser), HttpStatus.CREATED);
+        ScUser newUser;
+        try {
+            newUser = scUserService.save(scUser);
+        } catch (Exception e) {
+            throw new BadRequestAlertException("Invalid parameters.", "userId", "id exists");
+        }
+
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/portfolio")

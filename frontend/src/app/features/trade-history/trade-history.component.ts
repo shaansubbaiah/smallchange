@@ -18,7 +18,7 @@ export class TradeHistoryComponent implements OnInit {
     { name: 'price', displayName: 'Price', type: 'currency' },
     { name: 'quantity', displayName: 'Quantity', type: 'text' },
     { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
-    { name: 'trade_type', displayName: 'Action', type: 'buysell' },
+    { name: 'trade_type', displayName: 'Action', type: 'uppercase' },
     { name: 'date', displayName: 'Date', type: 'date' },
     { name: 'time', displayName: 'Time', type: 'time' },
   ];

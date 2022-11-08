@@ -13,9 +13,10 @@ export class MarketMfTableComponent implements OnInit {
   tableColumns = [
     { name: 'code', displayName: 'Code', type: 'text' },
     { name: 'name', displayName: 'Name', type: 'text' },
-    { name: 'currentPrice', displayName: 'LTP', type: 'currency' },
+    { name: 'currentPrice', displayName: 'Price', type: 'currency' },
+    { name: 'quantity', displayName: 'Qty', type: 'text' },
     { name: 'interestRate', displayName: 'Interest Rate', type: 'percentile' },
-    { name: 'mfType', displayName: 'Type', type: 'snakecase' },
+    { name: 'mfType', displayName: 'Asset Class', type: 'snakecase' },
   ];
 
   ngOnInit(): void {}

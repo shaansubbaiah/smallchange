@@ -1,47 +1,54 @@
 <div>
   <div class="index-title">
-    <span class="index-name">{{ indexData.name || "Company_Name" }}</span>
+    <span class="index-name">{{
+      infoDialogData.data.name || "Company_Name"
+    }}</span>
     <span class="index-code">{{
-      "(" + indexData.code + ")" || "(CODE)" | uppercase
+      "(" + infoDialogData.data.code + ")" || "(CODE)" | uppercase
     }}</span>
   </div>
   <span class="index-assetclass">
+    <!-- @TODO: Make sure asset class data enterd is separated by spaces -->
     {{
-      data.index_type == "stock"
-        ? indexData.stockType
-        : data.index_type == "mf"
-        ? indexData.mfType
-        : data.index_type == "bond"
-        ? indexData.bondType
+      infoDialogData.index_type == "stock"
+        ? infoDialogData.data.stockType
+        : infoDialogData.index_type == "mf"
+        ? infoDialogData.data.mfType
+        : infoDialogData.index_type == "bond"
+        ? infoDialogData.data.bondType
         : ("" | snakeToTitle)
     }}
   </span>
-  <span *ngIf="indexData.exchangeName" class="index-assetclass">
-    {{ "- " + indexData.exchangeName | uppercase }}
+  <span *ngIf="infoDialogData.data.exchangeName" class="index-assetclass">
+    {{ "- " + infoDialogData.data.exchangeName | uppercase }}
   </span>
 </div>
 
 <mat-divider></mat-divider>
 
 <div class="index-description">
-  <div *ngIf="indexData.currentPrice" class="index-desc-row">
+  <div *ngIf="infoDialogData.data.currentPrice" class="index-desc-row">
     <span class="index-desc-label">Current Price:</span>
     <span class="index-desc-value">{{
-      indexData.currentPrice | currency: "USD"
+      infoDialogData.data.currentPrice | currency: "USD"
     }}</span>
   </div>
-  <div *ngIf="indexData.interestRate" class="index-desc-row">
+  <div *ngIf="infoDialogData.data.interestRate" class="index-desc-row">
     <span class="index-desc-label">Interest:</span>
-    <span class="index-desc-value">{{ indexData.interestRate }}%</span>
+    <span class="index-desc-value"
+      >{{ infoDialogData.data.interestRate }}%</span
+    >
   </div>
-  <div *ngIf="indexData.quantity" class="index-desc-row">
+  <div *ngIf="infoDialogData.data.quantity" class="index-desc-row">
     <span class="index-desc-label">Owned Units:</span>
-    <span class="index-desc-value">{{ indexData.quantity }} units</span>
+    <span class="index-desc-value"
+      >{{ infoDialogData.data.quantity }} units</span
+    >
   </div>
-  <div *ngIf="indexData.durationInMonths" class="index-desc-row">
+  <div *ngIf="infoDialogData.data.durationInMonths" class="index-desc-row">
     <span class="index-desc-label">Duration:</span>
     <span class="index-desc-value"
-      >{{ indexData.durationInMonths }} months</span
+      >{{ infoDialogData.data.durationInMonths }} months</span
     >
   </div>
 </div>
@@ -65,18 +72,20 @@
       </mat-form-field>
 
       <div
-        *ngIf="orderQuantity > 0 && indexData.currentPrice"
+        *ngIf="orderQuantity > 0 && infoDialogData.data.currentPrice"
         class="index-desc-row"
       >
         <span class="index-desc-label"
           >{{
-            (indexData.currentPrice | currency: "USD") +
+            (infoDialogData.data.currentPrice | currency: "USD") +
               "/unit × " +
               orderQuantity
           }}
         </span>
         <span class="index-desc-value">
-          {{ orderQuantity * indexData.currentPrice | currency: "USD" }}
+          {{
+            orderQuantity * infoDialogData.data.currentPrice | currency: "USD"
+          }}
         </span>
       </div>
 
@@ -93,7 +102,11 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab label="SELL" *ngIf="indexData.quantity > 0" class="sell-tab">
+  <mat-tab
+    label="SELL"
+    *ngIf="infoDialogData.data.quantity > 0"
+    class="sell-tab"
+  >
     <ng-template matTabContent>
       <mat-form-field class="" appearance="outline">
         <mat-label>Quantity</mat-label>
@@ -103,25 +116,27 @@
           [(ngModel)]="orderQuantity"
           required
           min="0"
-          max="{{ indexData.quantity }}"
+          max="{{ infoDialogData.data.quantity }}"
           width="100%"
           placeholder="0"
         />
       </mat-form-field>
 
       <div
-        *ngIf="orderQuantity > 0 && indexData.currentPrice"
+        *ngIf="orderQuantity > 0 && infoDialogData.data.currentPrice"
         class="index-desc-row"
       >
         <span class="index-desc-label"
           >{{
-            (indexData.currentPrice | currency: "USD") +
+            (infoDialogData.data.currentPrice | currency: "USD") +
               "/unit × " +
               orderQuantity
           }}
         </span>
         <span class="index-desc-value">
-          {{ orderQuantity * indexData.currentPrice | currency: "USD" }}
+          {{
+            orderQuantity * infoDialogData.data.currentPrice | currency: "USD"
+          }}
         </span>
       </div>
 
@@ -132,7 +147,7 @@
         type="button"
         [disabled]="
           orderQuantity <= 0 ||
-          orderQuantity > indexData.quantity ||
+          orderQuantity > infoDialogData.data.quantity ||
           orderQuantity == null
         "
         (click)="onSellIndex(orderQuantity)"

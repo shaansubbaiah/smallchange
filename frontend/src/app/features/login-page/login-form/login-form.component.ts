@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   FormGroupDirective,
   NgForm,
@@ -12,6 +11,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -22,16 +22,16 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginFormComponent implements OnInit, ErrorStateMatcher {
   loginValid: boolean = true;
   hidePassword: boolean = true;
-  isLoading : boolean = false;
-
+  isLoading: boolean = false;
   loginDetails: FormGroup;
 
   constructor(
-    fb: FormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
+    private alertService: AlertService,
     private router: Router
   ) {
-    this.loginDetails = fb.group({
+    this.loginDetails = this.fb.group({
       username: [
         '',
         [
@@ -63,31 +63,50 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
     this.isLoading = true;
     let username = this.loginDetails.get('username')?.value;
 
-    this.authService.authenticate(
-      this.loginDetails.get('username')?.value,
-      this.loginDetails.get('password')?.value
-    ).subscribe((result : any) => {
-      const jwt = result.jwt;
-      console.log('login success');
-      let user = new User(username, result.firstName, result.lastName, result.email, result.lastLoginTimestamp, jwt);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.authService.setLoggedIn(true);
-      this.loginValid = true;
-      this.router.navigateByUrl('/home');
-      this.isLoading = false;
+    this.authService
+      .authenticate(
+        this.loginDetails.get('username')?.value,
+        this.loginDetails.get('password')?.value
+      )
+      .subscribe({
+        next: (result) => {
+          // console.log('login success');
+          let user = new User(
+            username,
+            result.firstName,
+            result.lastName,
+            result.email,
+            result.lastLoginTimestamp,
+            result.jwt
+          );
 
-    }, (e: HttpErrorResponse) => {
-      switch(e.status) {
-        case 401:
-        case 403:
-          this.loginValid = false;
-          this.authService.setLoggedIn(false);
-          break;
-        case 500:
-          console.log('Internal server error!');
-      }
-      this.isLoading = false;
-    });
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('token', result.jwt);
+
+          this.alertService.open({
+            type: 'success',
+            message: 'Login successfull!',
+          });
+
+          this.authService.setLoggedIn(true);
+          this.loginValid = true;
+          this.isLoading = false;
+          this.router.navigateByUrl('/home');
+        },
+        error: (e) => {
+          this.alertService.open({ type: 'error', message: e.statusText });
+          switch (e.status) {
+            case 401:
+            case 403:
+              this.loginValid = false;
+              this.authService.setLoggedIn(false);
+              break;
+            case 500:
+            // console.log('Internal server error!');
+          }
+          this.isLoading = false;
+        },
+      });
   }
 
   isErrorState(

@@ -27,6 +27,6 @@ export class PortfolioComponent implements OnInit {
     const dialogRef = this.dialog.open(InfoDialogComponent, {
       minWidth: '400px',
     });
-    dialogRef.componentInstance.data = data;
+    dialogRef.componentInstance.infoDialogData = data;
   }
 }

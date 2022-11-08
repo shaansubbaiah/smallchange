@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Constants } from 'src/app/constants';
 import { AssetTransactionModel } from '../models/asset-transaction-model';
 import { TransactionResult } from '../models/transaction-result';
 
@@ -7,43 +9,65 @@ import { TransactionResult } from '../models/transaction-result';
   providedIn: 'root',
 })
 export class BuySellService {
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  attemptBuy(buyData: AssetTransactionModel): Observable<TransactionResult> {
-    let array: TransactionResult[] = [
-      {
-        result: 'SUCCESS',
-        errorCode: `${null}`,
-        description: 'Transaction successful!',
-        payload: buyData,
-      },
-      {
-        result: 'FAILURE',
-        errorCode: '500',
-        description: 'Internal server error',
-        payload: buyData,
-      },
-    ];
+  transact(data: AssetTransactionModel): Observable<TransactionResult> {
+    console.log('data:');
+    console.log(data);
 
-    return of(array[Math.floor(Math.random() * array.length)]);
+    const requestEndpoint =
+      data.transaction_type == 'buy'
+        ? Constants.BUY_ENDPOINT
+        : Constants.SELL_ENDPOINT;
+
+    this.httpClient.post(requestEndpoint, data).subscribe((result) => {
+      console.log('result');
+      console.log(result);
+    });
+
+    return of({
+      result: 'SUCCESS',
+      errorCode: `${null}`,
+      description: 'Transaction successful!',
+      payload: data,
+    });
   }
 
-  attemptSell(sellData: AssetTransactionModel): Observable<TransactionResult> {
-    let array: TransactionResult[] = [
-      {
-        result: 'SUCCESS',
-        errorCode: `${null}`,
-        description: 'Transaction successful!',
-        payload: sellData,
-      },
-      {
-        result: 'FAILURE',
-        errorCode: '500',
-        description: 'Internal server error',
-        payload: sellData,
-      },
-    ];
+  // attemptBuy(buyData: AssetTransactionModel): Observable<TransactionResult> {
+  //   let array: TransactionResult[] = [
+  //     {
+  //       result: 'SUCCESS',
+  //       errorCode: `${null}`,
+  //       description: 'Transaction successful!',
+  //       payload: buyData,
+  //     },
+  //     {
+  //       result: 'FAILURE',
+  //       errorCode: '500',
+  //       description: 'Internal server error',
+  //       payload: buyData,
+  //     },
+  //   ];
 
-    return of(array[Math.floor(Math.random() * array.length)]);
-  }
+  //   return of(array[Math.floor(Math.random() * array.length)]);
+  // }
+
+  // attemptSell(sellData: AssetTransactionModel): Observable<TransactionResult> {
+  //   let array: TransactionResult[] = [
+  //     {
+  //       result: 'SUCCESS',
+  //       errorCode: `${null}`,
+  //       description: 'Transaction successful!',
+  //       payload: sellData,
+  //     },
+  //     {
+  //       result: 'FAILURE',
+  //       errorCode: '500',
+  //       description: 'Internal server error',
+  //       payload: sellData,
+  //     },
+  //   ];
+
+  //   return of(array[Math.floor(Math.random() * array.length)]);
+  // }
 }

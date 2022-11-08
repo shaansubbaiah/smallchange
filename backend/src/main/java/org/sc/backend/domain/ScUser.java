@@ -35,8 +35,8 @@ public class ScUser implements Serializable, Persistable<String> {
     private String email;
 
     @NotNull
-    @Size(min = 64, max = 64)
-    @Column(name = "password_hash", length = 64, nullable = false)
+    @Size(max = 72)
+    @Column(name = "password_hash", length = 72, nullable = false)
     private String passwordHash;
 
     @Lob

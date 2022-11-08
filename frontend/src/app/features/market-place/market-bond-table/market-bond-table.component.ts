@@ -13,8 +13,9 @@ export class MarketBondTableComponent implements OnInit {
     { name: 'code', displayName: 'Code', type: 'text' },
     { name: 'name', displayName: 'Name', type: 'text' },
     { name: 'interestRate', displayName: 'Interest Rate', type: 'percentile' },
-    { name: 'currentPrice', displayName: 'LTP', type: 'currency' },
-    { name: 'quantity', displayName: 'Qty', type: 'text' },
+    { name: 'durationMonths', displayName: 'Duration', type: 'text' },
+    { name: 'currentPrice', displayName: 'Price', type: 'currency' },
+    { name: 'quantity', displayName: 'Quantity', type: 'text' },
     { name: 'bondType', displayName: 'Asset Class', type: 'snakecase' },
     { name: 'exchangeName', displayName: 'Exchange', type: 'text' },
   ];
