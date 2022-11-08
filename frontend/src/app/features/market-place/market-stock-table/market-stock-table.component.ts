@@ -12,13 +12,12 @@ export class MarketStockTableComponent implements OnInit {
   @Output() openDialogEvent = new EventEmitter<any>();
 
   tableColumns = [
-    { name: 'name', displayName: 'Name', type: 'text' },
     { name: 'code', displayName: 'Code', type: 'text' },
-    { name: 'quantity', displayName: 'Qty', type: 'text' },
-    //{ name: 'buy_price', displayName: 'Buy Price', type: 'currency' },
-    { name: 'currentPrice', displayName: 'Current Price', type: 'currency' },
-    { name: 'stockType', displayName: 'Stock Type', type: 'snakecase' },
-    { name: 'exchangeName', displayName: 'Exchange Name', type: 'text' },
+    { name: 'name', displayName: 'Name', type: 'text' },
+    { name: 'currentPrice', displayName: 'Price', type: 'currency' },
+    { name: 'quantity', displayName: 'Quantity', type: 'text' },
+    { name: 'stockType', displayName: 'Asset Class', type: 'snakecase' },
+    { name: 'exchangeName', displayName: 'Exchange', type: 'uppercase' },
   ];
 
   ngOnInit(): void {}
