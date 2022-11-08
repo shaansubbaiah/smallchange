@@ -22,42 +22,4 @@ export class BuySellService {
 
     return this.httpClient.post<TransactionResult>(requestEndpoint, data);
   }
-
-  // attemptBuy(buyData: AssetTransactionModel): Observable<TransactionResult> {
-  //   let array: TransactionResult[] = [
-  //     {
-  //       result: 'SUCCESS',
-  //       errorCode: `${null}`,
-  //       description: 'Transaction successful!',
-  //       payload: buyData,
-  //     },
-  //     {
-  //       result: 'FAILURE',
-  //       errorCode: '500',
-  //       description: 'Internal server error',
-  //       payload: buyData,
-  //     },
-  //   ];
-
-  //   return of(array[Math.floor(Math.random() * array.length)]);
-  // }
-
-  // attemptSell(sellData: AssetTransactionModel): Observable<TransactionResult> {
-  //   let array: TransactionResult[] = [
-  //     {
-  //       result: 'SUCCESS',
-  //       errorCode: `${null}`,
-  //       description: 'Transaction successful!',
-  //       payload: sellData,
-  //     },
-  //     {
-  //       result: 'FAILURE',
-  //       errorCode: '500',
-  //       description: 'Internal server error',
-  //       payload: sellData,
-  //     },
-  //   ];
-
-  //   return of(array[Math.floor(Math.random() * array.length)]);
-  // }
 }

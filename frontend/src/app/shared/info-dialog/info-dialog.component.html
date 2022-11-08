@@ -95,7 +95,7 @@
         color="primary"
         type="button"
         [disabled]="orderQuantity <= 0 || orderQuantity == null"
-        (click)="onBuyIndex(orderQuantity)"
+        (click)="onBuySell(orderQuantity, 'buy')"
       >
         PURCHASE
       </button>
@@ -150,7 +150,7 @@
           orderQuantity > infoDialogData.data.quantity ||
           orderQuantity == null
         "
-        (click)="onSellIndex(orderQuantity)"
+        (click)="onBuySell(orderQuantity, 'sell')"
       >
         SELL
       </button>
