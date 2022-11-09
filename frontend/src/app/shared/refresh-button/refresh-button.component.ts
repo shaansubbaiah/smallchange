@@ -20,6 +20,7 @@ export class RefreshButtonComponent implements OnInit {
 
   onClick() {
     this.refreshEvent.emit(null);
+    this.lastRefreshedTime = Date.now();
   }
 
   ngOnDestroy(): void {
