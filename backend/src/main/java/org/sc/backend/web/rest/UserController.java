@@ -144,7 +144,7 @@ public class UserController {
 
                     List<Stocks> stocks = stocksQueryService.findByCriteria(stocksCriteria);
                     for (Stocks st : stocks) {
-                        stockPositions.add(new UserPosition(st.getName(), st.getCode(), AssetType.STOCK.getValue(), p.getQuantity(), p.getBuyPrice(), st.getCurrentPrice()));
+                        stockPositions.add(new UserPosition(st.getName(), st.getCode(), st.getStockType(), p.getQuantity(), p.getBuyPrice(), st.getCurrentPrice()));
                     }
                 }
                 else if (p.getAssetType() == AssetType.BOND) {
@@ -154,7 +154,7 @@ public class UserController {
 
                     List<Bonds> bonds = bondsQueryService.findByCriteria(bondsCriteria);
                     for (Bonds b : bonds) {
-                        bondPositions.add(new UserPosition(b.getName(), b.getCode(), AssetType.BOND.getValue(), p.getQuantity(), p.getBuyPrice(), b.getCurrentPrice()));
+                        bondPositions.add(new UserPosition(b.getName(), b.getCode(), b.getBondType(), p.getQuantity(), p.getBuyPrice(), b.getCurrentPrice()));
                     }
                 }
                 else {
@@ -164,7 +164,7 @@ public class UserController {
 
                     List<MutualFunds> mutualFunds = mfQueryService.findByCriteria(mfCriteria);
                     for (MutualFunds mf : mutualFunds) {
-                        mfPositions.add(new UserPosition(mf.getName(), mf.getCode(), AssetType.MUTUALFUND.getValue(), p.getQuantity(), p.getBuyPrice(), mf.getCurrentPrice()));
+                        mfPositions.add(new UserPosition(mf.getName(), mf.getCode(), mf.getMfType(), p.getQuantity(), p.getBuyPrice(), mf.getCurrentPrice()));
                     }
                 }
             }
