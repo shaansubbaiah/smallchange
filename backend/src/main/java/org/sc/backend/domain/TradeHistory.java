@@ -56,6 +56,20 @@ public class TradeHistory implements Serializable {
     @JsonIgnoreProperties(value = { "preferences", "positions", "scAccounts", "tradeHistories" }, allowSetters = true)
     private ScUser scUser;
 
+    public TradeHistory() {
+    }
+
+    public TradeHistory(String scUserId, String assetCode, AssetType assetType, Float tradePrice, String tradeType, Integer tradeQuantity, LocalDate tradeDate, ScUser scUser) {
+        this.scUserId = scUserId;
+        this.assetCode = assetCode;
+        this.assetType = assetType;
+        this.tradePrice = tradePrice;
+        this.tradeType = tradeType;
+        this.tradeQuantity = tradeQuantity;
+        this.tradeDate = tradeDate;
+        this.scUser = scUser;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getTradeId() {
