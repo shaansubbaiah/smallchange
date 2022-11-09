@@ -49,6 +49,18 @@ public class Positions implements Serializable {
     @JsonIgnoreProperties(value = { "preferences", "positions", "scAccounts", "tradeHistories" }, allowSetters = true)
     private ScUser scUser;
 
+    public Positions() {
+    }
+
+    public Positions(String scUserId, String assetCode, AssetType assetType, Float buyPrice, Integer quantity, ScUser scUser) {
+        this.scUserId = scUserId;
+        this.assetCode = assetCode;
+        this.assetType = assetType;
+        this.buyPrice = buyPrice;
+        this.quantity = quantity;
+        this.scUser = scUser;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getPositionId() {
