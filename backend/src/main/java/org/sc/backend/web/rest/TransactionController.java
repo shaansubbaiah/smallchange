@@ -30,25 +30,24 @@ public class TransactionController {
     private final Logger log = LoggerFactory.getLogger(TransactionController.class);
     private final PositionsQueryService positionsQueryService;
     private final PositionsService positionsService;
-
     private final StocksQueryService stocksQueryService;
     private final MutualFundsQueryService mutualFundsQueryService;
     private final BondsQueryService bondsQueryService;
-
+    private final StocksService stocksService;
+    private final MutualFundsService mutualFundsService;
+    private final BondsService bondsService;
     private final ScUserService scUserService;
 
-//    private final StocksCriteria stocksCriteria;
-//
-//    private final MutualFundsCriteria mutualFundsCriteria;
-//
-//    private final BondsCriteria bondsCriteria;
 
-    public TransactionController(PositionsQueryService positionsQueryService, PositionsService positionsService, StocksQueryService stocksQueryService, MutualFundsQueryService mutualFundsQueryService, BondsQueryService bondsQueryService, ScUserService scUserService) {
+    public TransactionController(PositionsQueryService positionsQueryService, PositionsService positionsService, StocksQueryService stocksQueryService, MutualFundsQueryService mutualFundsQueryService, BondsQueryService bondsQueryService, StocksService stocksService, MutualFundsService mutualFundsService, BondsService bondsService, ScUserService scUserService) {
         this.positionsQueryService = positionsQueryService;
         this.positionsService = positionsService;
         this.stocksQueryService = stocksQueryService;
         this.mutualFundsQueryService = mutualFundsQueryService;
         this.bondsQueryService = bondsQueryService;
+        this.stocksService = stocksService;
+        this.mutualFundsService = mutualFundsService;
+        this.bondsService = bondsService;
         this.scUserService = scUserService;
     }
 
@@ -71,14 +70,14 @@ public class TransactionController {
     }
 
     public Float getAssetPrice(String indexCode, String indexType) {
-        if(indexType.contentEquals("stock")) {
+        if(indexType.contentEquals("STOCK")) {
             StocksCriteria stocksCriteria = new StocksCriteria();
             stocksCriteria.setCode((StringFilter) new StringFilter().setEquals(indexCode));
             List<Stocks> stocks = stocksQueryService.findByCriteria(stocksCriteria);
             if(stocks.size() > 0) {
                 return stocks.get(0).getCurrentPrice();
             }
-        } else if(indexType.contentEquals("mf")) {
+        } else if(indexType.contentEquals("MUTUALFUND")) {
             MutualFundsCriteria mutualFundsCriteria = new MutualFundsCriteria();
             mutualFundsCriteria.setCode((StringFilter) new StringFilter().setEquals(indexCode));
             List<MutualFunds> mfs = mutualFundsQueryService.findByCriteria(mutualFundsCriteria);
@@ -94,6 +93,51 @@ public class TransactionController {
             }
         }
         return -1.0f;
+    }
+
+    public Boolean updateMarketplaceAssetQuantity(String indexCode, String indexType, Integer changeInQuantity) {
+        int newQuantity;
+        if(indexType.contentEquals("STOCK")) {
+            StocksCriteria stocksCriteria = new StocksCriteria();
+            stocksCriteria.setCode((StringFilter) new StringFilter().setEquals(indexCode));
+            List<Stocks> stocks = stocksQueryService.findByCriteria(stocksCriteria);
+            if(stocks.size() > 0) {
+                if(stocks.get(0).getQuantity() + changeInQuantity >= 0) {
+                    newQuantity = stocks.get(0).getQuantity() + changeInQuantity;
+                    Stocks updatedStock = stocks.get(0);
+                    updatedStock.setQuantity(newQuantity);
+                    stocksService.update(updatedStock);
+                    return true;
+                }
+            }
+        } else if(indexType.contentEquals("MUTUALFUND")) {
+            MutualFundsCriteria mutualFundsCriteria = new MutualFundsCriteria();
+            mutualFundsCriteria.setCode((StringFilter) new StringFilter().setEquals(indexCode));
+            List<MutualFunds> mfs = mutualFundsQueryService.findByCriteria(mutualFundsCriteria);
+            if(mfs.size() > 0) {
+                if(mfs.get(0).getQuantity() + changeInQuantity >= 0) {
+                    newQuantity = mfs.get(0).getQuantity() + changeInQuantity;
+                    MutualFunds updatedMf = mfs.get(0);
+                    updatedMf.setQuantity(newQuantity);
+                    mutualFundsService.update(updatedMf);
+                    return true;
+                }
+            }
+        } else {
+            BondsCriteria bondsCriteria = new BondsCriteria();
+            bondsCriteria.setCode((StringFilter) new StringFilter().setEquals(indexCode));
+            List<Bonds> bonds = bondsQueryService.findByCriteria(bondsCriteria);
+            if(bonds.size() > 0) {
+                if(bonds.get(0).getQuantity() + changeInQuantity >= 0) {
+                    newQuantity = bonds.get(0).getQuantity() + changeInQuantity;
+                    Bonds updatedBond = bonds.get(0);
+                    updatedBond.setQuantity(newQuantity);
+                    bondsService.update(updatedBond);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @PostMapping("/buy")
@@ -113,6 +157,9 @@ public class TransactionController {
         List<Positions> positions = positionsQueryService.findByCriteria(positionsCriteria);
         // ---------- Get current price of asset
         Float currentPrice = getAssetPrice(transactionRequest.indexCode, transactionRequest.indexType);
+        if (currentPrice < 0) {
+            throw new BadRequestAlertException("Couldn't get asset price!", "UserController", "failed_getting_price");
+        }
         // ---------- if position exists, increase by quantity
         if(positions.size() > 0) {
             Integer currentQuantity = positions.get(0).getQuantity();
@@ -129,7 +176,7 @@ public class TransactionController {
                 Positions newPosition = new Positions(
                     userId,
                     transactionRequest.indexCode,
-                    AssetType.valueOf(transactionRequest.indexType.toUpperCase()),
+                    AssetType.valueOf(transactionRequest.indexType),
                     currentPrice,
                     transactionRequest.quantity,
                     scUser
@@ -144,6 +191,11 @@ public class TransactionController {
 
         // 2) - remove x quantity of index value to user's account
         log.debug("Removing " + currentPrice * transactionRequest.quantity + " from user's account.");
+
+        // 3) - Remove x quantity of index from marketplace
+        if(!updateMarketplaceAssetQuantity(transactionRequest.indexCode, transactionRequest.indexType, (transactionRequest.quantity * -1))) {
+            throw new BadRequestAlertException("Failed to update marketplace quantity!", "UserController", "fail_upd_mkt_qty");
+        }
 
         long completeTS = System.currentTimeMillis();
         return new ResponseEntity<>(new TransactionResponse("result", null, "some data", startTS, completeTS), HttpStatus.OK);
@@ -191,6 +243,10 @@ public class TransactionController {
         // 2) - add x quantity of index value to user's account
         log.debug("Adding " + currentPrice * transactionRequest.quantity + " to user's account.");
 
+        // 3) - Add x quantity of index from marketplace
+        if(!updateMarketplaceAssetQuantity(transactionRequest.indexCode, transactionRequest.indexType, transactionRequest.quantity)) {
+            throw new BadRequestAlertException("Failed to update marketplace quantity!", "UserController", "fail_upd_mkt_qty");
+        }
 
         long completeTS = System.currentTimeMillis();
         return new ResponseEntity<>(new TransactionResponse("result", null, "some data", startTS, completeTS), HttpStatus.OK);

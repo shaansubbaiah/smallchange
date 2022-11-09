@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AssetHolding } from 'src/app/core/models/asset-holding';
 
 @Component({
@@ -35,13 +43,12 @@ export class BondTableComponent implements OnInit, OnChanges {
     this.invested_amount = 0;
     this.current_amount = 0;
     for (var i = 0; i < holdings.length; i++) {
-      this.invested_amount +=
-        holdings[i].buyPrice * holdings[i].quantity;
+      this.invested_amount += holdings[i].buyPrice * holdings[i].quantity;
       this.current_amount += holdings[i].currentPrice * holdings[i].quantity;
     }
   }
 
   openDialog(data: any) {
-    this.openDialogEvent.emit({ index_type: 'bond', data: data });
+    this.openDialogEvent.emit({ index_type: 'BOND', data: data });
   }
 }

@@ -10,11 +10,11 @@
   <span class="index-assetclass">
     <!-- @TODO: Make sure asset class data enterd is separated by spaces -->
     {{
-      infoDialogData.index_type == "stock"
+      infoDialogData.index_type == "STOCK"
         ? infoDialogData.data.stockType
-        : infoDialogData.index_type == "mf"
+        : infoDialogData.index_type == "MUTUALFUND"
         ? infoDialogData.data.mfType
-        : infoDialogData.index_type == "bond"
+        : infoDialogData.index_type == "BOND"
         ? infoDialogData.data.bondType
         : ("" | snakeToTitle)
     }}

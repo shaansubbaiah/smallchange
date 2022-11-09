@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AssetHolding } from 'src/app/core/models/asset-holding';
 @Component({
   selector: 'app-stock-table',
@@ -26,22 +34,23 @@ export class StockTableComponent implements OnInit, OnChanges {
     { name: 'assetType', displayName: 'Type', type: 'snakecase' },
   ];
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   openDialog(data: any) {
-    this.openDialogEvent.emit({ index_type: 'stock', data: data });
+    this.openDialogEvent.emit({ index_type: 'STOCK', data: data });
   }
 
-  updatePortfolio(holdings : AssetHolding[]) {
+  updatePortfolio(holdings: AssetHolding[]) {
     this.invested_amount = 0;
     this.current_amount = 0;
     if (holdings != null) {
       for (var i = 0; i < holdings.length; i++) {
-        this.invested_amount +=
-          holdings[i].buyPrice * holdings[i].quantity;
+        this.invested_amount += holdings[i].buyPrice * holdings[i].quantity;
         this.current_amount += holdings[i].currentPrice * holdings[i].quantity;
       }
     }
-    console.log('updated! new values: ' + this.invested_amount + ',' + this.current_amount);
+    console.log(
+      'updated! new values: ' + this.invested_amount + ',' + this.current_amount
+    );
   }
 }

@@ -5,7 +5,7 @@ import { BuySellService } from 'src/app/core/services/buy-sell.service';
 import { CommonUtils } from 'src/app/utils';
 
 interface InfoDialogData {
-  index_type: 'stock' | 'mf' | 'bond';
+  index_type: 'STOCK' | 'MUTUALFUND' | 'BOND';
   data: any;
 }
 
