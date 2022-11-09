@@ -1,7 +1,7 @@
 <div class="container">
   <div class="main">
-    <app-navbar></app-navbar>
+    <app-navbar *ngIf="!isHomepage"></app-navbar>
     <router-outlet></router-outlet>
-    <app-footer></app-footer>
+    <app-footer [class.pindown]="isHomepage"></app-footer>
   </div>
 </div>
