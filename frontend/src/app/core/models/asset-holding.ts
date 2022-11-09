@@ -3,6 +3,6 @@ export interface AssetHolding {
   code: string;
   quantity: number;
   buyPrice: number;
-  LTP: number;
+  currentPrice: number;
   assetType: string;
 }

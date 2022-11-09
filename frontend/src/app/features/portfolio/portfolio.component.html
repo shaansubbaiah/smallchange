@@ -1,5 +1,19 @@
 <app-title titleText="Portfolio"></app-title>
-
+<div style="margin-left: auto; margin-right: auto">
+  <span style="color: #a7a7a7"
+    >Last refreshed: {{ lastRefreshedTimeString }}</span
+  >
+  <button
+    style="margin-left: 20px"
+    (click)="fetchData()"
+    mat-raised-button
+    color="primary"
+    [disabled]="isLoading"
+    [class.sc-btn-spinner]="isLoading"
+  >
+    REFRESH
+  </button>
+</div>
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Stocks">
     <ng-template matTabContent>

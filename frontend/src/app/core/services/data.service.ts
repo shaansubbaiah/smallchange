@@ -15,9 +15,9 @@ export class DataService {
     this.userId = '';
   }
 
-  getTradeHistory() {
-    return [];
-    //return dummy_data_order;
+  public getTradeHistory(): Observable<any>{
+    return this.httpClient.get(Constants.TRADE_HISTORY_ENDPOINT, {
+    });
   }
 
   getStockHolding(userId : string) { }
@@ -32,9 +32,6 @@ export class DataService {
       throw new Error('User ID to fetch portfolio is null!');
 
       return this.httpClient.get(Constants.PORTFOLIO_ENDPOINT, {
-        params: {
-          scUserId: userId
-        }
       });
   }
 

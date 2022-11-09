@@ -100,15 +100,6 @@ public class PreferencesQueryService extends QueryService<Preferences> {
             if (criteria.getInvestmentLength() != null) {
                 specification = specification.and(buildSpecification(criteria.getInvestmentLength(), Preferences_.investmentLength));
             }
-            if (criteria.getScUserId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getScUserId(),
-                            root -> root.join(Preferences_.scUser, JoinType.LEFT).get(ScUser_.scUserId)
-                        )
-                    );
-            }
         }
         return specification;
     }
