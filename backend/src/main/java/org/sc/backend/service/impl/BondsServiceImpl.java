@@ -3,6 +3,7 @@ package org.sc.backend.service.impl;
 import java.util.List;
 import java.util.Optional;
 import org.sc.backend.domain.Bonds;
+import org.sc.backend.domain.Stocks;
 import org.sc.backend.repository.BondsRepository;
 import org.sc.backend.service.BondsService;
 import org.slf4j.Logger;
@@ -29,6 +30,10 @@ public class BondsServiceImpl implements BondsService {
     public Bonds save(Bonds bonds) {
         log.debug("Request to save Bonds : {}", bonds);
         return bondsRepository.save(bonds);
+    }
+
+    public List<Bonds> saveAll(List<Bonds> bonds) {
+        return bondsRepository.saveAll(bonds);
     }
 
     @Override

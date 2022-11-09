@@ -2,6 +2,8 @@ package org.sc.backend.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.sc.backend.domain.Bonds;
 import org.sc.backend.domain.MutualFunds;
 import org.sc.backend.repository.MutualFundsRepository;
 import org.sc.backend.service.MutualFundsService;
@@ -29,6 +31,10 @@ public class MutualFundsServiceImpl implements MutualFundsService {
     public MutualFunds save(MutualFunds mutualFunds) {
         log.debug("Request to save MutualFunds : {}", mutualFunds);
         return mutualFundsRepository.save(mutualFunds);
+    }
+
+    public List<MutualFunds> saveAll(List<MutualFunds> mfs) {
+        return mutualFundsRepository.saveAll(mfs);
     }
 
     @Override

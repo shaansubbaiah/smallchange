@@ -38,6 +38,9 @@ public class StocksServiceImpl implements StocksService {
         return stocksRepository.save(stocks);
     }
 
+    public List<Stocks> saveAll(List<Stocks> stocks) {
+        return stocksRepository.saveAll(stocks);
+    }
     @Override
     public Optional<Stocks> partialUpdate(Stocks stocks) {
         log.debug("Request to partially update Stocks : {}", stocks);

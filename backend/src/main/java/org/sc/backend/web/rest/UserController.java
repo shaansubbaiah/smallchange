@@ -17,7 +17,6 @@ import org.sc.backend.service.criteria.PositionsCriteria;
 import org.sc.backend.service.criteria.StocksCriteria;
 import org.sc.backend.service.impl.PositionsServiceImpl;
 import org.sc.backend.service.impl.ScUserServiceImpl;
-import org.sc.backend.web.rest.admin.PositionsResource;
 import org.sc.backend.web.rest.dto.UserAuthResponse;
 import org.sc.backend.web.rest.dto.UserPortfolio;
 import org.sc.backend.web.rest.dto.UserPosition;
@@ -49,6 +48,7 @@ public class UserController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final TokenProvider tokenProvider;
 
+    private final FluctuationsInducer inducer;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     private final ScUserService scUserService;
@@ -61,10 +61,11 @@ public class UserController {
 
     private final MutualFundsQueryService mfQueryService;
 
-    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, PositionsQueryService positionsQueryService, StocksQueryService stocksQueryService, BondsQueryService bondsQueryService, MutualFundsQueryService mfQueryService) {
+    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, FluctuationsInducer inducer, PositionsQueryService positionsQueryService, StocksQueryService stocksQueryService, BondsQueryService bondsQueryService, MutualFundsQueryService mfQueryService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.scUserService = scUserService;
+        this.inducer = inducer;
         this.stocksQueryService = stocksQueryService;
         this.bondsQueryService = bondsQueryService;
         this.mfQueryService = mfQueryService;
@@ -92,6 +93,23 @@ public class UserController {
         //set HTTP headers and return
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+
+        //start fluctuations
+        new Thread(() -> {
+            while (true) {
+                try {
+                    inducer.induceStockFluctuations();
+                    Thread.sleep(5000);
+
+                    inducer.induceBondFluctuations();
+                    Thread.sleep(5000);
+
+                    inducer.induceMfFluctuations();
+                    Thread.sleep(10000);
+
+                } catch (Exception ex) {ex.printStackTrace();}
+            }
+        }).start();
 
         return new ResponseEntity<>(new UserAuthResponse(user.getScUserId(), user.getName(), user.getEmail(), user.getScUserRole().toString(), System.currentTimeMillis(), jwt, user.getImage()), httpHeaders, HttpStatus.OK);
     }
