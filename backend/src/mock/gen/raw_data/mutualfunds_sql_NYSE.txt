@@ -1,0 +1,26 @@
+RANK	Symbol	Name
+1	VSMPX	Vanguard Total Stock Market Index Fund;Institutional Plus
+2	FXAIX	Fidelity 500 Index Fund
+3	VFIAX	Vanguard 500 Index Fund;Admiral
+4	VTSAX	Vanguard Total Stock Market Index Fund;Admiral
+5	VMFXX	Vanguard Federal Money Market Fund;Investor
+6	SPAXX	Fidelity Government Money Market Fund
+7	FDRXX	Fidelity Government Cash Reserves
+8	FGTXX	Goldman Sachs FS Government Fund;Institutional
+9	VGTSX	Vanguard Total International Stock Index Fund;Investor
+10	OGVXX	JPMorgan US Government Money Market Fund;Capital
+11	VIIIX	Vanguard Institutional Index Fund;Inst Plus
+12	VTBIX	Vanguard Total Bond Market II Index Fund;Investor
+13	TFDXX	BlackRock Liquidity FedFund;Institutional
+14	VTBNX	Vanguard Total Bond Market II Index Fund;Institutional
+15	TTTXX	BlackRock Liquidity Treasury Trust Fund;Institutional
+16	MVRXX	Morgan Stanley Inst Liq Government Port;Institutional
+17	AGTHX	American Funds Growth Fund of America;A
+18	VFFSX	Vanguard 500 Index Fund;Institutional Select
+19	FTIXX	Goldman Sachs FS Treasury Instruments Fund;Instituitonal
+20	DGCXX	Dreyfus Government Cash Management;Institutional
+21	VBTLX	Vanguard Total Bond Market Index Fund;Admiral
+22	VINIX	Vanguard Institutional Index Fund;Institutional
+23	VMRXX	Vanguard Cash Reserves Federal Money Market Fd;Adm
+24	ABALX	American Funds American Balanced Fund;A
+25	GOFXX	Federated Hermes Government Obligations Fund;Premier

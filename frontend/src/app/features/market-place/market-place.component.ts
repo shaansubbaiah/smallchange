@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MarketAssets } from 'src/app/core/models/market-assets';
 import { DataService } from 'src/app/core/services/data.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,11 +9,14 @@ import { Observable } from 'rxjs';
   templateUrl: './market-place.component.html',
   styleUrls: ['./market-place.component.scss'],
 })
-export class MarketPlaceComponent implements OnInit {
+export class MarketPlaceComponent implements OnInit, AfterViewInit {
   public marketAssets: MarketAssets = new MarketAssets([], [], []);
   isLoading: boolean = false;
 
   constructor(private dataService: DataService, public dialog: MatDialog) {}
+  ngAfterViewInit(): void {
+    this.fetchData(); //performance reasons
+  }
 
   fetchData() {
     this.isLoading = true;
@@ -42,9 +45,9 @@ export class MarketPlaceComponent implements OnInit {
     this.isLoading = false;
   }
 
-  ngOnInit(): void {
-    this.fetchData();
-  }
+  ngOnInit(): void {}
+
+
 
   openDialog(data: any) {
     const dialogRef = this.dialog.open(InfoDialogComponent, {
