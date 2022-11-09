@@ -51,6 +51,7 @@ import { RefreshButtonComponent } from './refresh-button/refresh-button.componen
     ReusableTableOverviewComponent,
     InfoDialogComponent,
     SnackbarComponent,
+    RefreshButtonComponent,
   ],
 })
 export class SharedModule {}

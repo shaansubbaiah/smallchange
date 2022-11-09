@@ -1,64 +1,75 @@
+.title-with-refresh {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+app-title {
+  padding-left: 80px;
+}
+
 .table-area {
-    width: 95%;
-    margin-left: 2.5%;
-    border: grey 2px solid;
-    overflow: scroll;
+  width: 95%;
+  margin-left: 2.5%;
+  border: grey 2px solid;
+  overflow: scroll;
+}
+
+.portfolio-overview {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 700px) {
+  .overview {
+    flex-direction: column;
   }
-  
-  .portfolio-overview {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  @media only screen and (max-width: 700px) {
-    .overview {
-      flex-direction: column;
-    }
-  }
-  
-  .portfolio-card {
-    background-color: white;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
-    padding: 12px;
-    border-radius: 18px;
-  }
-  
-  .portfolio-card-content {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin: 5px 0;
-  }
-  
-  .red {
-    color: rgba(160, 7, 7, 0.877);
-  }
-  
-  .green {
-    color: rgb(7, 124, 42);
-  }
-  
-  .bolder {
-    font-weight: bolder;
-  }
-  
-  .slide {
-    overflow: overlay;
-  }
-  
-  .table-container {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-  }
-  
-  table {
-    width: 90%;
-    margin: auto 10px;
-  }
-  
-  .mat-column-name {
-    font-weight: 500;
-  }
-  
+}
+
+.portfolio-card {
+  background-color: white;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  border-radius: 18px;
+}
+
+.portfolio-card-content {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.red {
+  color: rgba(160, 7, 7, 0.877);
+}
+
+.green {
+  color: rgb(7, 124, 42);
+}
+
+.bolder {
+  font-weight: bolder;
+}
+
+.slide {
+  overflow: overlay;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+table {
+  width: 90%;
+  margin: auto 10px;
+}
+
+.mat-column-name {
+  font-weight: 500;
+}

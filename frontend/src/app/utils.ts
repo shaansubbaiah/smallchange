@@ -46,28 +46,21 @@ export class CommonUtils {
     return colour;
   }
 
-  public static getTime(time : number) : string {
+  public static getTime(time: number): string {
     return this.getTimeString(Date.now(), time);
-}
+  }
 
-public static getTimeString(time1 : number, time2 : number) : string {
+  public static getTimeString(time1: number, time2: number): string {
     let t = Math.abs(time1 - time2);
 
-    if (t < 60000)
-        return "just now";
-    else if (t < 3600000)
-        return Math.floor(t / 60000) + "m ago";
-    else if (t < 86400000)
-        return Math.floor(t / 3600000) + "h ago";
-    else if (t < 604800000)
-        return Math.floor(t / 86400000) + "d ago";
-    else if (t < 2592000000)
-        return Math.floor(t / 604800000) + "w ago";
-    else if (t < 31536000000)
-        return Math.floor(t / 2592000000) + "M ago";
-    else
-        return Math.floor(t / 31536000000) + "y ago";
-}
+    if (t < 60000) return 'just now';
+    else if (t < 3600000) return Math.floor(t / 60000) + ' min ago';
+    else if (t < 86400000) return Math.floor(t / 3600000) + ' hr ago';
+    else if (t < 604800000) return Math.floor(t / 86400000) + ' day ago';
+    else if (t < 2592000000) return Math.floor(t / 604800000) + ' week ago';
+    else if (t < 31536000000) return Math.floor(t / 2592000000) + ' month ago';
+    else return Math.floor(t / 31536000000) + 'year ago';
+  }
 
   public static colors = [
     '#f2d5cf',

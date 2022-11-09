@@ -11,10 +11,12 @@ import { Observable } from 'rxjs';
 })
 export class MarketPlaceComponent implements OnInit {
   public marketAssets: MarketAssets = new MarketAssets([], [], []);
+  isLoading: boolean = false;
 
   constructor(private dataService: DataService, public dialog: MatDialog) {}
 
-  ngOnInit(): void {
+  fetchData() {
+    this.isLoading = true;
     let asset: Observable<any>[] = this.dataService.getMarketAssets();
     asset[0].subscribe((result) => {
       this.marketAssets = new MarketAssets(
@@ -22,7 +24,6 @@ export class MarketPlaceComponent implements OnInit {
         this.marketAssets.marketBonds,
         this.marketAssets.marketMfs
       );
-      // console.log(result);
     });
     asset[1].subscribe((result) => {
       this.marketAssets = new MarketAssets(
@@ -30,7 +31,6 @@ export class MarketPlaceComponent implements OnInit {
         result,
         this.marketAssets.marketMfs
       );
-      // console.log(result);
     });
     asset[2].subscribe((result) => {
       this.marketAssets = new MarketAssets(
@@ -38,8 +38,12 @@ export class MarketPlaceComponent implements OnInit {
         this.marketAssets.marketBonds,
         result
       );
-      // console.log(result);
     });
+    this.isLoading = false;
+  }
+
+  ngOnInit(): void {
+    this.fetchData();
   }
 
   openDialog(data: any) {
@@ -47,5 +51,9 @@ export class MarketPlaceComponent implements OnInit {
       minWidth: '400px',
     });
     dialogRef.componentInstance.infoDialogData = data;
+    // refresh table data after dialog close
+    dialogRef.afterClosed().subscribe(() => {
+      this.fetchData();
+    });
   }
 }

@@ -1,1 +1,17 @@
-<p>refresh-button works!</p>
+<div class="refresh-btn-container">
+  <a
+    mat-icon-button
+    aria-label="button to refresh table data"
+    (click)="onClick()"
+    [disabled]="isLoading"
+    [class.refresh-start-]="isLoading"
+  >
+    <mat-icon>refresh</mat-icon>
+  </a>
+  <div class="refresh-btn-text-container">
+    <span class="refresh-btn-text">Last updated</span>
+    <span class="refresh-btn-time">
+      {{ lastRefreshedTimeString }}
+    </span>
+  </div>
+</div>

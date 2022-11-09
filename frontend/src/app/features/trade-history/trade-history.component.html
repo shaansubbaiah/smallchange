@@ -1,4 +1,11 @@
-<app-title titleText="Trade History"></app-title>
+<div class="title-with-refresh">
+  <app-title titleText="Trade History"></app-title>
+  <app-refresh-button
+    [isLoading]="isLoading"
+    (refreshEvent)="fetchData()"
+  ></app-refresh-button>
+</div>
+
 <app-reusable-table
   [tableRows]="tradeHistory"
   [tableColumns]="tableColumns"

@@ -1,4 +1,10 @@
-<app-title titleText="Marketplace"></app-title>
+<div class="title-with-refresh">
+  <app-title titleText="Marketplace"></app-title>
+  <app-refresh-button
+    [isLoading]="isLoading"
+    (refreshEvent)="fetchData()"
+  ></app-refresh-button>
+</div>
 
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Stocks">

@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class TradeHistoryComponent implements OnInit {
   tradeHistory: TradeStock[] = [];
   dataSource!: MatTableDataSource<TradeStock>;
+  isLoading: boolean = false;
 
   tableColumns = [
     { name: 'name', displayName: 'Name', type: 'text' },
@@ -26,12 +27,13 @@ export class TradeHistoryComponent implements OnInit {
 
   constructor(private dataService: DataService) {}
 
-  ngOnInit() {
-     this.dataService.getTradeHistory().subscribe(result =>{
-        this.tradeHistory= result;
-     });
-    }
-
-    
+  fetchData() {
+    this.dataService.getTradeHistory().subscribe((result) => {
+      this.tradeHistory = result;
+    });
   }
 
+  ngOnInit() {
+    this.fetchData();
+  }
+}

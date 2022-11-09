@@ -1,3 +1,15 @@
+.title-with-refresh {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+app-title {
+  padding-left: 80px;
+}
+
 .table-area {
   width: 95%;
   margin-left: 2.5%;
