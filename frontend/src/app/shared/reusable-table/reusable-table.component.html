@@ -43,7 +43,7 @@
         <ng-container *ngIf="col.type == 'date'">
           {{ e[col.name] | date: "shortDate" }}
         </ng-container>
-        <ng-container *ngIf="col.type == 'buysell'">
+        <ng-container *ngIf="col.type == 'uppercase'">
           {{ e[col.name] | uppercase }}
         </ng-container>
         <ng-container *ngIf="col.type == 'percentile'">

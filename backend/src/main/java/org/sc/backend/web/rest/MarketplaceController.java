@@ -125,18 +125,6 @@ public class MarketplaceController {
     }
 
     /**
-     * {@code GET  /bonds/count} : count all the bonds.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/bonds/count")
-    public ResponseEntity<Long> countBonds(BondsCriteria criteria) {
-        log.debug("REST request to count Bonds by criteria: {}", criteria);
-        return ResponseEntity.ok().body(bondsQueryService.countByCriteria(criteria));
-    }
-
-    /**
      * {@code GET  /bonds/:id} : get the "id" bonds.
      *
      * @param id the id of the bonds to retrieve.
@@ -160,18 +148,6 @@ public class MarketplaceController {
         log.debug("REST request to get MutualFunds by criteria: {}", criteria);
         List<MutualFunds> entityList = mutualFundsQueryService.findByCriteria(criteria);
         return ResponseEntity.ok().body(entityList);
-    }
-
-    /**
-     * {@code GET  /mutual-funds/count} : count all the mutualFunds.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/mutual-funds/count")
-    public ResponseEntity<Long> countMutualFunds(MutualFundsCriteria criteria) {
-        log.debug("REST request to count MutualFunds by criteria: {}", criteria);
-        return ResponseEntity.ok().body(mutualFundsQueryService.countByCriteria(criteria));
     }
 
     /**

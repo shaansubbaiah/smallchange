@@ -7,24 +7,52 @@
           matInput
           type="text"
           placeholder="Username"
-          formControlName="username"
+          formControlName="userId"
         />
         <mat-error
           *ngIf="
-            registerDetails.get('username')?.invalid &&
-            registerDetails.get('username')?.hasError('required')
+            registerDetails.get('userId')?.invalid &&
+            registerDetails.get('userId')?.hasError('required')
           "
         >
           Username is required.
         </mat-error>
         <mat-error
           *ngIf="
-            (registerDetails.get('username')?.invalid &&
-              registerDetails.get('username')?.hasError('minlength')) ||
-            registerDetails.get('username')?.hasError('maxlength')
+            (registerDetails.get('userId')?.invalid &&
+              registerDetails.get('userId')?.hasError('minlength')) ||
+            registerDetails.get('userId')?.hasError('maxlength')
           "
         >
           Username should be 3 - 10 characters long.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" placeholder="Name" formControlName="name" />
+        <mat-error
+          *ngIf="
+            registerDetails.get('name')?.invalid &&
+            registerDetails.get('name')?.hasError('required')
+          "
+        >
+          Name is required.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            registerDetails.get('name')?.invalid &&
+            registerDetails.get('name')?.hasError('minlength')
+          "
+        >
+          Name should be at least 3 characters long.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            registerDetails.get('name')?.invalid &&
+            registerDetails.get('name')?.hasError('pattern')
+          "
+        >
+          Please enter a valid name.
         </mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -109,7 +137,8 @@
         type="submit"
         mat-raised-button
         color="primary"
-        [disabled]="registerDetails.invalid"
+        [disabled]="registerDetails.invalid || isLoading"
+        [class.sc-btn-spinner]="isLoading"
       >
         Register
       </button>

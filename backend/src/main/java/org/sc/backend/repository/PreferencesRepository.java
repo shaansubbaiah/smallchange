@@ -1,7 +1,8 @@
 package org.sc.backend.repository;
 
 import org.sc.backend.domain.Preferences;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +10,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PreferencesRepository extends JpaRepository<Preferences, String> {}
+public interface PreferencesRepository extends JpaRepository<Preferences, String>, JpaSpecificationExecutor<Preferences> {}

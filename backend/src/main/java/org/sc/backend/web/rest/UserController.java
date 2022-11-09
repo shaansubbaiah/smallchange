@@ -1,13 +1,30 @@
 package org.sc.backend.web.rest;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.Valid;
 
-import org.sc.backend.domain.ScUser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.sc.backend.domain.*;
+import org.sc.backend.domain.enumeration.AssetType;
+import org.sc.backend.repository.PositionsRepository;
 import org.sc.backend.security.jwt.JWTFilter;
 import org.sc.backend.security.jwt.TokenProvider;
+import org.sc.backend.service.*;
+import org.sc.backend.service.criteria.BondsCriteria;
+import org.sc.backend.service.criteria.MutualFundsCriteria;
+import org.sc.backend.service.criteria.PositionsCriteria;
+import org.sc.backend.service.criteria.StocksCriteria;
+import org.sc.backend.service.impl.PositionsServiceImpl;
 import org.sc.backend.service.impl.ScUserServiceImpl;
+import org.sc.backend.web.rest.admin.PositionsResource;
+import org.sc.backend.web.rest.dto.UserAuthResponse;
+import org.sc.backend.web.rest.dto.UserPortfolio;
+import org.sc.backend.web.rest.dto.UserPosition;
+import org.sc.backend.web.rest.errors.BadRequestAlertException;
 import org.sc.backend.web.rest.vm.LoginVM;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +35,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.service.filter.StringFilter;
+
+import java.util.*;
 
 /**
  * Controller to authenticate users.
@@ -26,16 +46,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
 
+    private final Logger log = LoggerFactory.getLogger(PositionsResource.class);
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private final ScUserServiceImpl scUserService;
+    private final ScUserService scUserService;
 
-    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService) {
+    private final PositionsQueryService positionsQueryService;
+
+    private final StocksQueryService stocksQueryService;
+
+    private final BondsQueryService bondsQueryService;
+
+    private final MutualFundsQueryService mfQueryService;
+
+    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, PositionsQueryService positionsQueryService, StocksQueryService stocksQueryService, BondsQueryService bondsQueryService, MutualFundsQueryService mfQueryService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.scUserService = scUserService;
+        this.stocksQueryService = stocksQueryService;
+        this.bondsQueryService = bondsQueryService;
+        this.mfQueryService = mfQueryService;
+        this.positionsQueryService = positionsQueryService;
     }
 
     @PostMapping("/authenticate")
@@ -65,102 +98,80 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ScUser> register(@Valid @RequestBody ScUser scUser) {
-        //hash passwords
         scUser.setPasswordHash(new BCryptPasswordEncoder(14).encode(scUser.getPasswordHash()));
 
-        //TODO: Implement checks before insertion
+        if (scUserService.findOne(scUser.getScUserId()).isPresent()) {
+            throw new BadRequestAlertException("User with id already exists.", "userId", "id exists");
+        }
 
-        return new ResponseEntity<>(scUserService.save(scUser), HttpStatus.CREATED);
+        ScUser newUser;
+        try {
+            newUser = scUserService.save(scUser);
+        } catch (Exception e) {
+            throw new BadRequestAlertException("Invalid parameters.", "userId", "id exists");
+        }
+
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    /**
-     * Object to return as body in JWT Authentication.
-     */
-    static class UserAuthResponse {
-        private String userId, firstName, lastName, email, role, jwt;
-        private Long lastLoginTimestamp;
+    @GetMapping("/portfolio")
+    public ResponseEntity<UserPortfolio> getPortfolio(@RequestHeader (name="Authorization") String token) {
+        String[] chunks = token.split("\\.");
+        Base64.Decoder decoder = Base64.getUrlDecoder();
 
-        private byte[] profileImg;
+        //String header = new String(decoder.decode(chunks[0]));
+        String payload = new String(decoder.decode(chunks[1]));
 
-        public UserAuthResponse(String userId, String name, String email, String role, Long lastLoginTimestamp, String jwt, byte[] profileImg) {
-            this.userId = userId;
-            int beginIndex = name.indexOf(' ') > 0 ? name.indexOf(' ') : name.length();
-            this.firstName = name.substring(0, beginIndex);
-            this.lastName = beginIndex < name.length() ? name.substring(beginIndex + 1) : "";
-            this.email = email;
-            this.role = role;
-            this.lastLoginTimestamp = lastLoginTimestamp;
-            this.jwt = jwt;
-            this.profileImg = profileImg;
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JsonNode payloadJson = mapper.readTree(payload);
+            String subject = payloadJson.get("sub").textValue();
 
-        UserAuthResponse(String idToken) {
-            this.jwt = idToken;
-        }
+            PositionsCriteria criteria = new PositionsCriteria();
 
-        public String getUserId() {
-            return userId;
-        }
+            criteria.setScUserId((StringFilter) new StringFilter().setEquals(subject));
 
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
+            List<Positions> positions = positionsQueryService.findByCriteria(criteria);
+            log.debug("POSIIONS:-------------- {}", positions);
 
-        @JsonProperty("jwt")
-        String getJwt() {
-            return jwt;
-        }
+            List<UserPosition> stockPositions = new ArrayList<>(), bondPositions = new ArrayList<>(), mfPositions = new ArrayList<>();
 
-        void setJwt(String jwt) {
-            this.jwt = jwt;
-        }
+            for (Positions p : positions) {
+                if (p.getAssetType() == AssetType.STOCK) {
+                    //fetch stock details through asset code and append to List<UserPosititions> in response.
+                    StocksCriteria stocksCriteria = new StocksCriteria();
+                    stocksCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
 
-        public String getFirstName() {
-            return firstName;
-        }
+                    List<Stocks> stocks = stocksQueryService.findByCriteria(stocksCriteria);
+                    for (Stocks st : stocks) {
+                        stockPositions.add(new UserPosition(st.getName(), st.getCode(), st.getStockType(), p.getQuantity(), p.getBuyPrice(), st.getCurrentPrice()));
+                    }
+                }
+                else if (p.getAssetType() == AssetType.BOND) {
+                    //fetch bond details through asset code and append to List<UserPosititions> in response.
+                    BondsCriteria bondsCriteria = new BondsCriteria();
+                    bondsCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
+                    List<Bonds> bonds = bondsQueryService.findByCriteria(bondsCriteria);
+                    for (Bonds b : bonds) {
+                        bondPositions.add(new UserPosition(b.getName(), b.getCode(), b.getBondType(), p.getQuantity(), p.getBuyPrice(), b.getCurrentPrice()));
+                    }
+                }
+                else {
+                    //fetch mf details through asset code and append to List<UserPosititions> in response.
+                    MutualFundsCriteria mfCriteria = new MutualFundsCriteria();
+                    mfCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
 
-        public String getLastName() {
-            return lastName;
-        }
+                    List<MutualFunds> mutualFunds = mfQueryService.findByCriteria(mfCriteria);
+                    for (MutualFunds mf : mutualFunds) {
+                        mfPositions.add(new UserPosition(mf.getName(), mf.getCode(), mf.getMfType(), p.getQuantity(), p.getBuyPrice(), mf.getCurrentPrice()));
+                    }
+                }
+            }
+            return ResponseEntity.ok().body(new UserPortfolio(stockPositions, bondPositions, mfPositions));
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getRole() {
-            return role;
-        }
-
-        public void setRole(String role) {
-            this.role = role;
-        }
-
-        public Long getLastLoginTimestamp() {
-            return lastLoginTimestamp;
-        }
-
-        public void setLastLoginTimestamp(Long lastLoginTimestamp) {
-            this.lastLoginTimestamp = lastLoginTimestamp;
-        }
-
-        public byte[] getProfileImg() {
-            return profileImg;
-        }
-
-        public void setProfileImg(byte[] profileImg) {
-            this.profileImg = profileImg;
+        } catch (JsonProcessingException e) {
+            throw new BadRequestAlertException("Invalid user ID!", "UserController", "invalidheader");
         }
     }
 }
