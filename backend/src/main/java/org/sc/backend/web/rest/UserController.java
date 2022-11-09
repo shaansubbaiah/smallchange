@@ -46,7 +46,7 @@ import java.util.*;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final Logger log = LoggerFactory.getLogger(PositionsResource.class);
+    private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;

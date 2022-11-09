@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 
+import static org.sc.backend.config.CommonUtils.getUserIdFromAuthorizationToken;
+
 @RestController
 @RequestMapping("/api/transact")
 public class TransactionController {
@@ -52,24 +54,6 @@ public class TransactionController {
         this.bondsService = bondsService;
         this.scUserService = scUserService;
         this.tradeHistoryService = tradeHistoryService;
-    }
-
-    public String getUserIdFromAuthorizationToken(String token) {
-        String[] chunks = token.split("\\.");
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-
-        //String header = new String(decoder.decode(chunks[0]));
-        String payload = new String(decoder.decode(chunks[1]));
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode payloadJson = null;
-        try {
-            payloadJson = mapper.readTree(payload);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        return payloadJson.get("sub").textValue();
     }
 
     public Float getAssetPrice(String indexCode, String indexType) {
