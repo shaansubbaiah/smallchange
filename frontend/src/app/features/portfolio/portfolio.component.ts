@@ -49,5 +49,9 @@ export class PortfolioComponent implements OnInit {
       minWidth: '400px',
     });
     dialogRef.componentInstance.infoDialogData = data;
+    // refresh table data after dialog close
+    dialogRef.afterClosed().subscribe(() => {
+      this.fetchData();
+    });
   }
 }

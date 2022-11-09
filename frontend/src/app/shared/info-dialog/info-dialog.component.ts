@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TransactionResult } from 'src/app/core/models/transaction-result';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { BuySellService } from 'src/app/core/services/buy-sell.service';
 import { CommonUtils } from 'src/app/utils';
@@ -20,7 +20,8 @@ export class InfoDialogComponent {
 
   constructor(
     private alertService: AlertService,
-    private buySellService: BuySellService
+    private buySellService: BuySellService,
+    private dialogRef: MatDialogRef<InfoDialogComponent>
   ) {}
 
   onBuySell(quantity: number, transactionType: 'buy' | 'sell') {
@@ -37,6 +38,8 @@ export class InfoDialogComponent {
           console.log('result:');
           console.log(res);
 
+          this.dialogRef.close();
+
           this.alertService.open({
             type: 'success',
             message: 'Transaction successfull.',
@@ -45,6 +48,8 @@ export class InfoDialogComponent {
         error: (e) => {
           console.log('error:');
           console.log(e);
+
+          this.dialogRef.close();
 
           this.alertService.open({
             type: 'error',
