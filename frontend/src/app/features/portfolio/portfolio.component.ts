@@ -12,32 +12,36 @@ import { CommonUtils } from 'src/app/utils';
   styleUrls: ['./portfolio.component.scss'],
 })
 export class PortfolioComponent implements OnInit {
-
   public userPortfolio: UserPortfolio = new UserPortfolio([], [], []);
   isLoading: boolean = false;
   lastRefreshedTimeString: string = '';
-  lastRefreshedTime : number = Date.now();
+  lastRefreshedTime: number = Date.now();
 
   constructor(private dataService: DataService, public dialog: MatDialog) {}
 
-  private timer: ReturnType<typeof setInterval> = setInterval(() => {
+  polling = setInterval(() => {
     this.lastRefreshedTimeString = CommonUtils.getTime(this.lastRefreshedTime);
   }, 1000);
 
-  refreshPortfolio() {
-    this.ngOnInit();
-    console.log('called!');
-  }
-
-  ngOnInit(): void {
+  fetchData() {
     this.isLoading = true;
-
-    let portfolio : Observable<any> = this.dataService.getPortfolio();
-    portfolio.subscribe(result => {
-      this.userPortfolio = new UserPortfolio(result.stocks, result.bonds, result.mfs);
+    this.dataService.getPortfolio().subscribe((result) => {
+      this.userPortfolio = new UserPortfolio(
+        result.stocks,
+        result.bonds,
+        result.mfs
+      );
       console.log(result);
       this.isLoading = false;
     });
+  }
+
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.polling);
   }
 
   openDialog(data: any) {

@@ -19,6 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnakeToTitlePipe } from '../core/pipes/snake-to-title.pipe';
+import { RefreshButtonComponent } from './refresh-button/refresh-button.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SnakeToTitlePipe } from '../core/pipes/snake-to-title.pipe';
     InfoDialogComponent,
     SnackbarComponent,
     SnakeToTitlePipe,
+    RefreshButtonComponent,
   ],
   imports: [
     CommonModule,
