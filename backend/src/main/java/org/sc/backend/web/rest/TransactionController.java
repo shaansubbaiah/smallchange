@@ -22,14 +22,30 @@ public class TransactionController {
     public TransactionController() {}
 
     @PostMapping("/buy")
-    public void buyPosition () {
+    public ResponseEntity<TransactionResponse> buyPosition (@Valid @RequestBody TransactionRequest transactionRequest) {
+        long startTS = System.currentTimeMillis();
 
+        log.debug("buy position");
+        log.debug(transactionRequest.toString());
+
+        // - add x quantity of index from user's positions
+
+        // - remove x quantity of index value to user's account
+
+        long completeTS = System.currentTimeMillis();
+        return new ResponseEntity<>(new TransactionResponse("result", null, "some data", startTS, completeTS), HttpStatus.OK);
     }
 
     @PostMapping("/sell")
     public ResponseEntity<TransactionResponse> sellPosition (@Valid @RequestBody TransactionRequest transactionRequest) {
         long startTS = System.currentTimeMillis();
+
+        log.debug("sell position");
         log.debug(transactionRequest.toString());
+
+        // - remove x quantity of index from user's positions
+        // - add x quantity of index value to user's account
+
         long completeTS = System.currentTimeMillis();
         return new ResponseEntity<>(new TransactionResponse("result", null, "some data", startTS, completeTS), HttpStatus.OK);
     }
