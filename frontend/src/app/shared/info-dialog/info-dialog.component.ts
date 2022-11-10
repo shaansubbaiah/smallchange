@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { BuySellService } from 'src/app/core/services/buy-sell.service';
 import { CommonUtils } from 'src/app/utils';
 
@@ -21,10 +22,13 @@ export class InfoDialogComponent {
   constructor(
     private alertService: AlertService,
     private buySellService: BuySellService,
+    private authService: AuthService,
     private dialogRef: MatDialogRef<InfoDialogComponent>
   ) {}
 
   onBuySell(quantity: number, transactionType: 'buy' | 'sell') {
+    let selectedAccount = parseInt(this.authService.getSelectedAccount() || '');
+
     this.buySellService
       .transact({
         index_code: this.infoDialogData.data.code,
@@ -32,6 +36,7 @@ export class InfoDialogComponent {
         quantity: quantity,
         transaction_type: transactionType,
         user_id: CommonUtils.getUserDetail('userName') || '',
+        selectedAccount: selectedAccount,
       })
       .subscribe({
         next: (res) => {

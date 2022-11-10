@@ -25,11 +25,12 @@
   <button
     mat-menu-item
     *ngFor="let acc of userAccounts"
-    (click)="onAccountClick(acc.accNo)"
+    (click)="onAccountClick(acc.accNo, acc.accBalance)"
   >
     XXXX{{ acc?.accNo.toString().slice(-4) }}-{{ acc?.bankName }}-{{
       acc?.accType
     }}
+    {{ acc?.accBalance | currency: "USD" }}
   </button>
 </mat-menu>
 
@@ -44,6 +45,9 @@
           ? currentUser.firstName + " " + currentUser.lastName
           : ""
       }}
+    </p>
+    <p>
+      {{ currentBalance | currency: "USD" }}
     </p>
   </div>
   <mat-divider></mat-divider>

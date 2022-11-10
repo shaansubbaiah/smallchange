@@ -4,10 +4,6 @@ import { CommonUtils } from 'src/app/utils';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
-// interface BankAccount {
-
-// }
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -19,6 +15,8 @@ export class NavbarComponent implements OnInit {
   navLinks: any;
   userInitials: string = '';
   userAccounts: any[] = [];
+  selectedAccount: number = 0;
+  currentBalance: number = 0;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -43,7 +41,9 @@ export class NavbarComponent implements OnInit {
 
       this.getUserInitials();
 
-      // this.updateUserAccounts();
+      this.selectedAccount = parseInt(
+        this.authService.getSelectedAccount() || ''
+      );
     });
   }
 
@@ -74,6 +74,11 @@ export class NavbarComponent implements OnInit {
       this.userAccounts = [];
       this.getAccountDetails(accNo);
     });
+    this.userAccounts.forEach((acc) => {
+      if (acc.accNo == this.selectedAccount) {
+        this.currentBalance = acc.accBalance;
+      }
+    });
     console.log(this.userAccounts);
   }
 
@@ -83,8 +88,11 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  onAccountClick(accNo: number) {
+  onAccountClick(accNo: number, accBalance: number) {
     console.log(accNo);
+    this.authService.setSelectedAccount(accNo);
+    this.selectedAccount = accNo;
+    this.currentBalance = accBalance;
   }
 
   logout() {

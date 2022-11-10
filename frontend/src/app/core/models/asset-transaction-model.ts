@@ -4,4 +4,5 @@ export interface AssetTransactionModel {
   quantity: number;
   transaction_type: 'buy' | 'sell';
   user_id: string;
+  selectedAccount: number;
 }

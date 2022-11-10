@@ -1,9 +1,6 @@
 package org.sc.backend.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sc.backend.domain.*;
 import org.sc.backend.domain.enumeration.AssetType;
 import org.sc.backend.service.*;
@@ -21,8 +18,8 @@ import tech.jhipster.service.filter.StringFilter;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 import static org.sc.backend.config.CommonUtils.getUserIdFromAuthorizationToken;
 
@@ -42,8 +39,10 @@ public class TransactionController {
     private final ScUserService scUserService;
     private final TradeHistoryService tradeHistoryService;
 
+    private final ScAccountService accountService;
 
-    public TransactionController(PositionsQueryService positionsQueryService, PositionsService positionsService, StocksQueryService stocksQueryService, MutualFundsQueryService mutualFundsQueryService, BondsQueryService bondsQueryService, StocksService stocksService, MutualFundsService mutualFundsService, BondsService bondsService, ScUserService scUserService, TradeHistoryService tradeHistoryService) {
+
+    public TransactionController(PositionsQueryService positionsQueryService, PositionsService positionsService, StocksQueryService stocksQueryService, MutualFundsQueryService mutualFundsQueryService, BondsQueryService bondsQueryService, StocksService stocksService, MutualFundsService mutualFundsService, BondsService bondsService, ScUserService scUserService, TradeHistoryService tradeHistoryService, ScAccountService accountService) {
         this.positionsQueryService = positionsQueryService;
         this.positionsService = positionsService;
         this.stocksQueryService = stocksQueryService;
@@ -54,6 +53,7 @@ public class TransactionController {
         this.bondsService = bondsService;
         this.scUserService = scUserService;
         this.tradeHistoryService = tradeHistoryService;
+        this.accountService = accountService;
     }
 
     public Float getAssetPrice(String indexCode, String indexType) {
@@ -177,6 +177,16 @@ public class TransactionController {
 
         // 2) - remove x quantity of index value to user's account
         log.debug("Removing " + currentPrice * transactionRequest.quantity + " from user's account.");
+        Optional<ScAccount> x = accountService.findOne(transactionRequest.selectedAccount);
+        if(x.isPresent()){
+            ScAccount scAccount = x.get();
+            Float old_balance = scAccount.getAccBalance();
+            scAccount.setAccBalance(old_balance - (transactionRequest.quantity * positions.get(0).getBuyPrice()));
+            accountService.update(scAccount);
+        }
+        else {
+            throw new BadRequestAlertException("Failed to find bank account!", "UserController", "fail_find_bnk_acc");
+        }
 
         // 3) - Remove x quantity of index from marketplace
         if (!updateMarketplaceAssetQuantity(transactionRequest.indexCode, transactionRequest.indexType, (transactionRequest.quantity * -1))) {
@@ -238,6 +248,16 @@ public class TransactionController {
 
         // 2) - add x quantity of index value to user's account
         log.debug("Adding " + currentPrice * transactionRequest.quantity + " to user's account.");
+        Optional<ScAccount> x = accountService.findOne(transactionRequest.selectedAccount);
+        if(x.isPresent()){
+            ScAccount scAccount = x.get();
+            Float old_balance = scAccount.getAccBalance();
+            scAccount.setAccBalance(old_balance + (transactionRequest.quantity * positions.get(0).getBuyPrice()));
+            accountService.update(scAccount);
+        }
+        else {
+            throw new BadRequestAlertException("Failed to find bank account!", "UserController", "fail_find_bnk_acc");
+        }
 
         // 3) - Add x quantity of index from marketplace
         if (!updateMarketplaceAssetQuantity(transactionRequest.indexCode, transactionRequest.indexType, transactionRequest.quantity)) {
@@ -261,16 +281,18 @@ public class TransactionController {
     static class TransactionRequest {
         String indexCode, indexType, transactionType, userId;
         Integer quantity;
+        Long selectedAccount;
 
         public TransactionRequest() {
         }
 
-        public TransactionRequest(String code, String indexType, String transactionType, String userId, Integer quantity) {
+        public TransactionRequest(String code, String indexType, String transactionType, String userId, Integer quantity, Long selectedAccount) {
             this.indexCode = code;
             this.indexType = indexType;
             this.transactionType = transactionType;
             this.userId = userId;
             this.quantity = quantity;
+            this.selectedAccount = selectedAccount;
         }
 
         @JsonProperty("index_code")
@@ -326,6 +348,14 @@ public class TransactionController {
                 ", userId='" + userId + '\'' +
                 ", quantity=" + quantity +
                 '}';
+        }
+
+        public Long getSelectedAccount() {
+            return selectedAccount;
+        }
+
+        public void setSelectedAccount(Long selectedAccount) {
+            this.selectedAccount = selectedAccount;
         }
     }
 

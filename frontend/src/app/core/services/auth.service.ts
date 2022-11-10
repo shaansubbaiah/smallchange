@@ -107,6 +107,14 @@ export class AuthService {
     });
   }
 
+  setSelectedAccount(accNo: number) {
+    localStorage.setItem('selectedAccount', accNo.toString());
+  }
+
+  getSelectedAccount() {
+    return localStorage.getItem('selectedAccount');
+  }
+
   setInitialLoginStatus() {
     if (this.getToken()) {
       this.setLoggedIn(true);
