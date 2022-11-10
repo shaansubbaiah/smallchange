@@ -2,26 +2,37 @@ package org.sc.backend.web.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
  * Object to return as body in JWT Authentication.
  */
 public class UserAuthResponse {
     private String userId, firstName, lastName, email, role, jwt;
-    private Long lastLoginTimestamp;
-
     private byte[] profileImg;
 
-    public UserAuthResponse(String userId, String name, String email, String role, Long lastLoginTimestamp, String jwt, byte[] profileImg) {
+    private List<Long> accounts;
+
+    public UserAuthResponse(String userId, String name, String email, String role, Long lastLoginTimestamp, String jwt, byte[] profileImg, List<Long> accounts) {
         this.userId = userId;
+        this.accounts = accounts;
         int beginIndex = name.indexOf(' ') > 0 ? name.indexOf(' ') : name.length();
         this.firstName = name.substring(0, beginIndex);
         this.lastName = beginIndex < name.length() ? name.substring(beginIndex + 1) : "";
         this.email = email;
         this.role = role;
-        this.lastLoginTimestamp = lastLoginTimestamp;
         this.jwt = jwt;
         this.profileImg = profileImg;
     }
+
+    public List<Long> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Long> accounts) {
+        this.accounts = accounts;
+    }
+
 
     UserAuthResponse(String idToken) {
         this.jwt = idToken;
@@ -74,14 +85,6 @@ public class UserAuthResponse {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public Long getLastLoginTimestamp() {
-        return lastLoginTimestamp;
-    }
-
-    public void setLastLoginTimestamp(Long lastLoginTimestamp) {
-        this.lastLoginTimestamp = lastLoginTimestamp;
     }
 
     public byte[] getProfileImg() {
