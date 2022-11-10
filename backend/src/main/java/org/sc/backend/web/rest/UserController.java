@@ -148,6 +148,15 @@ public class UserController {
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
     }
 
+    @GetMapping("/bank-account")
+    public ResponseEntity<ScAccount> getBankAccount(@RequestParam Long acctNo) {
+        Optional<ScAccount> account = scAccountService.findOne(acctNo);
+        if (account.isEmpty()) {
+            throw new BadRequestAlertException("Account with number does not exist", "BankAccount", "entity non-existent");
+        }
+        return new ResponseEntity<>(account.get(), HttpStatus.CREATED);
+    }
+
     @GetMapping("/portfolio")
     public ResponseEntity<UserPortfolio> getPortfolio(@RequestHeader (name="Authorization") String token) {
 
