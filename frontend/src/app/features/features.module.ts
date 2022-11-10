@@ -37,6 +37,8 @@ import { MarketBondTableComponent } from './market-place/market-bond-table/marke
 import { MarketMfTableComponent } from './market-place/market-mf-table/market-mf-table.component';
 import { MarketStockTableComponent } from './market-place/market-stock-table/market-stock-table.component';
 import { PreferencesComponent } from './preferences/preferences.component';
+import { AddAccountPageComponent } from "./add-account-page/add-account-page.component";
+import { AddAccountFormComponent } from './add-account-page/add-account-form/add-account-form.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { PreferencesComponent } from './preferences/preferences.component';
     MarketMfTableComponent,
     MarketStockTableComponent,
     PreferencesComponent,
+    AddAccountPageComponent,
+    AddAccountFormComponent,
   ],
   imports: [
     CommonModule,
