@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import { CommonUtils } from 'src/app/utils';
 import { HttpClient } from '@angular/common/http';
 import { Constants } from 'src/app/constants';
+import { map, filter, mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -21,17 +22,13 @@ export class AuthService {
     });
   }
 
-  public register(
+  registerUser(
     userId: string,
     name: string,
     email: string,
-    password: string,
-    accNo: string,
-    bankName: string,
-    accType: string
+    password: string
   ): Observable<any> {
-    // perform sc-account creation POST here
-
+    console.log('in reg');
     return this.httpClient.post(Constants.REGISTER_ENDPOINT, {
       scUserId: userId,
       name: name,
@@ -40,6 +37,38 @@ export class AuthService {
       scUserRole: 'USER',
       scUserEnabled: true,
     });
+  }
+
+  createBankAccount(
+    userId: string,
+    accNo: string,
+    bankName: string,
+    accType: string
+  ): Observable<any> {
+    console.log('in bank');
+    return this.httpClient.post(Constants.BANKACCT_ENDPOINT, {
+      scUserId: userId,
+      accNo: accNo,
+      bankName: bankName,
+      accType: accType,
+      accBalance: parseFloat((5000 + Math.random() * 10000).toFixed(2)),
+    });
+  }
+
+  public register(
+    userId: string,
+    name: string,
+    email: string,
+    password: string,
+    accNo: string,
+    bankName: string,
+    accType: string
+  ): Observable<String> {
+    // perform sc-account creation POST here
+
+    return this.registerUser(userId, name, email, password).pipe(() =>
+      this.createBankAccount(userId, accNo, bankName, accType)
+    );
   }
 
   getToken(): string | null {
