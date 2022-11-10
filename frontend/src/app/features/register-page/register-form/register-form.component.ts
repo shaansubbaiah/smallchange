@@ -55,6 +55,9 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[^da-zA-Z]).*$'),
         ],
       ],
+      accNo: ['', [Validators.required, Validators.pattern('^\\d{10}$')]],
+      bankName: ['', [Validators.required]],
+      accType: ['', [Validators.required]],
     });
   }
 
@@ -66,7 +69,10 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
         this.registerDetails.get('userId')?.value,
         this.registerDetails.get('name')?.value,
         this.registerDetails.get('email')?.value,
-        this.registerDetails.get('password')?.value
+        this.registerDetails.get('password')?.value,
+        this.registerDetails.get('accNo')?.value,
+        this.registerDetails.get('bankName')?.value,
+        this.registerDetails.get('accType')?.value
       )
       .subscribe({
         next: (result) => {
