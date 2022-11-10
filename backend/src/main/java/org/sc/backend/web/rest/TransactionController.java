@@ -177,6 +177,7 @@ public class TransactionController {
 
         // 2) - remove x quantity of index value to user's account
         log.debug("Removing " + currentPrice * transactionRequest.quantity + " from user's account.");
+        positions = positionsQueryService.findByCriteria(positionsCriteria);
         Optional<ScAccount> x = accountService.findOne(transactionRequest.selectedAccount);
         if(x.isPresent()){
             ScAccount scAccount = x.get();
@@ -230,6 +231,22 @@ public class TransactionController {
                 throw new BadRequestAlertException("Quantity is too low!", "UserController", "invalid_quantity");
             }
             Positions position = positions.get(0);
+
+            // 2) - add x quantity of index value to user's account
+            log.debug("Adding " + currentPrice * transactionRequest.quantity + " to user's account.");
+            Optional<ScAccount> x = accountService.findOne(transactionRequest.selectedAccount);
+            if(x.isPresent()){
+                ScAccount scAccount = x.get();
+                Float old_balance = scAccount.getAccBalance();
+                scAccount.setAccBalance(old_balance + (transactionRequest.quantity * positions.get(0).getBuyPrice()));
+                accountService.update(scAccount);
+            }
+            else {
+                throw new BadRequestAlertException("Failed to find bank account!", "UserController", "fail_find_bnk_acc");
+            }
+
+
+
             // --------- if new quantity > 0, update position
             if (currentQuantity - transactionRequest.quantity > 0) {
                 position.setQuantity(currentQuantity - transactionRequest.quantity);
@@ -246,18 +263,6 @@ public class TransactionController {
             throw new BadRequestAlertException("Invalid position!", "UserController", "invalid_position");
         }
 
-        // 2) - add x quantity of index value to user's account
-        log.debug("Adding " + currentPrice * transactionRequest.quantity + " to user's account.");
-        Optional<ScAccount> x = accountService.findOne(transactionRequest.selectedAccount);
-        if(x.isPresent()){
-            ScAccount scAccount = x.get();
-            Float old_balance = scAccount.getAccBalance();
-            scAccount.setAccBalance(old_balance + (transactionRequest.quantity * positions.get(0).getBuyPrice()));
-            accountService.update(scAccount);
-        }
-        else {
-            throw new BadRequestAlertException("Failed to find bank account!", "UserController", "fail_find_bnk_acc");
-        }
 
         // 3) - Add x quantity of index from marketplace
         if (!updateMarketplaceAssetQuantity(transactionRequest.indexCode, transactionRequest.indexType, transactionRequest.quantity)) {

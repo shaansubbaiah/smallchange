@@ -35,15 +35,17 @@ export class NavbarComponent implements OnInit {
           { name: 'Portfolio', url: '/portfolio' },
           { name: 'Marketplace', url: '/market-place' },
         ];
+
+        this.getUserInitials();
+
+        this.selectedAccount = parseInt(
+          this.authService.getSelectedAccount() || ''
+        );
+
+        this.updateUserAccounts();
       } else {
         this.navLinks = [{ name: 'Log In', url: '/login' }];
       }
-
-      this.getUserInitials();
-
-      this.selectedAccount = parseInt(
-        this.authService.getSelectedAccount() || ''
-      );
     });
   }
 
@@ -70,12 +72,17 @@ export class NavbarComponent implements OnInit {
   }
 
   updateUserAccounts() {
+    console.log('in2');
     this.currentUser.accounts.forEach((accNo) => {
       this.userAccounts = [];
       this.getAccountDetails(accNo);
     });
+
     this.userAccounts.forEach((acc) => {
       if (acc.accNo == this.selectedAccount) {
+        console.log(this.selectedAccount);
+        console.log(acc.accNo);
+        console.log('in');
         this.currentBalance = acc.accBalance;
       }
     });
@@ -85,6 +92,12 @@ export class NavbarComponent implements OnInit {
   getAccountDetails(accNo: number) {
     this.authService.getAccountDetails(accNo).subscribe((res) => {
       this.userAccounts.push(res);
+      if (res.accNo == this.selectedAccount) {
+        console.log(this.selectedAccount);
+        console.log(res.accNo);
+        console.log('in3');
+        this.currentBalance = res.accBalance;
+      }
     });
   }
 
