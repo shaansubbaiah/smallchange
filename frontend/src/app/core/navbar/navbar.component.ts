@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
   selectedAccount: number = 0;
   currentBalance: number = 0;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit(): void {
     this.authService.getLoggedIn().subscribe((val: boolean) => {

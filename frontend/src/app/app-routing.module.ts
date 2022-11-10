@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AddAccountPageComponent } from './features/add-account-page/add-account-page.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
 import { MarketPlaceComponent } from './features/market-place/market-place.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
+  { path: 'add-account', component: AddAccountPageComponent },
   {
     path: 'portfolio',
     component: PortfolioComponent,
@@ -33,6 +35,11 @@ const routes: Routes = [
   {
     path: 'preferences',
     component: PreferencesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add-account',
+    component: AddAccountPageComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: PageNotFoundComponent },
