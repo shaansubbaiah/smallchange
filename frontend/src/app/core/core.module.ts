@@ -9,11 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './guards/auth-interceptor';
-
-
 
 @NgModule({
   declarations: [NavbarComponent, FooterComponent],
@@ -25,14 +24,15 @@ import { AuthInterceptor } from './guards/auth-interceptor';
     MatCardModule,
     MatDividerModule,
     MatMenuModule,
-    HttpClientModule
+    MatSelectModule,
+    HttpClientModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   exports: [NavbarComponent, FooterComponent],
 })

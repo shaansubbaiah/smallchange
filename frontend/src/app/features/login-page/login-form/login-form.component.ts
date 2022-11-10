@@ -70,6 +70,7 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
       )
       .subscribe({
         next: (result) => {
+          console.log(result);
           // console.log('login success');
           let user = new User(
             username,
@@ -77,7 +78,8 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
             result.lastName,
             result.email,
             result.lastLoginTimestamp,
-            result.jwt
+            result.jwt,
+            result.accounts
           );
 
           localStorage.setItem('currentUser', JSON.stringify(user));
