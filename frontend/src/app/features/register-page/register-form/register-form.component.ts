@@ -65,24 +65,42 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
     this.isLoading = true;
     console.log(this.registerDetails.value);
     this.authService
-      .register(
+      .registerUser(
         this.registerDetails.get('userId')?.value,
         this.registerDetails.get('name')?.value,
         this.registerDetails.get('email')?.value,
-        this.registerDetails.get('password')?.value,
-        this.registerDetails.get('accNo')?.value,
-        this.registerDetails.get('bankName')?.value,
-        this.registerDetails.get('accType')?.value
+        this.registerDetails.get('password')?.value
       )
       .subscribe({
-        next: (result) => {
-          // console.log(result);
+        next: () => {
           this.alertService.open({
             type: 'success',
             message: 'Registration successfull!',
           });
-          this.isLoading = false;
-          this.router.navigateByUrl('/login');
+          this.authService
+            .createBankAccount(
+              this.registerDetails.get('userId')?.value,
+              this.registerDetails.get('accNo')?.value,
+              this.registerDetails.get('bankName')?.value,
+              this.registerDetails.get('accType')?.value
+            )
+            .subscribe({
+              next: () => {
+                this.alertService.open({
+                  type: 'success',
+                  message: 'Creating Account successfull!',
+                });
+                this.isLoading = false;
+                this.router.navigateByUrl('/login');
+              },
+              error: (e) => {
+                this.alertService.open({
+                  type: 'error',
+                  message: e.error.title,
+                });
+                this.isLoading = false;
+              },
+            });
         },
         error: (e) => {
           // console.log(e);
@@ -90,6 +108,33 @@ export class RegisterFormComponent implements OnInit, ErrorStateMatcher {
           this.isLoading = false;
         },
       });
+
+    // this.authService
+    //   .register(
+    //     this.registerDetails.get('userId')?.value,
+    //     this.registerDetails.get('name')?.value,
+    //     this.registerDetails.get('email')?.value,
+    //     this.registerDetails.get('password')?.value,
+    //     this.registerDetails.get('accNo')?.value,
+    //     this.registerDetails.get('bankName')?.value,
+    //     this.registerDetails.get('accType')?.value
+    //   )
+    //   .subscribe({
+    //     next: (result) => {
+    //       // console.log(result);
+    //       this.alertService.open({
+    //         type: 'success',
+    //         message: 'Registration successfull!',
+    //       });
+    //       this.isLoading = false;
+    //       this.router.navigateByUrl('/login');
+    //     },
+    //     error: (e) => {
+    //       // console.log(e);
+    //       this.alertService.open({ type: 'error', message: e.error.title });
+    //       this.isLoading = false;
+    //     },
+    //   });
   }
 
   isErrorState(
