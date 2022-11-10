@@ -1,11 +1,16 @@
-<app-reusable-table-overview
-  [current_amount]="current_amount"
-  [invested_amount]="invested_amount"
-></app-reusable-table-overview>
+<ng-container *ngIf="holdings.length > 0">
+  <app-reusable-table-overview
+    [current_amount]="current_amount"
+    [invested_amount]="invested_amount"
+  ></app-reusable-table-overview>
 
-<app-reusable-table
-  [tableRows]="holdings"
-  [tableColumns]="tableColumns"
-  [filterColumns]="['name', 'code']"
-  (rowClickEvent)="openDialog($event)"
-></app-reusable-table>
+  <app-reusable-table
+    [tableRows]="holdings"
+    [tableColumns]="tableColumns"
+    [filterColumns]="['name', 'code']"
+    (rowClickEvent)="openDialog($event)"
+  ></app-reusable-table>
+</ng-container>
+<p *ngIf="holdings.length == 0" class="no-results-found">
+  Mutual Fund portfolio is empty. 🦗
+</p>
