@@ -4,6 +4,10 @@ import { CommonUtils } from 'src/app/utils';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 
+// interface BankAccount {
+
+// }
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -14,6 +18,7 @@ export class NavbarComponent implements OnInit {
   currentUser!: User;
   navLinks: any;
   userInitials: string = '';
+  userAccounts: any[] = [];
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -37,6 +42,8 @@ export class NavbarComponent implements OnInit {
       }
 
       this.getUserInitials();
+
+      // this.updateUserAccounts();
     });
   }
 
@@ -60,6 +67,24 @@ export class NavbarComponent implements OnInit {
         this.currentUser.firstName + this.currentUser.lastName
       );
     else return '';
+  }
+
+  updateUserAccounts() {
+    this.currentUser.accounts.forEach((accNo) => {
+      this.userAccounts = [];
+      this.getAccountDetails(accNo);
+    });
+    console.log(this.userAccounts);
+  }
+
+  getAccountDetails(accNo: number) {
+    this.authService.getAccountDetails(accNo).subscribe((res) => {
+      this.userAccounts.push(res);
+    });
+  }
+
+  onAccountClick(accNo: number) {
+    console.log(accNo);
   }
 
   logout() {

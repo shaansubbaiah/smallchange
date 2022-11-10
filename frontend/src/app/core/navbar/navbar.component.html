@@ -14,11 +14,24 @@
       color="fab-color"
       aria-label=""
       [matMenuTriggerFor]="menu"
+      (click)="updateUserAccounts()"
     >
       {{ userInitials | uppercase }}
     </button>
   </div>
 </div>
+
+<mat-menu #accounts="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let acc of userAccounts"
+    (click)="onAccountClick(acc.accNo)"
+  >
+    XXXX{{ acc?.accNo.toString().slice(-4) }}-{{ acc?.bankName }}-{{
+      acc?.accType
+    }}
+  </button>
+</mat-menu>
 
 <mat-menu #menu="matMenu">
   <div class="user-details">
@@ -33,6 +46,14 @@
       }}
     </p>
   </div>
+  <mat-divider></mat-divider>
+  <button
+    *ngIf="userAccounts.length > 0"
+    mat-menu-item
+    [matMenuTriggerFor]="accounts"
+  >
+    Bank Account
+  </button>
   <mat-divider></mat-divider>
   <button mat-menu-item routerLink="/trade-history">Trade History</button>
   <mat-divider></mat-divider>

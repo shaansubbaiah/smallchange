@@ -7,6 +7,7 @@ export class User {
   email: string;
   lastLogin: number; //last successful login timestamp; to be updated in login screen
   jwt: string;
+  accounts: number[];
 
   constructor(
     userName: string,
@@ -14,7 +15,8 @@ export class User {
     lastName: string,
     email: string,
     lastLogin: number,
-    token: string
+    token: string,
+    accounts: number[]
   ) {
     this.userName = userName.trim();
     this.firstName = firstName.trim();
@@ -22,5 +24,6 @@ export class User {
     this.email = email.trim();
     this.lastLogin = lastLogin;
     this.jwt = token.trim();
+    this.accounts = accounts;
   }
 }

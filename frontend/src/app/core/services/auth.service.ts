@@ -55,22 +55,6 @@ export class AuthService {
     });
   }
 
-  public register(
-    userId: string,
-    name: string,
-    email: string,
-    password: string,
-    accNo: string,
-    bankName: string,
-    accType: string
-  ): Observable<String> {
-    // perform sc-account creation POST here
-
-    return this.registerUser(userId, name, email, password).pipe(() =>
-      this.createBankAccount(userId, accNo, bankName, accType)
-    );
-  }
-
   getToken(): string | null {
     return CommonUtils.getUserDetail('jwt');
   }
@@ -108,12 +92,19 @@ export class AuthService {
         currentUser.lastName,
         currentUser.email,
         currentUser.lastLogin,
-        currentUser.jwt
+        currentUser.jwt,
+        currentUser.accounts
       );
     } catch (err) {
       console.log(err);
       return null;
     }
+  }
+
+  getAccountDetails(accNo: number): Observable<any> {
+    return this.httpClient.get(Constants.BANKACCT_ENDPOINT, {
+      params: { accNo: accNo },
+    });
   }
 
   setInitialLoginStatus() {
