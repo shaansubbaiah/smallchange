@@ -91,7 +91,7 @@ export class LoginFormComponent implements OnInit, ErrorStateMatcher {
           this.authService.setLoggedIn(true);
           this.loginValid = true;
           this.isLoading = false;
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/market-place');
         },
         error: (e) => {
           this.alertService.open({ type: 'error', message: e.statusText });

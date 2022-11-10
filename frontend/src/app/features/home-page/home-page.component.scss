@@ -17,11 +17,11 @@
   margin-top: 20px;
   font-size: 1rem;
   font-weight: 500;
-  text-transform: uppercase;
+  text-transform: capitalize;
   gap: 20px;
 }
 
-.home-nav .light {
+.light {
   opacity: 0.5;
 }
 
@@ -52,6 +52,22 @@
   font-size: 1rem;
 }
 
+.home-footer-container {
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  gap: 20px;
+}
+
+.pindown {
+  color: black !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  margin: 0 auto 10px auto;
+}
+
 //
 //
 //
@@ -76,7 +92,7 @@
   width: 49vmin;
   height: 49vmin;
   border-radius: 49vmin;
-  backface-visibility: hidden;
+  // backface-visibility: hidden;
   position: absolute;
   animation: move;
   animation-duration: 1;

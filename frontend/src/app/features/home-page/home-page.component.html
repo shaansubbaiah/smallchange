@@ -1,10 +1,12 @@
 <main>
   <div class="home-nav flex-row flex-center">
+    <span class="light">⯌</span>
     <a class="home-nav-link" routerLink="/market-place">Marketplace</a>
-    <span class="light">x</span>
+    <span class="light">⯌</span>
     <a class="home-nav-link" routerLink="/login">Login</a>
-    <span class="light">x</span>
+    <span class="light">⯌</span>
     <a class="home-nav-link" routerLink="/register">Register</a>
+    <span class="light">⯌</span>
   </div>
 
   <div class="header-box flex-col flex-center">
@@ -14,6 +16,18 @@
       <span class="logo-text-change">Change™</span>
     </div>
     <span class="logo-undertext">it's smol.</span>
+  </div>
+
+  <div class="home-footer-container flex-row flex-center pindown">
+    <span class="footer-text">
+      Copyright &copy; {{ timestamp | date: "yyyy" }}
+    </span>
+    <span class="light">⯌</span>
+    <span> SmallChange Investments LLC</span>
+    <span class="light">⯌</span>
+    <span class="footer-text current-date">
+      {{ timestamp | date: "longDate" }}
+    </span>
   </div>
 
   <div class="background">
