@@ -99,13 +99,13 @@ public class UserController {
             while (true) {
                 try {
                     inducer.induceStockFluctuations();
-                    Thread.sleep(5000);
+                    Thread.sleep(30000);
 
                     inducer.induceBondFluctuations();
-                    Thread.sleep(5000);
+                    Thread.sleep(30000);
 
                     inducer.induceMfFluctuations();
-                    Thread.sleep(10000);
+                    Thread.sleep(30000);
 
                 } catch (Exception ex) {ex.printStackTrace();}
             }

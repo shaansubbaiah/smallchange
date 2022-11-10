@@ -61,9 +61,6 @@ public class ScAccountResource {
     @PostMapping("/sc-accounts")
     public ResponseEntity<ScAccount> createScAccount(@Valid @RequestBody ScAccount scAccount) throws URISyntaxException {
         log.debug("REST request to save ScAccount : {}", scAccount);
-        if (scAccount.getAccNo() != null) {
-            throw new BadRequestAlertException("A new scAccount cannot already have an ID", ENTITY_NAME, "idexists");
-        }
         ScAccount result = scAccountService.save(scAccount);
         return ResponseEntity
             .created(new URI("/api/sc-accounts/" + result.getAccNo()))
