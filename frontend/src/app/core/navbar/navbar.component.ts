@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   userInitials: string = '';
   userAccounts: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit(): void {
     this.authService.getLoggedIn().subscribe((val: boolean) => {
