@@ -142,15 +142,23 @@ public class UserController {
 
     @PostMapping("/bank-account")
     public ResponseEntity<ScAccount> registerBankAccount(@Valid @RequestBody ScAccount scAccount) {
-
         if (scAccountService.findOne(scAccount.getAccNo()).isPresent()) {
             throw new EntityAlreadyExistsException("Account with number already exists!", "BankAccount", "id exists");
         }
         ScAccount newAccount;
-        try {
-            newAccount = scAccountService.save(scAccount);
-        } catch (Exception e) {
-            throw new BadRequestAlertException("Invalid parameters.", "userId", "id exists");
+        Optional<ScUser> x = scUserService.findOne(scAccount.getScUserId());
+        if(x.isPresent()){
+            ScUser scUser = x.get();
+            try {
+                newAccount = scAccount;
+                newAccount.setScUser(scUser);
+                scAccountService.save(scAccount);
+            } catch (Exception e) {
+                throw new BadRequestAlertException("Invalid parameters.", "userId", "id exists");
+            }
+        }
+        else {
+            throw new BadRequestAlertException("Invalid parameters.", "userId", "user id doesnt exist");
         }
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
     }
