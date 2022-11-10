@@ -39,6 +39,18 @@ public class ScUser implements Serializable, Persistable<String> {
     @Column(name = "password_hash", length = 72, nullable = false)
     private String passwordHash;
 
+    @DecimalMin(value = "0")
+    @Column(name = "total_stocks_investment")
+    private Float totalStocksInvestment;
+
+    @DecimalMin(value = "0")
+    @Column(name = "total_bonds_investment")
+    private Float totalBondsInvestment;
+
+    @DecimalMin(value = "0")
+    @Column(name = "total_mf_investment")
+    private Float totalMfInvestment;
+
     @Lob
     @Column(name = "image")
     private byte[] image;
@@ -127,6 +139,45 @@ public class ScUser implements Serializable, Persistable<String> {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public Float getTotalStocksInvestment() {
+        return this.totalStocksInvestment;
+    }
+
+    public ScUser totalStocksInvestment(Float totalStocksInvestment) {
+        this.setTotalStocksInvestment(totalStocksInvestment);
+        return this;
+    }
+
+    public void setTotalStocksInvestment(Float totalStocksInvestment) {
+        this.totalStocksInvestment = totalStocksInvestment;
+    }
+
+    public Float getTotalBondsInvestment() {
+        return this.totalBondsInvestment;
+    }
+
+    public ScUser totalBondsInvestment(Float totalBondsInvestment) {
+        this.setTotalBondsInvestment(totalBondsInvestment);
+        return this;
+    }
+
+    public void setTotalBondsInvestment(Float totalBondsInvestment) {
+        this.totalBondsInvestment = totalBondsInvestment;
+    }
+
+    public Float getTotalMfInvestment() {
+        return this.totalMfInvestment;
+    }
+
+    public ScUser totalMfInvestment(Float totalMfInvestment) {
+        this.setTotalMfInvestment(totalMfInvestment);
+        return this;
+    }
+
+    public void setTotalMfInvestment(Float totalMfInvestment) {
+        this.totalMfInvestment = totalMfInvestment;
     }
 
     public byte[] getImage() {
@@ -336,6 +387,9 @@ public class ScUser implements Serializable, Persistable<String> {
             ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +
             ", passwordHash='" + getPasswordHash() + "'" +
+            ", totalStocksInvestment=" + getTotalStocksInvestment() +
+            ", totalBondsInvestment=" + getTotalBondsInvestment() +
+            ", totalMfInvestment=" + getTotalMfInvestment() +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             ", scUserRole='" + getScUserRole() + "'" +

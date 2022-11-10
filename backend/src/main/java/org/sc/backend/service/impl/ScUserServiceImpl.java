@@ -54,6 +54,15 @@ public class ScUserServiceImpl implements ScUserService {
                 if (scUser.getPasswordHash() != null) {
                     existingScUser.setPasswordHash(scUser.getPasswordHash());
                 }
+                if (scUser.getTotalStocksInvestment() != null) {
+                    existingScUser.setTotalStocksInvestment(scUser.getTotalStocksInvestment());
+                }
+                if (scUser.getTotalBondsInvestment() != null) {
+                    existingScUser.setTotalBondsInvestment(scUser.getTotalBondsInvestment());
+                }
+                if (scUser.getTotalMfInvestment() != null) {
+                    existingScUser.setTotalMfInvestment(scUser.getTotalMfInvestment());
+                }
                 if (scUser.getImage() != null) {
                     existingScUser.setImage(scUser.getImage());
                 }

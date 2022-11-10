@@ -1,6 +1,9 @@
 package org.sc.backend.service;
 
-import org.sc.backend.domain.*;
+import java.util.List;
+import javax.persistence.criteria.JoinType;
+import org.sc.backend.domain.*; // for static metamodels
+import org.sc.backend.domain.ScUser;
 import org.sc.backend.repository.ScUserRepository;
 import org.sc.backend.service.criteria.ScUserCriteria;
 import org.slf4j.Logger;
@@ -11,9 +14,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
-
-import javax.persistence.criteria.JoinType;
-import java.util.List;
 
 /**
  * Service for executing complex queries for {@link ScUser} entities in the database.
@@ -93,6 +93,17 @@ public class ScUserQueryService extends QueryService<ScUser> {
             }
             if (criteria.getPasswordHash() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getPasswordHash(), ScUser_.passwordHash));
+            }
+            if (criteria.getTotalStocksInvestment() != null) {
+                specification =
+                    specification.and(buildRangeSpecification(criteria.getTotalStocksInvestment(), ScUser_.totalStocksInvestment));
+            }
+            if (criteria.getTotalBondsInvestment() != null) {
+                specification =
+                    specification.and(buildRangeSpecification(criteria.getTotalBondsInvestment(), ScUser_.totalBondsInvestment));
+            }
+            if (criteria.getTotalMfInvestment() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getTotalMfInvestment(), ScUser_.totalMfInvestment));
             }
             if (criteria.getScUserRole() != null) {
                 specification = specification.and(buildSpecification(criteria.getScUserRole(), ScUser_.scUserRole));

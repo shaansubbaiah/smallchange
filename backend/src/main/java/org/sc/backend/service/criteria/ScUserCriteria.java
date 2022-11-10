@@ -47,6 +47,12 @@ public class ScUserCriteria implements Serializable, Criteria {
 
     private StringFilter passwordHash;
 
+    private FloatFilter totalStocksInvestment;
+
+    private FloatFilter totalBondsInvestment;
+
+    private FloatFilter totalMfInvestment;
+
     private UserRolesFilter scUserRole;
 
     private BooleanFilter scUserEnabled;
@@ -68,6 +74,9 @@ public class ScUserCriteria implements Serializable, Criteria {
         this.name = other.name == null ? null : other.name.copy();
         this.email = other.email == null ? null : other.email.copy();
         this.passwordHash = other.passwordHash == null ? null : other.passwordHash.copy();
+        this.totalStocksInvestment = other.totalStocksInvestment == null ? null : other.totalStocksInvestment.copy();
+        this.totalBondsInvestment = other.totalBondsInvestment == null ? null : other.totalBondsInvestment.copy();
+        this.totalMfInvestment = other.totalMfInvestment == null ? null : other.totalMfInvestment.copy();
         this.scUserRole = other.scUserRole == null ? null : other.scUserRole.copy();
         this.scUserEnabled = other.scUserEnabled == null ? null : other.scUserEnabled.copy();
         this.preferencesId = other.preferencesId == null ? null : other.preferencesId.copy();
@@ -140,6 +149,51 @@ public class ScUserCriteria implements Serializable, Criteria {
 
     public void setPasswordHash(StringFilter passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public FloatFilter getTotalStocksInvestment() {
+        return totalStocksInvestment;
+    }
+
+    public FloatFilter totalStocksInvestment() {
+        if (totalStocksInvestment == null) {
+            totalStocksInvestment = new FloatFilter();
+        }
+        return totalStocksInvestment;
+    }
+
+    public void setTotalStocksInvestment(FloatFilter totalStocksInvestment) {
+        this.totalStocksInvestment = totalStocksInvestment;
+    }
+
+    public FloatFilter getTotalBondsInvestment() {
+        return totalBondsInvestment;
+    }
+
+    public FloatFilter totalBondsInvestment() {
+        if (totalBondsInvestment == null) {
+            totalBondsInvestment = new FloatFilter();
+        }
+        return totalBondsInvestment;
+    }
+
+    public void setTotalBondsInvestment(FloatFilter totalBondsInvestment) {
+        this.totalBondsInvestment = totalBondsInvestment;
+    }
+
+    public FloatFilter getTotalMfInvestment() {
+        return totalMfInvestment;
+    }
+
+    public FloatFilter totalMfInvestment() {
+        if (totalMfInvestment == null) {
+            totalMfInvestment = new FloatFilter();
+        }
+        return totalMfInvestment;
+    }
+
+    public void setTotalMfInvestment(FloatFilter totalMfInvestment) {
+        this.totalMfInvestment = totalMfInvestment;
     }
 
     public UserRolesFilter getScUserRole() {
@@ -251,16 +305,19 @@ public class ScUserCriteria implements Serializable, Criteria {
         final ScUserCriteria that = (ScUserCriteria) o;
         return (
             Objects.equals(scUserId, that.scUserId) &&
-            Objects.equals(name, that.name) &&
-            Objects.equals(email, that.email) &&
-            Objects.equals(passwordHash, that.passwordHash) &&
-            Objects.equals(scUserRole, that.scUserRole) &&
-            Objects.equals(scUserEnabled, that.scUserEnabled) &&
-            Objects.equals(preferencesId, that.preferencesId) &&
-            Objects.equals(positionsId, that.positionsId) &&
-            Objects.equals(scAccountId, that.scAccountId) &&
-            Objects.equals(tradeHistoryId, that.tradeHistoryId) &&
-            Objects.equals(distinct, that.distinct)
+                Objects.equals(name, that.name) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(passwordHash, that.passwordHash) &&
+                Objects.equals(totalStocksInvestment, that.totalStocksInvestment) &&
+                Objects.equals(totalBondsInvestment, that.totalBondsInvestment) &&
+                Objects.equals(totalMfInvestment, that.totalMfInvestment) &&
+                Objects.equals(scUserRole, that.scUserRole) &&
+                Objects.equals(scUserEnabled, that.scUserEnabled) &&
+                Objects.equals(preferencesId, that.preferencesId) &&
+                Objects.equals(positionsId, that.positionsId) &&
+                Objects.equals(scAccountId, that.scAccountId) &&
+                Objects.equals(tradeHistoryId, that.tradeHistoryId) &&
+                Objects.equals(distinct, that.distinct)
         );
     }
 
@@ -271,6 +328,9 @@ public class ScUserCriteria implements Serializable, Criteria {
             name,
             email,
             passwordHash,
+            totalStocksInvestment,
+            totalBondsInvestment,
+            totalMfInvestment,
             scUserRole,
             scUserEnabled,
             preferencesId,
@@ -289,6 +349,9 @@ public class ScUserCriteria implements Serializable, Criteria {
             (name != null ? "name=" + name + ", " : "") +
             (email != null ? "email=" + email + ", " : "") +
             (passwordHash != null ? "passwordHash=" + passwordHash + ", " : "") +
+            (totalStocksInvestment != null ? "totalStocksInvestment=" + totalStocksInvestment + ", " : "") +
+            (totalBondsInvestment != null ? "totalBondsInvestment=" + totalBondsInvestment + ", " : "") +
+            (totalMfInvestment != null ? "totalMfInvestment=" + totalMfInvestment + ", " : "") +
             (scUserRole != null ? "scUserRole=" + scUserRole + ", " : "") +
             (scUserEnabled != null ? "scUserEnabled=" + scUserEnabled + ", " : "") +
             (preferencesId != null ? "preferencesId=" + preferencesId + ", " : "") +
