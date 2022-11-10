@@ -15,14 +15,12 @@ export class TradeHistoryComponent implements OnInit {
   isLoading: boolean = false;
 
   tableColumns = [
-    { name: 'name', displayName: 'Name', type: 'text' },
-    { name: 'code', displayName: 'Code', type: 'text' },
-    { name: 'price', displayName: 'Price', type: 'currency' },
-    { name: 'quantity', displayName: 'Quantity', type: 'text' },
-    { name: 'asset_class', displayName: 'Asset Class', type: 'snakecase' },
-    { name: 'trade_type', displayName: 'Action', type: 'uppercase' },
-    { name: 'date', displayName: 'Date', type: 'date' },
-    { name: 'time', displayName: 'Time', type: 'time' },
+    { name: 'assetCode', displayName: 'Code', type: 'text' },
+    { name: 'tradePrice', displayName: 'Price', type: 'currency' },
+    { name: 'tradeQuantity', displayName: 'Quantity', type: 'text' },
+    { name: 'assetType', displayName: 'Asset Class', type: 'uppercase' },
+    { name: 'tradeType', displayName: 'Action', type: 'uppercase' },
+    { name: 'tradeDate', displayName: 'Date', type: 'date' },
   ];
 
   constructor(private dataService: DataService) {}
