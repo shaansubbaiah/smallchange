@@ -164,8 +164,8 @@ public class UserController {
     }
 
     @GetMapping("/bank-account")
-    public ResponseEntity<ScAccount> getBankAccount(@RequestParam Long acctNo) {
-        Optional<ScAccount> account = scAccountService.findOne(acctNo);
+    public ResponseEntity<ScAccount> getBankAccount(@RequestParam Long accNo) {
+        Optional<ScAccount> account = scAccountService.findOne(accNo);
         if (account.isEmpty()) {
             throw new BadRequestAlertException("Account with number does not exist", "BankAccount", "entity non-existent");
         }
