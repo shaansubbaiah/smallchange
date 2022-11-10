@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.sc.backend.config.CommonUtils;
 import org.sc.backend.domain.*;
 import org.sc.backend.domain.enumeration.AssetType;
 import org.sc.backend.repository.PositionsRepository;
@@ -134,62 +135,49 @@ public class UserController {
 
     @GetMapping("/portfolio")
     public ResponseEntity<UserPortfolio> getPortfolio(@RequestHeader (name="Authorization") String token) {
-        String[] chunks = token.split("\\.");
-        Base64.Decoder decoder = Base64.getUrlDecoder();
 
-        //String header = new String(decoder.decode(chunks[0]));
-        String payload = new String(decoder.decode(chunks[1]));
+        String subject = CommonUtils.getUserIdFromAuthorizationToken(token);
+        PositionsCriteria criteria = new PositionsCriteria();
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            JsonNode payloadJson = mapper.readTree(payload);
-            String subject = payloadJson.get("sub").textValue();
+        criteria.setScUserId((StringFilter) new StringFilter().setEquals(subject));
 
-            PositionsCriteria criteria = new PositionsCriteria();
+        List<Positions> positions = positionsQueryService.findByCriteria(criteria);
+        log.debug("POSIIONS:-------------- {}", positions);
 
-            criteria.setScUserId((StringFilter) new StringFilter().setEquals(subject));
+        List<UserPosition> stockPositions = new ArrayList<>(), bondPositions = new ArrayList<>(), mfPositions = new ArrayList<>();
 
-            List<Positions> positions = positionsQueryService.findByCriteria(criteria);
-            log.debug("POSIIONS:-------------- {}", positions);
+        for (Positions p : positions) {
+            if (p.getAssetType() == AssetType.STOCK) {
+                //fetch stock details through asset code and append to List<UserPosititions> in response.
+                StocksCriteria stocksCriteria = new StocksCriteria();
+                stocksCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
 
-            List<UserPosition> stockPositions = new ArrayList<>(), bondPositions = new ArrayList<>(), mfPositions = new ArrayList<>();
-
-            for (Positions p : positions) {
-                if (p.getAssetType() == AssetType.STOCK) {
-                    //fetch stock details through asset code and append to List<UserPosititions> in response.
-                    StocksCriteria stocksCriteria = new StocksCriteria();
-                    stocksCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
-
-                    List<Stocks> stocks = stocksQueryService.findByCriteria(stocksCriteria);
-                    for (Stocks st : stocks) {
-                        stockPositions.add(new UserPosition(st.getName(), st.getCode(), st.getStockType(), p.getQuantity(), p.getBuyPrice(), st.getCurrentPrice()));
-                    }
-                }
-                else if (p.getAssetType() == AssetType.BOND) {
-                    //fetch bond details through asset code and append to List<UserPosititions> in response.
-                    BondsCriteria bondsCriteria = new BondsCriteria();
-                    bondsCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
-
-                    List<Bonds> bonds = bondsQueryService.findByCriteria(bondsCriteria);
-                    for (Bonds b : bonds) {
-                        bondPositions.add(new UserPosition(b.getName(), b.getCode(), b.getBondType(), p.getQuantity(), p.getBuyPrice(), b.getCurrentPrice()));
-                    }
-                }
-                else {
-                    //fetch mf details through asset code and append to List<UserPosititions> in response.
-                    MutualFundsCriteria mfCriteria = new MutualFundsCriteria();
-                    mfCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
-
-                    List<MutualFunds> mutualFunds = mfQueryService.findByCriteria(mfCriteria);
-                    for (MutualFunds mf : mutualFunds) {
-                        mfPositions.add(new UserPosition(mf.getName(), mf.getCode(), mf.getMfType(), p.getQuantity(), p.getBuyPrice(), mf.getCurrentPrice()));
-                    }
+                List<Stocks> stocks = stocksQueryService.findByCriteria(stocksCriteria);
+                for (Stocks st : stocks) {
+                    stockPositions.add(new UserPosition(st.getName(), st.getCode(), st.getStockType(), p.getQuantity(), p.getBuyPrice(), st.getCurrentPrice()));
                 }
             }
-            return ResponseEntity.ok().body(new UserPortfolio(stockPositions, bondPositions, mfPositions));
+            else if (p.getAssetType() == AssetType.BOND) {
+                //fetch bond details through asset code and append to List<UserPosititions> in response.
+                BondsCriteria bondsCriteria = new BondsCriteria();
+                bondsCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
 
-        } catch (JsonProcessingException e) {
-            throw new BadRequestAlertException("Invalid user ID!", "UserController", "invalidheader");
+                List<Bonds> bonds = bondsQueryService.findByCriteria(bondsCriteria);
+                for (Bonds b : bonds) {
+                    bondPositions.add(new UserPosition(b.getName(), b.getCode(), b.getBondType(), p.getQuantity(), p.getBuyPrice(), b.getCurrentPrice()));
+                }
+            }
+            else {
+                //fetch mf details through asset code and append to List<UserPosititions> in response.
+                MutualFundsCriteria mfCriteria = new MutualFundsCriteria();
+                mfCriteria.setCode((StringFilter) new StringFilter().setEquals(p.getAssetCode()));
+
+                List<MutualFunds> mutualFunds = mfQueryService.findByCriteria(mfCriteria);
+                for (MutualFunds mf : mutualFunds) {
+                    mfPositions.add(new UserPosition(mf.getName(), mf.getCode(), mf.getMfType(), p.getQuantity(), p.getBuyPrice(), mf.getCurrentPrice()));
+                }
+            }
         }
+        return ResponseEntity.ok().body(new UserPortfolio(stockPositions, bondPositions, mfPositions));
     }
 }
