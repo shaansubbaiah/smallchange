@@ -25,8 +25,13 @@ export class AuthService {
     userId: string,
     name: string,
     email: string,
-    password: string
+    password: string,
+    accNo: string,
+    bankName: string,
+    accType: string
   ): Observable<any> {
+    // perform sc-account creation POST here
+
     return this.httpClient.post(Constants.REGISTER_ENDPOINT, {
       scUserId: userId,
       name: name,

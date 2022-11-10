@@ -127,7 +127,65 @@
           and 1 symbol.
         </mat-error>
       </mat-form-field>
-
+      <mat-form-field>
+        <mat-label>Account Number</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="1234567890"
+          formControlName="accNo"
+        />
+        <mat-error
+          *ngIf="
+            registerDetails.get('accNo')?.invalid &&
+            registerDetails.get('accNo')?.hasError('required')
+          "
+        >
+          Account number is required.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            registerDetails.get('accNo')?.invalid &&
+            registerDetails.get('accNo')?.hasError('pattern')
+          "
+        >
+          Account number should be 10 digits.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Select a bank</mat-label>
+        <mat-select formControlName="bankName">
+          <mat-option value="CITI">CITI</mat-option>
+          <mat-option value="American Express">American Express</mat-option>
+          <mat-option value="HDFC">HDFC</mat-option>
+          <mat-option value="ICICI">ICICI</mat-option>
+          <mat-option value="Axis">Axis</mat-option>
+          <mat-option value="Standard Chartered">Standard Chartered</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            registerDetails.get('bankName')?.invalid &&
+            registerDetails.get('bankName')?.hasError('required')
+          "
+        >
+          Bank name is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Select the account type</mat-label>
+        <mat-select formControlName="accType">
+          <mat-option value="Savings">Savings</mat-option>
+          <mat-option value="Current">Current</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            registerDetails.get('accType')?.invalid &&
+            registerDetails.get('accType')?.hasError('required')
+          "
+        >
+          Account type is required.
+        </mat-error>
+      </mat-form-field>
       <!-- <mat-error *ngIf="!registerValid"
         >User details are invalid! Please try again!</mat-error
       > -->
