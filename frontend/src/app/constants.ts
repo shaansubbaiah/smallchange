@@ -3,6 +3,7 @@ export class Constants {
   public static readonly BACKEND_URL = "http://localhost:8080/api";
   public static readonly AUTH_ENDPOINT = this.BACKEND_URL + '/user/authenticate';
   public static readonly REGISTER_ENDPOINT = this.BACKEND_URL + '/user/register';
+  public static readonly BANKACCT_ENDPOINT = this.BACKEND_URL + '/user/bank-account';
 
   public static readonly TRADE_HISTORY_ENDPOINT = this.BACKEND_URL + '/user/trade-history';
   // public static readonly STOCK_HOLDINGS_ENDPOINT = this.BACKEND_URL + '/holdings/stocks';
