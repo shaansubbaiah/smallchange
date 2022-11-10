@@ -94,6 +94,8 @@ public class SecurityConfiguration {
             //user APIs
             .antMatchers("/api/user/authenticate").permitAll()
             .antMatchers("/api/user/register").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/user/bank-account").authenticated()
+            .antMatchers(HttpMethod.POST, "/api/user/bank-account").permitAll()
             .antMatchers("/api/user/**").authenticated()
 
             //Marketplace APIs
