@@ -1,5 +1,6 @@
 package org.sc.backend.config;
 
+import org.sc.backend.domain.enumeration.UserRoles;
 import org.sc.backend.security.*;
 import org.sc.backend.security.jwt.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,7 @@ public class SecurityConfiguration {
             .antMatchers("/api/marketplace/**").authenticated()
 
             //Admin APIs
-            .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/admin/**").hasAuthority(UserRoles.ADMIN.getValue())
 
             .antMatchers("/api/**").authenticated()
 
@@ -108,7 +109,7 @@ public class SecurityConfiguration {
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/management/**").hasAuthority(UserRoles.ADMIN.getValue())
         .and()
             .httpBasic()
         .and()

@@ -2,9 +2,6 @@ package org.sc.backend.web.rest;
 
 import javax.validation.Valid;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sc.backend.config.CommonUtils;
 import org.sc.backend.domain.*;
 import org.sc.backend.domain.enumeration.AssetType;
@@ -53,6 +50,7 @@ public class UserController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     private final ScUserService scUserService;
+    private final ScAccountService scAccountService;
 
     private final PositionsQueryService positionsQueryService;
 
@@ -62,11 +60,12 @@ public class UserController {
 
     private final MutualFundsQueryService mfQueryService;
 
-    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, FluctuationsInducer inducer, PositionsQueryService positionsQueryService, StocksQueryService stocksQueryService, BondsQueryService bondsQueryService, MutualFundsQueryService mfQueryService) {
+    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, FluctuationsInducer inducer, ScAccountService scAccountService, PositionsQueryService positionsQueryService, StocksQueryService stocksQueryService, BondsQueryService bondsQueryService, MutualFundsQueryService mfQueryService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.scUserService = scUserService;
         this.inducer = inducer;
+        this.scAccountService = scAccountService;
         this.stocksQueryService = stocksQueryService;
         this.bondsQueryService = bondsQueryService;
         this.mfQueryService = mfQueryService;
@@ -116,7 +115,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ScUser> register(@Valid @RequestBody ScUser scUser) {
+    public ResponseEntity<ScUser> registerUser(@Valid @RequestBody ScUser scUser) {
         scUser.setPasswordHash(new BCryptPasswordEncoder(14).encode(scUser.getPasswordHash()));
 
         if (scUserService.findOne(scUser.getScUserId()).isPresent()) {
@@ -132,6 +131,16 @@ public class UserController {
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
+
+    /*@PostMapping("/bank-account")
+    public ResponseEntity<ScUser> registerBankAccount(@Valid @RequestBody ScAccount scAccount) {
+
+        if (scAccountService.findOne(scAccount.getAccNo()).isPresent()) {
+            throw new BadRequestAlertException("Uxser with id already exists.", "userId", "id exists");
+        }
+
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }*/
 
     @GetMapping("/portfolio")
     public ResponseEntity<UserPortfolio> getPortfolio(@RequestHeader (name="Authorization") String token) {

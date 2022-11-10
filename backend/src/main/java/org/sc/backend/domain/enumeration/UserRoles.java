@@ -4,8 +4,8 @@ package org.sc.backend.domain.enumeration;
  * The UserRoles enumeration.
  */
 public enum UserRoles {
-    USER("ROLE_USER"),
-    ADMIN("ROLE_ADMIN");
+    USER("USER"),
+    ADMIN("ADMIN");
 
     private final String value;
 
