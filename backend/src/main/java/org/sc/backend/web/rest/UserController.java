@@ -9,10 +9,7 @@ import org.sc.backend.repository.PositionsRepository;
 import org.sc.backend.security.jwt.JWTFilter;
 import org.sc.backend.security.jwt.TokenProvider;
 import org.sc.backend.service.*;
-import org.sc.backend.service.criteria.BondsCriteria;
-import org.sc.backend.service.criteria.MutualFundsCriteria;
-import org.sc.backend.service.criteria.PositionsCriteria;
-import org.sc.backend.service.criteria.StocksCriteria;
+import org.sc.backend.service.criteria.*;
 import org.sc.backend.service.impl.PositionsServiceImpl;
 import org.sc.backend.service.impl.ScUserServiceImpl;
 import org.sc.backend.web.rest.dto.UserAuthResponse;
@@ -53,6 +50,7 @@ public class UserController {
     private final ScUserService scUserService;
     private final ScAccountService scAccountService;
 
+    private final ScAccountQueryService scAccountQueryService;
     private final PositionsQueryService positionsQueryService;
 
     private final StocksQueryService stocksQueryService;
@@ -61,12 +59,13 @@ public class UserController {
 
     private final MutualFundsQueryService mfQueryService;
 
-    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, FluctuationsInducer inducer, ScAccountService scAccountService, PositionsQueryService positionsQueryService, StocksQueryService stocksQueryService, BondsQueryService bondsQueryService, MutualFundsQueryService mfQueryService) {
+    public UserController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, ScUserServiceImpl scUserService, PositionsServiceImpl positionsService, PositionsRepository positionsRepository, FluctuationsInducer inducer, ScAccountService scAccountService, ScAccountQueryService scAccountQueryService, PositionsQueryService positionsQueryService, StocksQueryService stocksQueryService, BondsQueryService bondsQueryService, MutualFundsQueryService mfQueryService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.scUserService = scUserService;
         this.inducer = inducer;
         this.scAccountService = scAccountService;
+        this.scAccountQueryService = scAccountQueryService;
         this.stocksQueryService = stocksQueryService;
         this.bondsQueryService = bondsQueryService;
         this.mfQueryService = mfQueryService;
@@ -90,7 +89,15 @@ public class UserController {
         //get user details
         ScUser user = scUserService.findOne(loginVM.getUsername()).isPresent() ? scUserService.findOne(loginVM.getUsername()).get() : null;
         if (user == null) throw new UsernameNotFoundException("Username not found in database!");
+        ScAccountCriteria accountCriteria = new ScAccountCriteria();
+        accountCriteria.setScUserId((StringFilter) new StringFilter().setEquals(loginVM.getUsername()));
 
+        List<ScAccount> accounts = scAccountQueryService.findByCriteria(accountCriteria);
+        List<Long> accountNos = new ArrayList<>();
+        for (ScAccount account : accounts) {
+            accountNos.add(account.getAccNo());
+        }
+        log.debug("USERACCOUNTS: {}", accountNos);
         //set HTTP headers and return
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
@@ -112,7 +119,7 @@ public class UserController {
             }
         }).start();
 
-        return new ResponseEntity<>(new UserAuthResponse(user.getScUserId(), user.getName(), user.getEmail(), user.getScUserRole().toString(), System.currentTimeMillis(), jwt, user.getImage()), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new UserAuthResponse(user.getScUserId(), user.getName(), user.getEmail(), user.getScUserRole().toString(), System.currentTimeMillis(), jwt, user.getImage(), accountNos), httpHeaders, HttpStatus.OK);
     }
 
     @PostMapping("/register")
