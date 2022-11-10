@@ -19,6 +19,7 @@ import org.sc.backend.web.rest.dto.UserAuthResponse;
 import org.sc.backend.web.rest.dto.UserPortfolio;
 import org.sc.backend.web.rest.dto.UserPosition;
 import org.sc.backend.web.rest.errors.BadRequestAlertException;
+import org.sc.backend.web.rest.errors.EntityAlreadyExistsException;
 import org.sc.backend.web.rest.vm.LoginVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +120,7 @@ public class UserController {
         scUser.setPasswordHash(new BCryptPasswordEncoder(14).encode(scUser.getPasswordHash()));
 
         if (scUserService.findOne(scUser.getScUserId()).isPresent()) {
-            throw new BadRequestAlertException("User with id already exists.", "userId", "id exists");
+            throw new EntityAlreadyExistsException("User with id already exists.", "userId", "id exists");
         }
 
         ScUser newUser;
@@ -132,15 +133,20 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    /*@PostMapping("/bank-account")
-    public ResponseEntity<ScUser> registerBankAccount(@Valid @RequestBody ScAccount scAccount) {
+    @PostMapping("/bank-account")
+    public ResponseEntity<ScAccount> registerBankAccount(@Valid @RequestBody ScAccount scAccount) {
 
         if (scAccountService.findOne(scAccount.getAccNo()).isPresent()) {
-            throw new BadRequestAlertException("Uxser with id already exists.", "userId", "id exists");
+            throw new EntityAlreadyExistsException("Account with number already exists!", "BankAccount", "id exists");
         }
-
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-    }*/
+        ScAccount newAccount;
+        try {
+            newAccount = scAccountService.save(scAccount);
+        } catch (Exception e) {
+            throw new BadRequestAlertException("Invalid parameters.", "userId", "id exists");
+        }
+        return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
+    }
 
     @GetMapping("/portfolio")
     public ResponseEntity<UserPortfolio> getPortfolio(@RequestHeader (name="Authorization") String token) {
